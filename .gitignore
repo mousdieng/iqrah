@@ -1,0 +1,74 @@
+############################
+# Build outputs
+############################
+/api/target/
+/api/build/
+/api/.gradle/
+
+############################
+# IDE / Editors
+############################
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+############################
+# OS
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# Logs
+############################
+*.log
+logs/
+
+############################
+# Env / Secrets
+############################
+.env
+.env.*
+**/application-*.yml
+**/application-*.properties
+
+############################
+# Spring Boot artifacts
+############################
+*.jar
+*.war
+*.ear
+
+############################
+# Node / Frontend
+############################
+**/node_modules/
+**/dist/
+**/.cache/
+
+############################
+# Resources
+############################
+
+# Ignore audio files (Qur'an recitations / tafsir audio)
+api/src/main/resources/audio/
+
+# Ignore temp/generated resources
+api/src/main/resources/tmp/
+api/src/main/resources/generated/
+
+# Ignore uploads/storage
+api/src/main/resources/uploads/
+
+############################
+# Keep important resources
+############################
+!api/src/main/resources/application.yml
+!api/src/main/resources/application.properties
+!api/src/main/resources/static/**
+!api/src/main/resources/templates/**

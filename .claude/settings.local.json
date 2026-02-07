@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app:*)",
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(kill:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Bash(node fetch-missing-batch.js:*)",
+      "Bash(node fix-duplicates.js:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

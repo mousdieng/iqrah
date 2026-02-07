@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "إقراء - Iqrah",
+    "slug": "iqrah",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2E7D32"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.iqrah.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2E7D32"
+      },
+      "package": "com.iqrah.app",
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "apiUrl": "http://192.168.1.210:8080/api"
+    },
+    "plugins": [
+      "expo-audio"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: quran-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/quran_db
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:quran_user}
+    password: ${DB_PASSWORD:quran_password}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    com.iqrah.quran: DEBUG
+    org.springframework.web: DEBUG
