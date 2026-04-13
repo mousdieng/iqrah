@@ -1,0 +1,111 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-quranic-darkGreen mb-2">
+      Liste des Sourates
+    </h1>
+    <p class="text-gray-600">
+      Parcourez et explorez les 114 sourates du Saint Coran
+    </p>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Search -->
+      <div class="flex items-center">
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="searchQuery"
+            (input)="filterSurahs()"
+            placeholder="Rechercher par nom ou numéro..."
+            class="w-full" />
+        </span>
+      </div>
+
+      <!-- Revelation Type Filter -->
+      <div>
+        <p-select
+          [(ngModel)]="selectedType"
+          [options]="revelationTypes"
+          optionLabel="label"
+          optionValue="value"
+          (onChange)="filterSurahs()"
+          placeholder="Type de révélation"
+          [style]="{ width: '100%' }">
+        </p-select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Count -->
+  <div class="mb-4 text-gray-600">
+    <span class="font-semibold">{{ filteredSurahs.length }}</span>
+    sourate(s) trouvée(s)
+  </div>
+
+  <!-- Surahs Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (surah of filteredSurahs; track surah.id) {
+      <div
+        class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-quranic-gold transform hover:-translate-y-1"
+        (click)="openSurah(surah.id)">
+
+        <div class="p-6">
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="bg-quranic-green text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold">
+              {{ surah.id }}
+            </div>
+            <span
+              class="px-3 py-1 rounded-full text-xs font-semibold"
+              [ngClass]="getRevelationBadgeClass(surah.revelationType)">
+              {{ surah.revelationType === 'Meccan' ? 'Mecquoise' : 'Médinoise' }}
+            </span>
+          </div>
+
+          <!-- Arabic Name -->
+          <div class="text-center mb-3">
+            <h3 class="text-3xl font-bold arabic-text text-quranic-darkGreen" dir="rtl">
+              {{ surah.name }}
+            </h3>
+          </div>
+
+          <!-- Transliteration & Translation -->
+          <div class="text-center mb-4">
+            <p class="text-lg font-semibold text-gray-800">
+              {{ surah.transliteratedName }}
+            </p>
+            <p class="text-sm text-gray-600">
+              {{ surah.translatedName }}
+            </p>
+          </div>
+
+          <!-- Stats -->
+          <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+            <div class="flex items-center space-x-2 text-gray-600">
+              <i class="pi pi-book"></i>
+              <span class="text-sm">{{ surah.totalVerses }} versets</span>
+            </div>
+            <button
+              pButton
+              icon="pi pi-arrow-right"
+              class="p-button-rounded p-button-text p-button-sm"
+              (click)="openSurah(surah.id); $event.stopPropagation()">
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @empty {
+      <div class="col-span-full text-center py-12">
+        <i class="pi pi-search text-6xl text-gray-300 mb-4"></i>
+        <p class="text-xl text-gray-600">Aucune sourate trouvée</p>
+      </div>
+    }
+  </div>
+</div>

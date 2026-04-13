@@ -34,7 +34,9 @@ public class Ayah {
     private Integer hizbQuarter;
     private Boolean sajda;
 
-    // optional: keep edition identifier only (no extra props)
+    @Column(name = "surah_id", insertable = false, updatable = false)
+    private Integer surahId;
+
     private String editionIdentifier;
 
     @ManyToOne(fetch = FetchType.EAGER)

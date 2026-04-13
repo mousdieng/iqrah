@@ -73,7 +73,7 @@ public class AudioService {
             // tafsir/<tafsir>/<surah>/<ayah>.mp3
             case TRANSLATOR -> Paths.get(
                     AUDIO_BASE_PATH_TRANSLATOR,
-                    String.format("%s/%d/%d.mp3", sourceName, surahNumber, ayaNumber)
+                    String.format("%s/%d/%d_%d.mp3", sourceName, surahNumber, surahNumber, ayaNumber)
             );
         };
     }

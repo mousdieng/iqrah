@@ -1,0 +1,234 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-quranic-darkGreen mb-2">
+      Mémorisation
+    </h1>
+    <p class="text-gray-600">
+      Suivez votre progression et révisez vos ayahs mémorisées
+    </p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6 shadow-lg">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm opacity-90">Total Mémorisé</p>
+          <p class="text-4xl font-bold">{{ memorizedAyahs.length }}</p>
+          <p class="text-sm opacity-75">sur {{ totalAyahs }} ayahs</p>
+        </div>
+        <i class="pi pi-check-circle text-5xl opacity-20"></i>
+      </div>
+      <div class="mt-4 bg-white/20 rounded-full h-2">
+        <div
+          class="bg-white h-2 rounded-full transition-all duration-500"
+          [style.width.%]="memorizedPercentage">
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-6 shadow-lg">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm opacity-90">À Réviser</p>
+          <p class="text-4xl font-bold">{{ dueForReview.length }}</p>
+          <p class="text-sm opacity-75">ayahs en attente</p>
+        </div>
+        <i class="pi pi-sync text-5xl opacity-20"></i>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm opacity-90">Progression</p>
+          <p class="text-4xl font-bold">{{ memorizedPercentage.toFixed(1) }}%</p>
+          <p class="text-sm opacity-75">du Coran</p>
+        </div>
+        <i class="pi pi-chart-bar text-5xl opacity-20"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <!-- Tab Headers -->
+    <div class="flex border-b border-gray-200">
+      <button
+        class="flex-1 py-4 px-6 text-center font-semibold transition-colors"
+        [class.text-quranic-green]="activeTab === 0"
+        [class.border-b-2]="activeTab === 0"
+        [class.border-quranic-green]="activeTab === 0"
+        [class.text-gray-600]="activeTab !== 0"
+        (click)="activeTab = 0">
+        <i class="pi pi-check-circle mr-2"></i>
+        Ayahs Mémorisées
+      </button>
+      <button
+        class="flex-1 py-4 px-6 text-center font-semibold transition-colors"
+        [class.text-quranic-green]="activeTab === 1"
+        [class.border-b-2]="activeTab === 1"
+        [class.border-quranic-green]="activeTab === 1"
+        [class.text-gray-600]="activeTab !== 1"
+        (click)="activeTab = 1">
+        <i class="pi pi-sync mr-2"></i>
+        À Réviser
+      </button>
+    </div>
+
+    <!-- Tab Panels -->
+    <div class="p-6">
+      <!-- Memorized Ayahs Tab -->
+      @if (activeTab === 0) {
+        @if (memorizedAyahs.length > 0) {
+        <div class="space-y-4">
+          @for (progress of memorizedAyahs; track progress.id) {
+            @if (getAyah(progress.ayahId); as ayah) {
+              <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg transition-shadow">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <span class="bg-quranic-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                        {{ ayah.numberInSurah }}
+                      </span>
+                      <span class="text-sm text-gray-600">
+                        Sourate {{ ayah.surahId }} - Page {{ ayah.page }}
+                      </span>
+                      <span
+                        class="px-2 py-1 rounded-full text-xs font-semibold"
+                        [ngClass]="getDifficultyClass(progress.difficulty)">
+                        {{ getDifficultyLabel(progress.difficulty) }}
+                      </span>
+                    </div>
+
+                    <div class="quran-text mb-2" dir="rtl">
+                      {{ ayah.text.substring(0, 100) }}{{ ayah.text.length > 100 ? '...' : '' }}
+                    </div>
+
+                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                      <span>
+                        <i class="pi pi-sync mr-1"></i>
+                        {{ progress.reviewCount }} révisions
+                      </span>
+                      <span>
+                        <i class="pi pi-calendar mr-1"></i>
+                        Dernière révision: {{ formatDate(progress.lastReviewDate) }}
+                      </span>
+                    </div>
+
+                    @if (progress.notes) {
+                      <div class="mt-2 p-2 bg-blue-50 rounded text-sm">
+                        <i class="pi pi-info-circle text-blue-600 mr-1"></i>
+                        {{ progress.notes }}
+                      </div>
+                    }
+                  </div>
+
+                  <button
+                    pButton
+                    icon="pi pi-arrow-right"
+                    class="p-button-rounded p-button-text"
+                    (click)="goToAyah(progress.ayahId)">
+                  </button>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      } @else {
+        <div class="text-center py-12">
+          <i class="pi pi-star text-6xl text-gray-300 mb-4"></i>
+          <p class="text-xl text-gray-600 mb-4">
+            Vous n'avez pas encore mémorisé d'ayahs
+          </p>
+          <button
+            pButton
+            label="Commencer la mémorisation"
+            icon="pi pi-play"
+            class="p-button-success"
+            [routerLink]="['/surahs']">
+          </button>
+        </div>
+        }
+      }
+
+      <!-- Review Tab -->
+      @if (activeTab === 1) {
+        @if (dueForReview.length > 0) {
+        <div class="mb-4 p-4 bg-orange-50 border-l-4 border-orange-500 rounded">
+          <div class="flex items-center space-x-3">
+            <i class="pi pi-exclamation-triangle text-orange-600 text-2xl"></i>
+            <div>
+              <p class="font-semibold text-orange-900">
+                {{ dueForReview.length }} ayah(s) à réviser
+              </p>
+              <p class="text-sm text-orange-800">
+                Ces ayahs nécessitent une révision selon le système de répétition espacée
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          @for (progress of dueForReview; track progress.id) {
+            @if (getAyah(progress.ayahId); as ayah) {
+              <div class="bg-white rounded-lg shadow p-4 border-l-4 border-orange-500">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <span class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                        {{ ayah.numberInSurah }}
+                      </span>
+                      <span class="text-sm text-gray-600">
+                        Sourate {{ ayah.surahId }} - Page {{ ayah.page }}
+                      </span>
+                      <span
+                        class="px-2 py-1 rounded-full text-xs font-semibold"
+                        [ngClass]="getDifficultyClass(progress.difficulty)">
+                        {{ getDifficultyLabel(progress.difficulty) }}
+                      </span>
+                    </div>
+
+                    <div class="quran-text mb-2" dir="rtl">
+                      {{ ayah.text.substring(0, 100) }}{{ ayah.text.length > 100 ? '...' : '' }}
+                    </div>
+
+                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                      <span>
+                        <i class="pi pi-sync mr-1"></i>
+                        {{ progress.reviewCount }} révisions
+                      </span>
+                      <span>
+                        <i class="pi pi-calendar mr-1"></i>
+                        Dernière révision: {{ formatDate(progress.lastReviewDate) }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    pButton
+                    icon="pi pi-arrow-right"
+                    class="p-button-rounded p-button-text p-button-warning"
+                    (click)="goToAyah(progress.ayahId)">
+                  </button>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      } @else {
+        <div class="text-center py-12">
+          <i class="pi pi-check-circle text-6xl text-green-500 mb-4"></i>
+          <p class="text-xl text-gray-600">
+            Aucune ayah à réviser pour le moment !
+          </p>
+          <p class="text-gray-500 mt-2">
+            Continuez votre excellent travail de mémorisation
+          </p>
+        </div>
+        }
+      }
+    </div>
+  </div>
+</div>

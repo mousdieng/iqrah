@@ -1,0 +1,93 @@
+<div
+  class="ayah-card p-4 rounded-lg border-2 transition-all duration-300 hover:shadow-lg"
+  [class.border-quranic-gold]="isSelected"
+  [class.border-gray-200]="!isSelected"
+  [class.bg-quranic-cream]="isMemorized"
+  [class.bg-white]="!isMemorized">
+
+  <!-- Ayah Info Header -->
+  @if (showSurahInfo) {
+    <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-200">
+      <div class="flex items-center space-x-3">
+        <div class="bg-quranic-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+          {{ ayah.numberInSurah }}
+        </div>
+        <div class="text-xs text-gray-600">
+          <span>Page {{ ayah.page }}</span>
+          <span class="mx-2">•</span>
+          <span>Juz {{ ayah.juz }}</span>
+        </div>
+      </div>
+
+      <!-- Status Icons -->
+      <div class="flex items-center space-x-2">
+        @if (isMemorized) {
+          <i class="pi pi-check-circle text-green-600" pTooltip="Mémorisé"></i>
+        }
+        @if (isFavorite) {
+          <i class="pi pi-heart-fill text-red-500" pTooltip="Favori"></i>
+        }
+        @if (ayah.sajda) {
+          <i class="pi pi-star text-quranic-gold" pTooltip="Sajda"></i>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Ayah Text -->
+  <div class="quran-text mb-4 text-right" dir="rtl">
+    {{ ayah.text }}
+  </div>
+
+  <!-- Actions -->
+  <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+    <div class="flex items-center space-x-2">
+      <!-- Play Button -->
+      <button
+        pButton
+        icon="pi pi-play"
+        class="p-button-rounded p-button-text p-button-sm"
+        pTooltip="Écouter"
+        tooltipPosition="top"
+        (click)="onPlayClick()">
+      </button>
+
+      <!-- Repeat Button -->
+      <button
+        pButton
+        icon="pi pi-sync"
+        class="p-button-rounded p-button-text p-button-sm"
+        pTooltip="Répéter"
+        tooltipPosition="top"
+        (click)="onRepeatClick()">
+      </button>
+
+      <!-- Favorite Button -->
+      <button
+        pButton
+        [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
+        class="p-button-rounded p-button-text p-button-sm"
+        [class.p-button-danger]="isFavorite"
+        pTooltip="Favori"
+        tooltipPosition="top"
+        (click)="onFavoriteClick()">
+      </button>
+
+      <!-- Memorized Button -->
+      <button
+        pButton
+        [icon]="isMemorized ? 'pi pi-check-circle' : 'pi pi-circle'"
+        class="p-button-rounded p-button-text p-button-sm"
+        [class.p-button-success]="isMemorized"
+        pTooltip="Marquer comme mémorisé"
+        tooltipPosition="top"
+        (click)="onMemorizedClick()">
+      </button>
+    </div>
+
+    <!-- Ayah Number Badge -->
+    <div class="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
+      #{{ ayah.id }}
+    </div>
+  </div>
+</div>

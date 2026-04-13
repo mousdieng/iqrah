@@ -1,0 +1,148 @@
+@if (playerState) {
+  <div class="fixed bottom-0 left-0 right-0 bg-white shadow-2xl border-t-2 border-quranic-gold z-40">
+    <!-- Repeat Mode Indicator -->
+    @if (repeatState && repeatState.isActive) {
+      <div class="bg-quranic-green text-white px-4 py-2">
+        <div class="container mx-auto flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <i class="pi pi-sync text-quranic-gold animate-spin"></i>
+            <span class="font-semibold">{{ getRepeatModeLabel() }}</span>
+            <span class="text-sm">
+              Itération {{ (repeatState.currentIteration ?? 0) + 1 }} / {{ repeatState.totalIterations ?? 0 }}
+            </span>
+            @if (repeatState.currentAyah) {
+              <span class="text-sm arabic-text">
+                {{ repeatState.currentAyah.text.substring(0, 50) }}...
+              </span>
+            }
+          </div>
+          <div class="flex items-center space-x-2">
+            <button
+              pButton
+              [icon]="repeatState.isActive ? 'pi pi-pause' : 'pi pi-play'"
+              [rounded]="true"
+              size="small"
+              (click)="repeatState.isActive ? pauseRepeat() : resumeRepeat()">
+            </button>
+            <button
+              pButton
+              icon="pi pi-times"
+              [rounded]="true"
+              size="small"
+              severity="danger"
+              (click)="stopRepeat()">
+            </button>
+          </div>
+        </div>
+        <!-- Repeat Progress Bar -->
+        <div class="mt-2 bg-white/20 rounded-full h-1">
+          <div
+            class="bg-quranic-gold h-1 rounded-full transition-all duration-300"
+            [style.width.%]="repeatProgress">
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Main Player -->
+    <div class="container mx-auto px-4 py-3">
+      <!-- Current Ayah Info -->
+      @if (playerState.currentAyah) {
+        <div class="mb-3 text-center">
+          <p class="text-sm text-gray-600 mb-1">
+            Sourate {{ playerState.currentAyah.surahId }} - Ayah {{ playerState.currentAyah.numberInSurah }}
+          </p>
+          <p class="quran-text text-lg">
+            {{ playerState.currentAyah.text }}
+          </p>
+        </div>
+      }
+
+      <div class="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-6">
+        <!-- Controls -->
+        <div class="flex items-center space-x-3">
+          <!-- Previous -->
+          <button
+            pButton
+            icon="pi pi-step-backward"
+            [rounded]="true"
+            [text]="true"
+            (click)="skipPrevious()"
+            [disabled]="!playerState.currentAyah">
+          </button>
+
+          <!-- Play/Pause -->
+          <button
+            pButton
+            [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+            [rounded]="true"
+            [severity]="isPlaying ? 'warn' : 'success'"
+            (click)="togglePlay()"
+            [disabled]="!playerState.currentAyah">
+          </button>
+
+          <!-- Next -->
+          <button
+            pButton
+            icon="pi pi-step-forward"
+            [rounded]="true"
+            [text]="true"
+            (click)="skipNext()"
+            [disabled]="!playerState.currentAyah">
+          </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="flex-1 w-full md:w-auto">
+          <div class="flex items-center space-x-3">
+            <span class="text-xs text-gray-600 w-12 text-right">{{ currentTime }}</span>
+            <p-slider
+              [(ngModel)]="progress"
+              [max]="100"
+              [step]="0.1"
+              class="flex-1"
+              (ngModelChange)="onProgressChange($event)"
+              [disabled]="!playerState.currentAyah">
+            </p-slider>
+            <span class="text-xs text-gray-600 w-12">{{ duration }}</span>
+          </div>
+        </div>
+
+        <!-- Volume Control -->
+        <div class="flex items-center space-x-2">
+          <i class="pi pi-volume-up text-gray-600"></i>
+          <p-slider
+            [ngModel]="volume"
+            [max]="100"
+            [step]="1"
+            (ngModelChange)="onVolumeChange($event)"
+            class="w-24">
+          </p-slider>
+        </div>
+
+        <!-- Reciter Selection -->
+        <div class="flex items-center space-x-2">
+          <p-select
+            [options]="reciters"
+            [(ngModel)]="selectedReciter"
+            (ngModelChange)="onReciterChange($event)"
+            placeholder="Récitateur"
+            [style]="{'min-width': '150px'}">
+          </p-select>
+        </div>
+
+        <!-- Playback Rate -->
+        <div class="flex items-center space-x-2">
+          <p-select
+            [options]="playbackRates"
+            [(ngModel)]="playbackRate"
+            optionLabel="label"
+            optionValue="value"
+            (ngModelChange)="onPlaybackRateChange($event)"
+            [style]="{'min-width': '80px'}">
+          </p-select>
+        </div>
+      </div>
+    </div>
+  </div>
+}

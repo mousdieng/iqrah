@@ -1,0 +1,125 @@
+<div class="container mx-auto px-4 py-8 pb-32">
+  @if (loading) {
+    <div class="text-center py-20">
+      <i class="pi pi-spinner pi-spin text-6xl text-quranic-gold"></i>
+      <p class="mt-4 text-xl text-gray-600">Chargement...</p>
+    </div>
+  } @else if (surah) {
+    <!-- Surah Header -->
+    <div class="bg-gradient-to-r from-quranic-darkGreen to-quranic-green text-white rounded-xl shadow-xl p-8 mb-8">
+      <div class="flex items-center justify-between mb-6">
+        <button
+          pButton
+          icon="pi pi-arrow-left"
+          class="p-button-rounded p-button-text text-white"
+          (click)="navigateToSurah('prev')"
+          [disabled]="surahId === 1">
+        </button>
+
+        <div class="text-center flex-1">
+          <div class="text-5xl font-bold arabic-text mb-2" dir="rtl">
+            {{ surah.name }}
+          </div>
+          <h1 class="text-3xl font-bold mb-1">{{ surah.transliteratedName }}</h1>
+          <p class="text-quranic-cream text-lg">{{ surah.translatedName }}</p>
+        </div>
+
+        <button
+          pButton
+          icon="pi pi-arrow-right"
+          class="p-button-rounded p-button-text text-white"
+          (click)="navigateToSurah('next')"
+          [disabled]="surahId === 114">
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-white/10 rounded-lg p-4 text-center">
+          <i class="pi pi-hashtag text-2xl mb-2"></i>
+          <p class="text-sm opacity-90">Sourate N°</p>
+          <p class="text-2xl font-bold">{{ surah.id }}</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-4 text-center">
+          <i class="pi pi-book text-2xl mb-2"></i>
+          <p class="text-sm opacity-90">Versets</p>
+          <p class="text-2xl font-bold">{{ surah.totalVerses }}</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-4 text-center">
+          <i class="pi pi-map-marker text-2xl mb-2"></i>
+          <p class="text-sm opacity-90">Révélation</p>
+          <p class="text-2xl font-bold">{{ surah.revelationType === 'Meccan' ? 'La Mecque' : 'Médine' }}</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-4 text-center">
+          <i class="pi pi-check-circle text-2xl mb-2"></i>
+          <p class="text-sm opacity-90">Mémorisé</p>
+          <p class="text-2xl font-bold">{{ memorizedCount }} / {{ surah.totalVerses }}</p>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="mt-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm">Progression de mémorisation</span>
+          <span class="text-sm font-bold">{{ memorizedPercentage.toFixed(1) }}%</span>
+        </div>
+        <p-progressBar [value]="memorizedPercentage" [showValue]="false"></p-progressBar>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-center space-x-4 mt-6">
+        <button
+          pButton
+          label="Écouter la sourate"
+          icon="pi pi-play"
+          class="p-button-success p-button-lg"
+          (click)="playSurah()">
+        </button>
+        <button
+          pButton
+          label="Répéter la sourate"
+          icon="pi pi-sync"
+          class="p-button-warning p-button-lg"
+          (click)="repeatSurah()">
+        </button>
+      </div>
+    </div>
+
+    <!-- Ayahs List -->
+    <div class="space-y-4">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Versets</h2>
+
+      @for (ayah of surah.ayahs; track ayah.id) {
+        <app-ayah-card
+          [ayah]="ayah"
+          [showSurahInfo]="true"
+          [isSelected]="selectedAyahId === ayah.id"
+          [isMemorized]="isAyahMemorized(ayah.id)"
+          (playAyah)="onPlayAyah($event)"
+          (repeatAyah)="onRepeatAyah($event)"
+          (toggleFavorite)="onToggleFavorite($event)"
+          (toggleMemorized)="onToggleMemorized($event)">
+        </app-ayah-card>
+      }
+    </div>
+
+  } @else {
+    <div class="text-center py-20">
+      <i class="pi pi-exclamation-triangle text-6xl text-red-500 mb-4"></i>
+      <p class="text-xl text-gray-600">Sourate non trouvée</p>
+      <button
+        pButton
+        label="Retour à la liste"
+        icon="pi pi-arrow-left"
+        class="mt-4"
+        [routerLink]="['/surahs']">
+      </button>
+    </div>
+  }
+</div>
+
+<!-- Repeat Controls Dialog -->
+<app-repeat-controls
+  #repeatControls
+  (startRepeat)="onStartRepeat($event)">
+</app-repeat-controls>

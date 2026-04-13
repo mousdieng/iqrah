@@ -1,0 +1,12 @@
+.ayah-card {
+  cursor: pointer;
+  user-select: text;
+}
+
+.ayah-card:hover {
+  background-color: #fafafa;
+}
+
+.ayah-card.bg-quranic-cream:hover {
+  background-color: #f0f0d8;
+}

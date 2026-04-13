@@ -1,0 +1,49 @@
+<header class="bg-gradient-to-r from-quranic-darkGreen to-quranic-green text-white shadow-lg sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between py-4">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3" routerLink="/">
+        <div class="text-3xl font-bold cursor-pointer hover:opacity-80 transition-opacity">
+          <span class="text-quranic-gold">إِقْرَأْ</span>
+          <span class="text-sm block text-quranic-cream">Iqrah - Mémorisation du Coran</span>
+        </div>
+      </div>
+
+      <!-- Navigation Desktop -->
+      <nav class="hidden md:flex items-center space-x-6">
+        @for (item of menuItems; track item.label) {
+          <a
+            [routerLink]="item.routerLink"
+            routerLinkActive="text-quranic-gold border-b-2 border-quranic-gold"
+            class="flex items-center space-x-2 py-2 px-3 hover:text-quranic-gold transition-colors cursor-pointer">
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        }
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button
+        class="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
+        (click)="toggleMobileMenu()">
+        <i class="pi pi-bars text-2xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (mobileMenuOpen) {
+      <nav class="md:hidden pb-4 animate-fade-in">
+        @for (item of menuItems; track item.label) {
+          <a
+            [routerLink]="item.routerLink"
+            routerLinkActive="bg-white/10 text-quranic-gold"
+            (click)="toggleMobileMenu()"
+            class="flex items-center space-x-3 py-3 px-4 hover:bg-white/5 rounded-lg transition-colors cursor-pointer">
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        }
+      </nav>
+    }
+  </div>
+</header>

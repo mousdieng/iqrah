@@ -1,0 +1,94 @@
+<p-dialog
+  [(visible)]="visible"
+  [header]="getModeLabel()"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+  [closable]="true"
+  [draggable]="false">
+
+  <div class="space-y-6">
+    <!-- Repeat Count -->
+    <div class="field">
+      <label for="repeatCount" class="block text-sm font-semibold mb-2">
+        Nombre de répétitions
+      </label>
+      <p-inputNumber
+        [(ngModel)]="repeatCount"
+        inputId="repeatCount"
+        [showButtons]="true"
+        [min]="1"
+        [max]="100"
+        [step]="1"
+        class="w-full">
+      </p-inputNumber>
+      <small class="text-gray-600">Combien de fois répéter</small>
+    </div>
+
+    <!-- Pause Duration -->
+    <div class="field">
+      <label for="pauseDuration" class="block text-sm font-semibold mb-2">
+        Pause entre les répétitions (secondes)
+      </label>
+      <p-inputNumber
+        [(ngModel)]="pauseDuration"
+        inputId="pauseDuration"
+        [showButtons]="true"
+        [min]="0"
+        [max]="30"
+        [step]="1"
+        class="w-full">
+      </p-inputNumber>
+      <small class="text-gray-600">Temps de pause entre chaque répétition</small>
+    </div>
+
+    <!-- Reciter Selection -->
+    <div class="field">
+      <label for="reciter" class="block text-sm font-semibold mb-2">
+        Récitateur
+      </label>
+      <p-select
+        [(ngModel)]="selectedReciter"
+        [options]="reciters"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Choisir un récitateur"
+        [style]="{ width: '100%' }">
+      </p-select>
+      <small class="text-gray-600">Sélectionnez votre récitateur préféré</small>
+    </div>
+
+    <!-- Preview Info -->
+    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+      <div class="flex items-start space-x-3">
+        <i class="pi pi-info-circle text-blue-500 mt-1"></i>
+        <div>
+          <p class="text-sm font-semibold text-blue-900 mb-1">Aperçu de la configuration</p>
+          <ul class="text-sm text-blue-800 space-y-1">
+            <li>• Répétitions: {{ repeatCount }} fois</li>
+            <li>• Pause: {{ pauseDuration }} secondes</li>
+            <li>• Récitateur: {{ reciters.find(r => r.value === selectedReciter)?.label }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end space-x-3">
+      <button
+        pButton
+        label="Annuler"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hide()">
+      </button>
+      <button
+        pButton
+        label="Commencer"
+        icon="pi pi-play"
+        class="p-button-success"
+        (click)="onStart()">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
