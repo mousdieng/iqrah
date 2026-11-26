@@ -1,0 +1,1602 @@
+[
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5623,
+      "text": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ وَٱلۡمُرۡسَلَـٰتِ عُرۡفࣰا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 1,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5624,
+      "text": "فَٱلۡعَـٰصِفَـٰتِ عَصۡفࣰا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 2,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5625,
+      "text": "وَٱلنَّـٰشِرَ ٰ⁠تِ نَشۡرࣰا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 3,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5626,
+      "text": "فَٱلۡفَـٰرِقَـٰتِ فَرۡقࣰا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 4,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5627,
+      "text": "فَٱلۡمُلۡقِیَـٰتِ ذِكۡرًا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 5,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5628,
+      "text": "عُذۡرًا أَوۡ نُذۡرًا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 6,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5629,
+      "text": "إِنَّمَا تُوعَدُونَ لَوَ ٰ⁠قِعࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 7,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5630,
+      "text": "فَإِذَا ٱلنُّجُومُ طُمِسَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 8,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5631,
+      "text": "وَإِذَا ٱلسَّمَاۤءُ فُرِجَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 9,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5632,
+      "text": "وَإِذَا ٱلۡجِبَالُ نُسِفَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 10,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5633,
+      "text": "وَإِذَا ٱلرُّسُلُ أُقِّتَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 11,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5634,
+      "text": "لِأَیِّ یَوۡمٍ أُجِّلَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 12,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5635,
+      "text": "لِیَوۡمِ ٱلۡفَصۡلِ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 13,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5636,
+      "text": "وَمَاۤ أَدۡرَىٰكَ مَا یَوۡمُ ٱلۡفَصۡلِ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 14,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5637,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 15,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5638,
+      "text": "أَلَمۡ نُهۡلِكِ ٱلۡأَوَّلِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 16,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5639,
+      "text": "ثُمَّ نُتۡبِعُهُمُ ٱلۡـَٔاخِرِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 17,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5640,
+      "text": "كَذَ ٰ⁠لِكَ نَفۡعَلُ بِٱلۡمُجۡرِمِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 18,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5641,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 19,
+      "juz": 29,
+      "manzil": 7,
+      "page": 580,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5642,
+      "text": "أَلَمۡ نَخۡلُقكُّم مِّن مَّاۤءࣲ مَّهِینࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 20,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5643,
+      "text": "فَجَعَلۡنَـٰهُ فِی قَرَارࣲ مَّكِینٍ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 21,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5644,
+      "text": "إِلَىٰ قَدَرࣲ مَّعۡلُومࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 22,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5645,
+      "text": "فَقَدَرۡنَا فَنِعۡمَ ٱلۡقَـٰدِرُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 23,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5646,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 24,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5647,
+      "text": "أَلَمۡ نَجۡعَلِ ٱلۡأَرۡضَ كِفَاتًا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 25,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5648,
+      "text": "أَحۡیَاۤءࣰ وَأَمۡوَ ٰ⁠تࣰا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 26,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5649,
+      "text": "وَجَعَلۡنَا فِیهَا رَوَ ٰ⁠سِیَ شَـٰمِخَـٰتࣲ وَأَسۡقَیۡنَـٰكُم مَّاۤءࣰ فُرَاتࣰا\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 27,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5650,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 28,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5651,
+      "text": "ٱنطَلِقُوۤا۟ إِلَىٰ مَا كُنتُم بِهِۦ تُكَذِّبُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 29,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5652,
+      "text": "ٱنطَلِقُوۤا۟ إِلَىٰ ظِلࣲّ ذِی ثَلَـٰثِ شُعَبࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 30,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5653,
+      "text": "لَّا ظَلِیلࣲ وَلَا یُغۡنِی مِنَ ٱللَّهَبِ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 31,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5654,
+      "text": "إِنَّهَا تَرۡمِی بِشَرَرࣲ كَٱلۡقَصۡرِ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 32,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5655,
+      "text": "كَأَنَّهُۥ جِمَـٰلَتࣱ صُفۡرࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 33,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5656,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 34,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5657,
+      "text": "هَـٰذَا یَوۡمُ لَا یَنطِقُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 35,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5658,
+      "text": "وَلَا یُؤۡذَنُ لَهُمۡ فَیَعۡتَذِرُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 36,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5659,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 37,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5660,
+      "text": "هَـٰذَا یَوۡمُ ٱلۡفَصۡلِۖ جَمَعۡنَـٰكُمۡ وَٱلۡأَوَّلِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 38,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5661,
+      "text": "فَإِن كَانَ لَكُمۡ كَیۡدࣱ فَكِیدُونِ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 39,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5662,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 40,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 516,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5663,
+      "text": "إِنَّ ٱلۡمُتَّقِینَ فِی ظِلَـٰلࣲ وَعُیُونࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 41,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5664,
+      "text": "وَفَوَ ٰ⁠كِهَ مِمَّا یَشۡتَهُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 42,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5665,
+      "text": "كُلُوا۟ وَٱشۡرَبُوا۟ هَنِیۤـَٔۢا بِمَا كُنتُمۡ تَعۡمَلُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 43,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5666,
+      "text": "إِنَّا كَذَ ٰ⁠لِكَ نَجۡزِی ٱلۡمُحۡسِنِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 44,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5667,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 45,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5668,
+      "text": "كُلُوا۟ وَتَمَتَّعُوا۟ قَلِیلًا إِنَّكُم مُّجۡرِمُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 46,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5669,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 47,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5670,
+      "text": "وَإِذَا قِیلَ لَهُمُ ٱرۡكَعُوا۟ لَا یَرۡكَعُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 48,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5671,
+      "text": "وَیۡلࣱ یَوۡمَىِٕذࣲ لِّلۡمُكَذِّبِینَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 49,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5672,
+      "text": "فَبِأَیِّ حَدِیثِۭ بَعۡدَهُۥ یُؤۡمِنُونَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 77,
+        "name": "سُورَةُ المُرۡسَلَاتِ",
+        "englishName": "Al-Mursalaat",
+        "englishNameTranslation": "The Emissaries",
+        "numberOfAyahs": 50,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 50,
+      "juz": 29,
+      "manzil": 7,
+      "page": 581,
+      "ruku": 517,
+      "hizbQuarter": 232,
+      "sajda": false
+    }
+  }
+]

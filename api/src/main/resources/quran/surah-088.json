@@ -1,0 +1,834 @@
+[
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5968,
+      "text": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ هَلۡ أَتَىٰكَ حَدِیثُ ٱلۡغَـٰشِیَةِ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 1,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5969,
+      "text": "وُجُوهࣱ یَوۡمَىِٕذٍ خَـٰشِعَةٌ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 2,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5970,
+      "text": "عَامِلَةࣱ نَّاصِبَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 3,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5971,
+      "text": "تَصۡلَىٰ نَارًا حَامِیَةࣰ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 4,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5972,
+      "text": "تُسۡقَىٰ مِنۡ عَیۡنٍ ءَانِیَةࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 5,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5973,
+      "text": "لَّیۡسَ لَهُمۡ طَعَامٌ إِلَّا مِن ضَرِیعࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 6,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5974,
+      "text": "لَّا یُسۡمِنُ وَلَا یُغۡنِی مِن جُوعࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 7,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5975,
+      "text": "وُجُوهࣱ یَوۡمَىِٕذࣲ نَّاعِمَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 8,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5976,
+      "text": "لِّسَعۡیِهَا رَاضِیَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 9,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5977,
+      "text": "فِی جَنَّةٍ عَالِیَةࣲ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 10,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5978,
+      "text": "لَّا تَسۡمَعُ فِیهَا لَـٰغِیَةࣰ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 11,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5979,
+      "text": "فِیهَا عَیۡنࣱ جَارِیَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 12,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5980,
+      "text": "فِیهَا سُرُرࣱ مَّرۡفُوعَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 13,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5981,
+      "text": "وَأَكۡوَابࣱ مَّوۡضُوعَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 14,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5982,
+      "text": "وَنَمَارِقُ مَصۡفُوفَةࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 15,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5983,
+      "text": "وَزَرَابِیُّ مَبۡثُوثَةٌ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 16,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5984,
+      "text": "أَفَلَا یَنظُرُونَ إِلَى ٱلۡإِبِلِ كَیۡفَ خُلِقَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 17,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5985,
+      "text": "وَإِلَى ٱلسَّمَاۤءِ كَیۡفَ رُفِعَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 18,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5986,
+      "text": "وَإِلَى ٱلۡجِبَالِ كَیۡفَ نُصِبَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 19,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5987,
+      "text": "وَإِلَى ٱلۡأَرۡضِ كَیۡفَ سُطِحَتۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 20,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5988,
+      "text": "فَذَكِّرۡ إِنَّمَاۤ أَنتَ مُذَكِّرࣱ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 21,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5989,
+      "text": "لَّسۡتَ عَلَیۡهِم بِمُصَیۡطِرٍ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 22,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5990,
+      "text": "إِلَّا مَن تَوَلَّىٰ وَكَفَرَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 23,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5991,
+      "text": "فَیُعَذِّبُهُ ٱللَّهُ ٱلۡعَذَابَ ٱلۡأَكۡبَرَ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 24,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5992,
+      "text": "إِنَّ إِلَیۡنَاۤ إِیَابَهُمۡ\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 25,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  },
+  {
+    "code": 200,
+    "status": "OK",
+    "data": {
+      "number": 5993,
+      "text": "ثُمَّ إِنَّ عَلَیۡنَا حِسَابَهُم\n",
+      "edition": {
+        "identifier": "quran-uthmani-quran-academy",
+        "language": "ar",
+        "name": "القرآن الكريم برسم العثماني (quran-academy)",
+        "englishName": "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font",
+        "format": "text",
+        "type": "quran",
+        "direction": "rtl"
+      },
+      "surah": {
+        "number": 88,
+        "name": "سُورَةُ الغَاشِيَةِ",
+        "englishName": "Al-Ghaashiya",
+        "englishNameTranslation": "The Overwhelming",
+        "numberOfAyahs": 26,
+        "revelationType": "Meccan"
+      },
+      "numberInSurah": 26,
+      "juz": 30,
+      "manzil": 7,
+      "page": 592,
+      "ruku": 530,
+      "hizbQuarter": 237,
+      "sajda": false
+    }
+  }
+]

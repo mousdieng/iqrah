@@ -22,6 +22,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class QuranImportService {
 
+    private static final String QURAN_DIR = "quran/";
+    private static final int SURAH_COUNT = 114;
+
     private final SurahRepository surahRepository;
     private final AyahRepository ayahRepository;
     private final ObjectMapper objectMapper;
@@ -34,14 +37,19 @@ public class QuranImportService {
             return;
         }
 
-        InputStream inputStream = new ClassPathResource("quran.json").getInputStream();
-
-        JsonNode root = objectMapper.readTree(inputStream);
-
         Map<Integer, Surah> surahCache = new HashMap<>();
         List<Ayah> ayahBatch = new ArrayList<>();
 
-        for (JsonNode node : root) {
+        // quran/surah-NNN.json: one file per surah, each an array of alquran.cloud ayah responses
+        List<JsonNode> nodes = new ArrayList<>();
+        for (int surahNumber = 1; surahNumber <= SURAH_COUNT; surahNumber++) {
+            String file = String.format("%ssurah-%03d.json", QURAN_DIR, surahNumber);
+            try (InputStream inputStream = new ClassPathResource(file).getInputStream()) {
+                objectMapper.readTree(inputStream).forEach(nodes::add);
+            }
+        }
+
+        for (JsonNode node : nodes) {
             JsonNode dataNode = node.get("data");
             if (dataNode == null || dataNode.isNull()) continue;
 
