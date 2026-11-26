@@ -18,6 +18,22 @@ import { RepeatControlsComponent } from '../../components/repeat-controls/repeat
 import { AudioPlayerComponent } from "../../components/audio-player/audio-player.component";
 import { combineLatest, take, Subject, takeUntil } from 'rxjs';
 
+/** 'mushaf': the printed page as in the Quran; 'study': ayah cards with every translation detail */
+export type ViewMode = 'mushaf' | 'study';
+type Lang = 'en' | 'fr' | 'de';
+
+/** A run of consecutive ayahs of one surah on a Mushaf page */
+interface PageBlock {
+  surahId: number;
+  surah?: SurahDTO;
+  startsSurah: boolean;   // the surah's first ayah is on this page → draw its title banner
+  showBasmala: boolean;   // Basmala line above ayah 1 (not for Al-Fatiha, where it is ayah 1, nor At-Tawbah)
+  ayahs: Ayah[];
+}
+
+const VIEW_MODE_KEY = 'surahViewMode';
+const STUDY_SETTINGS_KEY = 'studyViewSettings';
+
 @Component({
   selector: 'app-surah-detail',
   standalone: true,
@@ -35,7 +51,7 @@ import { combineLatest, take, Subject, takeUntil } from 'rxjs';
     RepeatControlsComponent
   ],
   templateUrl: './surah-detail.component.html',
-  styleUrls: ['./surah-detail.component.css']
+  styleUrls: ['./surah-detail.component.css', './surah-detail.views.css']
 })
 export class SurahDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -82,13 +98,28 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   // Bookmark state
   bookmarkedAyahs: Set<number> = new Set();
 
-  // Translation state
+  // View mode
+  viewMode: ViewMode = 'mushaf';
+
+  // Mushaf page: every ayah printed on the current page, across surahs
+  pageAyahs: Ayah[] = [];
+  pageBlocks: PageBlock[] = [];
+  private quarterStartIds = new Set<number>();   // ayahs that open a new hizb quarter (۞)
+  private surahIndex = new Map<number, SurahDTO>();
+  private pageRequest = 0;                        // ignores late responses after fast page changes
+
+  // Study mode: translation data and which sections are shown
   translations = new Map<number, AyahTranslation>();
-  selectedLanguage: 'en' | 'fr' | 'de' = 'fr';
-  showTranslations: boolean = true;
-  showWordMeanings: boolean = false;
-  showTafsir: boolean = false;
-  expandedTafsirAyahId: number | null = null;
+  selectedLanguage: Lang = 'fr';
+  showTranslations = true;
+  showWordMeanings = true;
+  showTafsir = true;
+  showAyahInfo = true;
+  readonly languages: { code: Lang; label: string }[] = [
+    { code: 'fr', label: 'Français' },
+    { code: 'en', label: 'English' },
+    { code: 'de', label: 'Deutsch' }
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -108,8 +139,20 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
       .subscribe(([params, queryParams]) => {
         this.surahId = +params['id'];
         this.savedPageFromUrl = queryParams['page'] ? +queryParams['page'] : null;
+        const urlMode = queryParams['mode'];
+        const storedMode = localStorage.getItem(VIEW_MODE_KEY);
+        this.viewMode = this.isViewMode(urlMode) ? urlMode
+          : this.isViewMode(storedMode) ? storedMode
+          : 'mushaf';
         this.loadSurah();
       });
+
+    // Surah names and details for the title banners of every surah that appears on a page
+    this.quranService.getAllSurahs().pipe(takeUntil(this.destroy$)).subscribe(surahs => {
+      surahs.forEach(s => this.surahIndex.set(s.number, s));
+      this.buildPageBlocks();
+      this.cdr.detectChanges();
+    });
 
     // Still react to surah navigation (prev/next surah links)
     this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
@@ -137,8 +180,8 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
     // Load bookmarks
     this.loadBookmarks();
 
-    // Load translation settings
-    this.loadTranslationSettings();
+    // Load study view settings
+    this.loadStudySettings();
   }
 
   ngOnDestroy(): void {
@@ -177,16 +220,23 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   // ── REPLACE loadPage ────────────────────────────────────────────────────────
   loadPage(pageNumber: number): void {
     this.loadingPage = true;
-    this.quranService.getSurahPage(this.surahId, pageNumber).subscribe({
-      next: (ayahs) => {
-        this.currentAyahs = ayahs.sort((a, b) => a.id - b.id);
+    const request = ++this.pageRequest;
 
-        if (this.shouldShowBismillah()) {
-          this.currentAyahs[0] = {
-            ...this.currentAyahs[0],
-            text: this.removeBismillah(this.currentAyahs[0].text)
-          };
-        }
+    // The whole Mushaf page: it can end the previous surah or start the next one
+    this.quranService.getPage(pageNumber).subscribe({
+      next: (pageAyahs) => {
+        if (request !== this.pageRequest) return;
+
+        const sorted = [...pageAyahs].sort((a, b) => a.id - b.id);
+        const surahAyahs = sorted.filter(a => a.surahId === this.surahId);
+
+        // Ayah 1 of most surahs starts with the Basmala; it is shown on its own line instead
+        this.pageAyahs = sorted.map(a => this.startsWithBasmala(a)
+          ? { ...a, text: this.removeBismillah(a.text) }
+          : a);
+        this.currentAyahs = this.pageAyahs.filter(a => a.surahId === this.surahId);
+        this.buildPageBlocks();
+        this.loadQuarterMarks(request);
 
         this.loading      = false;
         this.loadingPage  = false;
@@ -196,12 +246,13 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
 
         // Hand new ayahs to RepeatService if it is waiting for them
         if (this.repeatService.getState().mode === RepeatMode.SURAH) {
-          this.repeatService.updatePageAyahs(ayahs);
+          this.repeatService.updatePageAyahs(surahAyahs);
         }
 
         this.cdr.detectChanges();
       },
       error: (error) => {
+        if (request !== this.pageRequest) return;
         console.error(`Error loading page ${pageNumber}:`, error);
         this.loading      = false;
         this.loadingPage  = false;
@@ -240,7 +291,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   private updatePageUrl(): void {
     this.router.navigate([], {
       relativeTo:          this.route,
-      queryParams:         { page: this.currentPage },
+      queryParams:         { page: this.currentPage, mode: this.viewMode },
       queryParamsHandling: 'merge',
       replaceUrl:          true        // no extra entries in browser history
     });
@@ -279,6 +330,98 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
       /^بِسۡمِ\s*ٱللَّهِ\s*ٱلرَّحۡمَـٰنِ\s*ٱلرَّحِیمِ\s*/u;
 
     return text.replace(bismillahRegex, '');
+  }
+
+  /** Ayah 1 of every surah except Al-Fatiha (where it is the ayah itself) and At-Tawbah (none) */
+  private startsWithBasmala(ayah: Ayah): boolean {
+    return ayah.numberInSurah === 1 && ayah.surahId !== 1 && ayah.surahId !== 9;
+  }
+
+  // ─── View mode ─────────────────────────────────────────────────────────────
+
+  private isViewMode(value: unknown): value is ViewMode {
+    return value === 'mushaf' || value === 'study';
+  }
+
+  setViewMode(mode: ViewMode): void {
+    if (mode === this.viewMode) return;
+    this.viewMode = mode;
+    localStorage.setItem(VIEW_MODE_KEY, mode);
+    this.updatePageUrl();
+  }
+
+  // ─── Mushaf page layout ────────────────────────────────────────────────────
+
+  /** Groups the page's ayahs by surah so each new surah gets its title banner and Basmala */
+  private buildPageBlocks(): void {
+    const blocks: PageBlock[] = [];
+    for (const ayah of this.pageAyahs) {
+      let block = blocks[blocks.length - 1];
+      if (!block || block.surahId !== ayah.surahId) {
+        const startsSurah = ayah.numberInSurah === 1;
+        block = {
+          surahId: ayah.surahId,
+          surah: this.surahIndex.get(ayah.surahId),
+          startsSurah,
+          showBasmala: startsSurah && this.startsWithBasmala(ayah),
+          ayahs: []
+        };
+        blocks.push(block);
+      }
+      block.ayahs.push(ayah);
+    }
+    this.pageBlocks = blocks;
+  }
+
+  /**
+   * Marks the ayahs that open a new hizb quarter (shown with ۞).
+   * The first ayah of the page is compared with the ayah just before it, on the previous page.
+   */
+  private loadQuarterMarks(request: number): void {
+    const first = this.pageAyahs[0];
+    if (!first) { this.quarterStartIds = new Set(); return; }
+
+    const mark = (previousQuarter: number | null) => {
+      const ids = new Set<number>();
+      let last = previousQuarter ?? first.hizbQuarter;
+      for (const ayah of this.pageAyahs) {
+        if (ayah.hizbQuarter !== last) ids.add(ayah.id);
+        last = ayah.hizbQuarter;
+      }
+      this.quarterStartIds = ids;
+    };
+
+    mark(null);
+    if (first.id > 1) {
+      this.quranService.getAyah(first.id - 1).subscribe(prev => {
+        if (request !== this.pageRequest || !prev) return;
+        mark(prev.hizbQuarter);
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  isQuarterStart(ayahId: number): boolean {
+    return this.quarterStartIds.has(ayahId);
+  }
+
+  /** Juz printed in the page header (the juz the page opens in) */
+  get pageJuz(): number | null {
+    return this.pageAyahs[0]?.juz ?? null;
+  }
+
+  /** Names of the surahs printed on the page, for the page header */
+  get pageSurahNames(): string {
+    return this.pageBlocks
+      .map(b => b.surah?.name ?? '')
+      .filter(name => !!name)
+      .join(' - ');
+  }
+
+  hizbLabel(hizbQuarter: number): string {
+    const hizb = Math.ceil(hizbQuarter / 4);
+    const part = ['', '¼', '½', '¾'][(hizbQuarter - 1) % 4];
+    return part ? `${hizb} ${part}` : `${hizb}`;
   }
 
   convertToArabicNumber(num: number): string {
@@ -517,52 +660,63 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
     return this.translations.get(ayahId);
   }
 
-  onLanguageChange(lang: 'en' | 'fr' | 'de'): void {
+  /** True when the surah has translation data (it is only available for some surahs so far) */
+  get hasTranslationData(): boolean {
+    return this.translations.size > 0;
+  }
+
+  /** All languages of an ayah, the chosen language first */
+  orderedTranslations(ayahId: number): { code: Lang; label: string; text: string; translator?: string }[] {
+    const data = this.getTranslation(ayahId)?.translations;
+    if (!data) return [];
+    const order = [this.selectedLanguage, ...this.languages.map(l => l.code).filter(c => c !== this.selectedLanguage)];
+    return order
+      .filter(code => data[code]?.text)
+      .map(code => ({
+        code,
+        label: this.languages.find(l => l.code === code)?.label ?? code,
+        text: data[code].text,
+        translator: data[code].translator
+      }));
+  }
+
+  onLanguageChange(lang: Lang): void {
     this.selectedLanguage = lang;
-    this.saveTranslationSettings();
+    this.saveStudySettings();
   }
 
-  toggleTranslations(): void {
-    this.showTranslations = !this.showTranslations;
-    this.saveTranslationSettings();
+  toggleSection(section: 'translations' | 'wordMeanings' | 'tafsir' | 'ayahInfo'): void {
+    switch (section) {
+      case 'translations': this.showTranslations = !this.showTranslations; break;
+      case 'wordMeanings': this.showWordMeanings = !this.showWordMeanings; break;
+      case 'tafsir':       this.showTafsir       = !this.showTafsir;       break;
+      case 'ayahInfo':     this.showAyahInfo     = !this.showAyahInfo;     break;
+    }
+    this.saveStudySettings();
   }
 
-  toggleWordMeanings(): void {
-    this.showWordMeanings = !this.showWordMeanings;
-    this.saveTranslationSettings();
-  }
-
-  toggleTafsir(): void {
-    this.showTafsir = !this.showTafsir;
-    this.saveTranslationSettings();
-  }
-
-  expandTafsir(ayahId: number): void {
-    this.expandedTafsirAyahId = this.expandedTafsirAyahId === ayahId ? null : ayahId;
-  }
-
-  private loadTranslationSettings(): void {
-    const settings = localStorage.getItem('translationSettings');
-    if (settings) {
-      try {
-        const parsed = JSON.parse(settings);
-        this.selectedLanguage = parsed.primaryLanguage || 'fr';
-        this.showTranslations = parsed.showTranslation ?? true;
-        this.showWordMeanings = parsed.showWordMeanings ?? false;
-        this.showTafsir = parsed.showTafsir ?? false;
-      } catch (e) {
-        console.error('Error parsing translation settings:', e);
-      }
+  private loadStudySettings(): void {
+    const settings = localStorage.getItem(STUDY_SETTINGS_KEY);
+    if (!settings) return;
+    try {
+      const parsed = JSON.parse(settings);
+      if (['en', 'fr', 'de'].includes(parsed.language)) this.selectedLanguage = parsed.language;
+      this.showTranslations = parsed.showTranslations ?? true;
+      this.showWordMeanings = parsed.showWordMeanings ?? true;
+      this.showTafsir       = parsed.showTafsir ?? true;
+      this.showAyahInfo     = parsed.showAyahInfo ?? true;
+    } catch (e) {
+      console.error('Error parsing study view settings:', e);
     }
   }
 
-  private saveTranslationSettings(): void {
-    const settings = {
-      primaryLanguage: this.selectedLanguage,
-      showTranslation: this.showTranslations,
+  private saveStudySettings(): void {
+    localStorage.setItem(STUDY_SETTINGS_KEY, JSON.stringify({
+      language:         this.selectedLanguage,
+      showTranslations: this.showTranslations,
       showWordMeanings: this.showWordMeanings,
-      showTafsir: this.showTafsir
-    };
-    localStorage.setItem('translationSettings', JSON.stringify(settings));
+      showTafsir:       this.showTafsir,
+      showAyahInfo:     this.showAyahInfo
+    }));
   }
 }

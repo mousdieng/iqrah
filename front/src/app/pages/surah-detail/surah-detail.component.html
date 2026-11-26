@@ -103,72 +103,97 @@
       </div>
     </div>
 
-    <!-- Translation Controls -->
-    <div class="translation-controls rounded-lg shadow-md p-4 mb-6" style="background-color: var(--color-surface);">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <!-- Language Selector -->
-        <div class="flex items-center gap-2">
-          <label class="text-sm font-medium" style="color: var(--color-text-secondary);">Langue:</label>
-          <select
-            [ngModel]="selectedLanguage"
-            (ngModelChange)="onLanguageChange($event)"
-            class="px-3 py-1 rounded-md border text-sm"
-            style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);">
-            <option value="fr">Francais</option>
-            <option value="en">English</option>
-            <option value="de">Deutsch</option>
-          </select>
+    <!-- View mode switch (+ study options) -->
+    <div class="view-toolbar rounded-lg shadow-md p-3 mb-6" style="background-color: var(--color-surface);">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="mode-switch" role="tablist" aria-label="Mode d'affichage">
+          <button type="button" role="tab" class="mode-option"
+                  [class.active]="viewMode === 'mushaf'" [attr.aria-selected]="viewMode === 'mushaf'"
+                  (click)="setViewMode('mushaf')">
+            <i class="pi pi-book"></i>
+            <span>Mushaf</span>
+          </button>
+          <button type="button" role="tab" class="mode-option"
+                  [class.active]="viewMode === 'study'" [attr.aria-selected]="viewMode === 'study'"
+                  (click)="setViewMode('study')">
+            <i class="pi pi-language"></i>
+            <span>Étude</span>
+          </button>
         </div>
 
-        <!-- Toggle Buttons -->
-        <div class="flex items-center gap-4">
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" [checked]="showTranslations" (change)="toggleTranslations()">
-            <span class="text-sm" style="color: var(--color-text-primary);">Traductions</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" [checked]="showWordMeanings" (change)="toggleWordMeanings()">
-            <span class="text-sm" style="color: var(--color-text-primary);">Mots</span>
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" [checked]="showTafsir" (change)="toggleTafsir()">
-            <span class="text-sm" style="color: var(--color-text-primary);">Tafsir</span>
-          </label>
-        </div>
+        @if (viewMode === 'study') {
+          <div class="flex flex-wrap items-center gap-4">
+            <label class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              Langue principale
+              <select
+                [ngModel]="selectedLanguage"
+                (ngModelChange)="onLanguageChange($event)"
+                class="px-2 py-1 rounded-md border text-sm"
+                style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);">
+                @for (lang of languages; track lang.code) {
+                  <option [value]="lang.code">{{ lang.label }}</option>
+                }
+              </select>
+            </label>
+            <div class="section-toggles">
+              <button type="button" class="section-toggle" [class.on]="showTranslations" (click)="toggleSection('translations')">
+                <i class="pi" [class.pi-check-square]="showTranslations" [class.pi-stop]="!showTranslations"></i> Traductions
+              </button>
+              <button type="button" class="section-toggle" [class.on]="showWordMeanings" (click)="toggleSection('wordMeanings')">
+                <i class="pi" [class.pi-check-square]="showWordMeanings" [class.pi-stop]="!showWordMeanings"></i> Mot à mot
+              </button>
+              <button type="button" class="section-toggle" [class.on]="showTafsir" (click)="toggleSection('tafsir')">
+                <i class="pi" [class.pi-check-square]="showTafsir" [class.pi-stop]="!showTafsir"></i> Tafsir
+              </button>
+              <button type="button" class="section-toggle" [class.on]="showAyahInfo" (click)="toggleSection('ayahInfo')">
+                <i class="pi" [class.pi-check-square]="showAyahInfo" [class.pi-stop]="!showAyahInfo"></i> Repères
+              </button>
+            </div>
+          </div>
+        }
       </div>
     </div>
 
-    <!-- Mushaf Page Display -->
-    <div class="rounded-xl shadow-2xl p-8 md:p-12" style="background-color: var(--color-mushaf-bg);">
-      <h2 class="text-center text-2xl font-bold mb-8" style="color: var(--color-primary-dark);">
-        صفحة {{ currentPage }}
-      </h2>
+    @if (loadingPage) {
+      <div class="text-center py-12">
+        <i class="pi pi-spinner pi-spin text-4xl" style="color: var(--color-accent);"></i>
+        <p class="mt-4 text-lg" style="color: var(--color-text-secondary);">Chargement de la page...</p>
+      </div>
+    } @else if (viewMode === 'mushaf') {
+      <!-- ═══ Mushaf mode: the page exactly as printed ═══ -->
+      <div class="mushaf-book">
+        <article class="mushaf-sheet" dir="rtl" [attr.aria-label]="'Page ' + currentPage">
+          <header class="mushaf-head">
+            <span class="mushaf-head-surah">{{ pageSurahNames }}</span>
+            @if (pageJuz) {
+              <span class="mushaf-head-juz">الجزء {{ convertToArabicNumber(pageJuz) }}</span>
+            }
+          </header>
 
-      @if (loadingPage) {
-        <div class="text-center py-12">
-          <i class="pi pi-spinner pi-spin text-4xl" style="color: var(--color-accent);"></i>
-          <p class="mt-4 text-lg" style="color: var(--color-text-secondary);">Chargement de la page...</p>
-        </div>
-      } @else {
-        <!-- Mushaf-style continuous text -->
-        <div class="mushaf-page text-right leading-loose" dir="rtl">
-          <!-- Bismillah at start of page if it's the first page and not Al-Fatiha or At-Tawbah -->
-          @if (shouldShowBismillah()) {
-            <div class="bismillah-container text-center mb-8">
-              <p class="bismillah-text">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ</p>
-            </div>
-          }
+          <div class="mushaf-frame">
+            @for (block of pageBlocks; track block.surahId) {
+              @if (block.startsSurah) {
+                <div class="surah-banner">
+                  <span class="surah-banner-side">{{ block.surah?.revelationType === 'Meccan' ? 'مكية' : 'مدنية' }}</span>
+                  <span class="surah-banner-name">{{ block.surah?.name }}</span>
+                  <span class="surah-banner-side">
+                    آياتها {{ block.surah ? convertToArabicNumber(block.surah.numberOfAyahs) : '' }}
+                  </span>
+                </div>
+                @if (block.showBasmala) {
+                  <p class="mushaf-basmala">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ</p>
+                }
+              }
 
-          <!-- Display mode depends on translation settings -->
-          @if (showTranslations || showWordMeanings || showTafsir) {
-            <!-- Verse-by-verse mode with translations -->
-            <div class="ayah-list space-y-6">
-              @for (ayah of currentAyahs; track ayah.id) {
-                <div class="ayah-block p-4 rounded-lg" style="background-color: var(--color-surface);">
-                  <!-- Arabic Text -->
-                  <div
-                    class="ayah-wrapper mb-3"
-                    [class.selectable]="isSelectionMode"
+              <p class="mushaf-text">
+                @for (ayah of block.ayahs; track ayah.id) {
+                  @if (isQuarterStart(ayah.id)) {
+                    <span class="hizb-mark" [title]="'Hizb ' + hizbLabel(ayah.hizbQuarter)">۞</span>
+                  }
+                  <span
+                    class="ayah-wrapper"
+                    [class.other-surah]="ayah.surahId !== surahId"
+                    [class.selectable]="isSelectionMode && ayah.surahId === surahId"
                     [class.selected]="isAyahSelected(ayah.id)"
                     [class.playing]="isCurrentAyah(ayah.id)"
                     [class.playing-active]="isAyahPlaying(ayah.id)"
@@ -176,110 +201,130 @@
                     [class.has-note]="hasNote(ayah.id)"
                     (click)="onAyahClick(ayah, $event)"
                     (contextmenu)="onAyahContextMenu(ayah, $event)">
-                    @if (isAyahBookmarked(ayah.id)) {
-                      <span class="ayah-indicator bookmark-indicator" title="Signet">
-                        <i class="pi pi-bookmark-fill"></i>
-                      </span>
+                    <span class="ayah-text">{{ ayah.text }}</span>
+                    @if (ayah.sajda) {
+                      <span class="sajda-mark" title="Prosternation">۩</span>
                     }
-                    @if (hasNote(ayah.id)) {
-                      <span class="ayah-indicator note-indicator" title="Note">
-                        <i class="pi pi-comment"></i>
-                      </span>
-                    }
-                    <p class="quran-text text-right leading-loose" dir="rtl">
-                      <span class="ayah-text">{{ ayah.text }}</span>
-                      <span class="ayah-number" [class.number-playing]="isAyahPlaying(ayah.id)">
-                        &#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;
-                      </span>
-                    </p>
-                  </div>
-
-                  <!-- Translation Section -->
-                  <div class="ayah-translation-section mt-3 pt-3 border-t" style="border-color: var(--color-card-border);">
-                    @if (showTranslations && getTranslation(ayah.id)?.translations?.[selectedLanguage]) {
-                      <p class="translation-text text-sm leading-relaxed mb-3"
-                         style="color: var(--color-text-secondary); text-align: left;" dir="ltr">
-                        {{ getTranslation(ayah.id)?.translations?.[selectedLanguage]?.text }}
-                      </p>
-                    }
-
-                    @if (showWordMeanings && getTranslation(ayah.id)?.wordMeanings?.length) {
-                      <div class="word-meanings flex flex-wrap gap-2 mb-3 justify-end" dir="rtl">
-                        @for (word of getTranslation(ayah.id)?.wordMeanings; track $index) {
-                          <span class="word-chip px-2 py-1 rounded text-xs"
-                                style="background-color: var(--color-surface-hover);"
-                                [title]="word.grammar || ''">
-                            <span class="font-semibold" style="color: var(--color-primary);">{{ word.arabic }}</span>
-                            <span class="mx-1" style="color: var(--color-text-muted);">-</span>
-                            <span style="color: var(--color-text-secondary);">{{ word.meaning }}</span>
-                          </span>
-                        }
-                      </div>
-                    }
-
-                    @if (showTafsir && getTranslation(ayah.id)?.tafsir) {
-                      <div class="tafsir-section">
-                        <button
-                          class="text-xs flex items-center gap-1 cursor-pointer mb-2"
-                          style="color: var(--color-accent);"
-                          (click)="expandTafsir(ayah.id)">
-                          <i class="pi" [class.pi-chevron-down]="expandedTafsirAyahId !== ayah.id"
-                                        [class.pi-chevron-up]="expandedTafsirAyahId === ayah.id"></i>
-                          <span>Tafsir</span>
-                        </button>
-                        @if (expandedTafsirAyahId === ayah.id) {
-                          <div class="tafsir-content p-3 rounded-lg text-sm leading-relaxed"
-                               style="background-color: var(--color-surface-hover); color: var(--color-text-primary);">
-                            <p>{{ getTranslation(ayah.id)?.tafsir?.text }}</p>
-                            @if (getTranslation(ayah.id)?.tafsir?.references?.length) {
-                              <p class="mt-2 text-xs" style="color: var(--color-text-muted);">
-                                Sources: {{ getTranslation(ayah.id)?.tafsir?.references?.join(', ') }}
-                              </p>
-                            }
-                          </div>
-                        }
-                      </div>
-                    }
-                  </div>
-                </div>
-              }
-            </div>
-          } @else {
-            <!-- Traditional Mushaf continuous text mode -->
-            <p class="quran-text">
-              @for (ayah of currentAyahs; track ayah.id; let isLast = $last) {
-                <span
-                  class="ayah-wrapper"
-                  [class.selectable]="isSelectionMode"
-                  [class.selected]="isAyahSelected(ayah.id)"
-                  [class.playing]="isCurrentAyah(ayah.id)"
-                  [class.playing-active]="isAyahPlaying(ayah.id)"
-                  [class.bookmarked]="isAyahBookmarked(ayah.id)"
-                  [class.has-note]="hasNote(ayah.id)"
-                  (click)="onAyahClick(ayah, $event)"
-                  (contextmenu)="onAyahContextMenu(ayah, $event)">
-                  @if (isAyahBookmarked(ayah.id)) {
-                    <span class="ayah-indicator bookmark-indicator" title="Signet">
-                      <i class="pi pi-bookmark-fill"></i>
-                    </span>
-                  }
-                  @if (hasNote(ayah.id)) {
-                    <span class="ayah-indicator note-indicator" title="Note">
-                      <i class="pi pi-comment"></i>
-                    </span>
-                  }
-                  <span class="ayah-text">{{ ayah.text }}</span>
-                  <span class="ayah-number" [class.number-playing]="isAyahPlaying(ayah.id)">
-                    &#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;
+                    <span class="ayah-end" [class.number-playing]="isAyahPlaying(ayah.id)">&#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;</span>
                   </span>
-                </span>
-                @if (!isLast) { <span> </span> }
-              }
+                  {{ ' ' }}
+                }
+              </p>
+            }
+          </div>
+
+          <footer class="mushaf-foot">{{ convertToArabicNumber(currentPage) }}</footer>
+        </article>
+      </div>
+    } @else {
+      <!-- ═══ Study mode: every ayah with all its translation data ═══ -->
+      <div class="study-view">
+        @if (!hasTranslationData) {
+          <div class="study-notice">
+            <i class="pi pi-info-circle"></i>
+            Les traductions, le mot à mot et le tafsir ne sont pas encore disponibles pour cette sourate.
+          </div>
+        }
+
+        @if (shouldShowBismillah()) {
+          <p class="study-basmala" dir="rtl">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ</p>
+        }
+
+        @for (ayah of currentAyahs; track ayah.id) {
+          <article class="study-card"
+                   [class.playing]="isCurrentAyah(ayah.id)"
+                   [class.selected]="isAyahSelected(ayah.id)">
+            <header class="study-card-head">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="ayah-badge">{{ surah.number }}:{{ ayah.numberInSurah }}</span>
+                @if (showAyahInfo) {
+                  <span class="meta-chip" title="Page du Mushaf"><i class="pi pi-file"></i> Page {{ ayah.page }}</span>
+                  <span class="meta-chip" title="Juz"><i class="pi pi-th-large"></i> Juz {{ ayah.juz }}</span>
+                  <span class="meta-chip" title="Hizb"><i class="pi pi-chart-pie"></i> Hizb {{ hizbLabel(ayah.hizbQuarter) }}</span>
+                  <span class="meta-chip" title="Ruku"><i class="pi pi-bars"></i> Ruku {{ ayah.ruku }}</span>
+                  <span class="meta-chip" title="Manzil"><i class="pi pi-calendar"></i> Manzil {{ ayah.manzil }}</span>
+                  @if (ayah.sajda) {
+                    <span class="meta-chip sajda" title="Verset de prosternation">۩ Sajda</span>
+                  }
+                }
+              </div>
+              <div class="flex items-center gap-1">
+                <button type="button" class="icon-btn" [title]="isAyahPlaying(ayah.id) ? 'En lecture' : 'Écouter'"
+                        (click)="playAyah(ayah)">
+                  <i class="pi" [class.pi-volume-up]="isAyahPlaying(ayah.id)" [class.pi-play]="!isAyahPlaying(ayah.id)"></i>
+                </button>
+                <button type="button" class="icon-btn" [title]="isAyahBookmarked(ayah.id) ? 'Retirer le signet' : 'Ajouter un signet'"
+                        (click)="toggleBookmark(ayah.id)">
+                  <i class="pi" [class.pi-bookmark-fill]="isAyahBookmarked(ayah.id)" [class.pi-bookmark]="!isAyahBookmarked(ayah.id)"></i>
+                </button>
+                <button type="button" class="icon-btn" title="Plus d'actions" (click)="onAyahContextMenu(ayah, $event)">
+                  <i class="pi pi-ellipsis-v"></i>
+                </button>
+              </div>
+            </header>
+
+            <p class="study-arabic" dir="rtl"
+               [class.selectable]="isSelectionMode"
+               (click)="onAyahClick(ayah, $event)">
+              {{ ayah.text }}
+              <span class="ayah-end">&#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;</span>
             </p>
-          }
-        </div>
-      }
-    </div>
+
+            @if (getTranslation(ayah.id); as data) {
+              @if (showTranslations && orderedTranslations(ayah.id).length) {
+                <section class="study-section">
+                  <h3 class="study-section-title"><i class="pi pi-language"></i> Traductions</h3>
+                  @for (t of orderedTranslations(ayah.id); track t.code; let first = $first) {
+                    <div class="translation-row" [class.primary]="first" [attr.lang]="t.code">
+                      <div class="translation-meta">
+                        <span class="lang-tag">{{ t.code.toUpperCase() }}</span>
+                        <span class="translator">{{ t.label }}@if (t.translator) { · {{ t.translator }} }</span>
+                      </div>
+                      <p class="translation-body">{{ t.text }}</p>
+                    </div>
+                  }
+                </section>
+              }
+
+              @if (showWordMeanings && data.wordMeanings?.length) {
+                <section class="study-section">
+                  <h3 class="study-section-title"><i class="pi pi-list"></i> Mot à mot</h3>
+                  <div class="word-table" role="table">
+                    <div class="word-row word-head" role="row">
+                      <span role="columnheader">Arabe</span>
+                      <span role="columnheader">Sens</span>
+                      <span role="columnheader">Grammaire</span>
+                    </div>
+                    @for (word of data.wordMeanings; track $index) {
+                      <div class="word-row" role="row">
+                        <span class="word-arabic" dir="rtl" role="cell">{{ word.arabic }}</span>
+                        <span class="word-meaning" role="cell">{{ word.meaning }}</span>
+                        <span class="word-grammar" role="cell">{{ word.grammar || '—' }}</span>
+                      </div>
+                    }
+                  </div>
+                </section>
+              }
+
+              @if (showTafsir && data.tafsir) {
+                <section class="study-section">
+                  <h3 class="study-section-title"><i class="pi pi-book"></i> Tafsir</h3>
+                  <p class="tafsir-body">{{ data.tafsir.text }}</p>
+                  @if (data.tafsir.references?.length) {
+                    <div class="tafsir-refs">
+                      <span class="refs-label">Sources</span>
+                      @for (ref of data.tafsir.references; track ref) {
+                        <span class="ref-chip">{{ ref }}</span>
+                      }
+                    </div>
+                  }
+                </section>
+              }
+            }
+          </article>
+        }
+      </div>
+    }
 
     <!-- Page Navigation Footer -->
     <div class="page-navigation rounded-lg shadow-md p-4 mt-6" style="background-color: var(--color-surface);">
