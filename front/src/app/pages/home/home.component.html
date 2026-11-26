@@ -1,20 +1,20 @@
 <div class="container mx-auto px-4 py-8">
   <!-- Hero Section -->
   <div class="text-center mb-12">
-    <h1 class="text-5xl font-bold text-quranic-darkGreen mb-4">
-      <span class="text-quranic-gold">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
+    <h1 class="text-5xl font-bold mb-4" style="color: var(--color-primary-dark);">
+      <span style="color: var(--color-accent);">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
     </h1>
-    <h2 class="text-3xl font-bold text-gray-800 mb-2">
+    <h2 class="text-3xl font-bold mb-2" style="color: var(--color-text-primary);">
       Bienvenue sur Iqrah
     </h2>
-    <p class="text-xl text-gray-600">
+    <p class="text-xl" style="color: var(--color-text-secondary);">
       Votre compagnon pour la mémorisation du Saint Coran
     </p>
   </div>
 
   <!-- Stats Section -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 shadow-lg">
+    <div class="text-white rounded-xl p-6 shadow-lg" style="background: linear-gradient(135deg, var(--color-info) 0%, var(--color-primary) 100%);">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm opacity-90">Total Mémorisé</p>
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6 shadow-lg">
+    <div class="text-white rounded-xl p-6 shadow-lg" style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%);">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm opacity-90">À réviser</p>
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
+    <div class="text-white rounded-xl p-6 shadow-lg" style="background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm opacity-90">Progrès</p>
@@ -57,15 +57,15 @@
   <!-- Random Ayah of the Day -->
   @if (randomAyah) {
     <div class="mb-12">
-      <div class="bg-white rounded-xl shadow-lg p-8 border-l-4 border-quranic-gold">
-        <h3 class="text-2xl font-bold text-quranic-darkGreen mb-4 flex items-center">
-          <i class="pi pi-star-fill text-quranic-gold mr-3"></i>
+      <div class="rounded-xl shadow-lg p-8 border-l-4" style="background-color: var(--color-surface); border-color: var(--color-accent);">
+        <h3 class="text-2xl font-bold mb-4 flex items-center" style="color: var(--color-primary-dark);">
+          <i class="pi pi-star-fill mr-3" style="color: var(--color-accent);"></i>
           Ayah du jour
         </h3>
         <div class="quran-text text-2xl mb-4 text-center" dir="rtl">
           {{ randomAyah.text }}
         </div>
-        <div class="text-center text-gray-600 mb-4">
+        <div class="text-center mb-4" style="color: var(--color-text-secondary);">
           <span>Sourate {{ randomAyah.surahId }} - Ayah {{ randomAyah.numberInSurah }}</span>
         </div>
         <div class="flex justify-center">
@@ -83,46 +83,46 @@
 
   <!-- Quick Links -->
   <div class="mb-12">
-    <h3 class="text-2xl font-bold text-gray-800 mb-6">Accès rapide</h3>
+    <h3 class="text-2xl font-bold mb-6" style="color: var(--color-text-primary);">Accès rapide</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       @for (link of quickLinks; track link.route) {
         <div
-          class="bg-white rounded-xl shadow-lg p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl border-2 border-transparent hover:border-quranic-gold"
+          class="quick-link-card rounded-xl shadow-lg p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl border-2"
           (click)="navigateTo(link.route)">
           <div class="flex items-center justify-between mb-4">
             <div [class]="link.color + ' text-white rounded-full w-16 h-16 flex items-center justify-center'">
               <i [class]="link.icon + ' text-3xl'"></i>
             </div>
           </div>
-          <h4 class="text-xl font-bold text-gray-800 mb-2">{{ link.title }}</h4>
-          <p class="text-gray-600 text-sm">{{ link.description }}</p>
+          <h4 class="text-xl font-bold mb-2" style="color: var(--color-text-primary);">{{ link.title }}</h4>
+          <p class="text-sm" style="color: var(--color-text-secondary);">{{ link.description }}</p>
         </div>
       }
     </div>
   </div>
 
   <!-- Features Section -->
-  <div class="bg-gradient-to-r from-quranic-darkGreen to-quranic-green text-white rounded-xl p-8 shadow-lg">
+  <div class="text-white rounded-xl p-8 shadow-lg" style="background: var(--color-header-bg);">
     <h3 class="text-3xl font-bold mb-6 text-center">Fonctionnalités</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="text-center">
-        <i class="pi pi-sync text-5xl text-quranic-gold mb-4"></i>
+        <i class="pi pi-sync text-5xl mb-4" style="color: var(--color-accent);"></i>
         <h4 class="text-xl font-bold mb-2">Répétition intelligente</h4>
-        <p class="text-quranic-cream">
+        <p style="color: var(--color-text-secondary);">
           Répétez les ayahs, sourates, pages ou juz avec des intervalles personnalisables
         </p>
       </div>
       <div class="text-center">
-        <i class="pi pi-volume-up text-5xl text-quranic-gold mb-4"></i>
+        <i class="pi pi-volume-up text-5xl mb-4" style="color: var(--color-accent);"></i>
         <h4 class="text-xl font-bold mb-2">Audio de qualité</h4>
-        <p class="text-quranic-cream">
+        <p style="color: var(--color-text-secondary);">
           Écoutez avec plusieurs récitateurs renommés
         </p>
       </div>
       <div class="text-center">
-        <i class="pi pi-chart-line text-5xl text-quranic-gold mb-4"></i>
+        <i class="pi pi-chart-line text-5xl mb-4" style="color: var(--color-accent);"></i>
         <h4 class="text-xl font-bold mb-2">Suivi de progression</h4>
-        <p class="text-quranic-cream">
+        <p style="color: var(--color-text-secondary);">
           Suivez votre mémorisation avec un système de révision espacée
         </p>
       </div>

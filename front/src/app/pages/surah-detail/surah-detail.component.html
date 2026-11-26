@@ -1,12 +1,12 @@
 <div class="container mx-auto px-4 py-8 pb-32">
   @if (loading) {
     <div class="text-center py-20">
-      <i class="pi pi-spinner pi-spin text-6xl text-quranic-gold"></i>
-      <p class="mt-4 text-xl text-gray-600">Chargement...</p>
+      <i class="pi pi-spinner pi-spin text-6xl" style="color: var(--color-accent);"></i>
+      <p class="mt-4 text-xl" style="color: var(--color-text-secondary);">Chargement...</p>
     </div>
   } @else if (surah) {
     <!-- Surah Header -->
-    <div class="bg-gradient-to-r from-quranic-darkGreen to-quranic-green text-white rounded-xl shadow-xl p-8 mb-8">
+    <div class="text-white rounded-xl shadow-xl p-8 mb-8" style="background: var(--color-header-bg);">
       <div class="flex items-center justify-between mb-6">
         <button
           pButton
@@ -20,8 +20,8 @@
           <div class="text-5xl font-bold arabic-text mb-2" dir="rtl">
             {{ surah.name }}
           </div>
-          <h1 class="text-3xl font-bold mb-1">{{ surah.transliteratedName }}</h1>
-          <p class="text-quranic-cream text-lg">{{ surah.translatedName }}</p>
+          <h1 class="text-3xl font-bold mb-1">{{ surah.englishName }}</h1>
+          <p class="text-lg" style="color: var(--color-text-muted);">{{ surah.englishNameTranslation }}</p>
         </div>
 
         <button
@@ -38,12 +38,12 @@
         <div class="bg-white/10 rounded-lg p-4 text-center">
           <i class="pi pi-hashtag text-2xl mb-2"></i>
           <p class="text-sm opacity-90">Sourate N°</p>
-          <p class="text-2xl font-bold">{{ surah.id }}</p>
+          <p class="text-2xl font-bold">{{ surah.number }}</p>
         </div>
         <div class="bg-white/10 rounded-lg p-4 text-center">
           <i class="pi pi-book text-2xl mb-2"></i>
           <p class="text-sm opacity-90">Versets</p>
-          <p class="text-2xl font-bold">{{ surah.totalVerses }}</p>
+          <p class="text-2xl font-bold">{{ surah.numberOfAyahs }}</p>
         </div>
         <div class="bg-white/10 rounded-lg p-4 text-center">
           <i class="pi pi-map-marker text-2xl mb-2"></i>
@@ -51,62 +51,285 @@
           <p class="text-2xl font-bold">{{ surah.revelationType === 'Meccan' ? 'La Mecque' : 'Médine' }}</p>
         </div>
         <div class="bg-white/10 rounded-lg p-4 text-center">
-          <i class="pi pi-check-circle text-2xl mb-2"></i>
-          <p class="text-sm opacity-90">Mémorisé</p>
-          <p class="text-2xl font-bold">{{ memorizedCount }} / {{ surah.totalVerses }}</p>
+          <i class="pi pi-file text-2xl mb-2"></i>
+          <p class="text-sm opacity-90">Pages</p>
+          <p class="text-2xl font-bold">{{ surah.startingPage }} - {{ surah.endingPage }}</p>
         </div>
       </div>
+    </div>
 
-      <!-- Progress Bar -->
-      <div class="mt-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-sm">Progression de mémorisation</span>
-          <span class="text-sm font-bold">{{ memorizedPercentage.toFixed(1) }}%</span>
-        </div>
-        <p-progressBar [value]="memorizedPercentage" [showValue]="false"></p-progressBar>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex items-center justify-center space-x-4 mt-6">
+    <!-- Page Navigation Header -->
+    <div class="page-navigation rounded-lg shadow-md p-4 mb-6" style="background-color: var(--color-surface);">
+      <div class="flex items-center justify-between">
         <button
           pButton
-          label="Écouter la sourate"
-          icon="pi pi-play"
-          class="p-button-success p-button-lg"
-          (click)="playSurah()">
+          icon="pi pi-chevron-left"
+          label="Page précédente"
+          class="p-button-outlined"
+          (click)="goToPreviousPage()"
+          [disabled]="!canGoToPreviousPage() || loadingPage">
         </button>
+
+        <div class="flex flex-col items-center gap-1">
+          <p class="text-xs" style="color: var(--color-text-muted);">
+            Pages {{ surah.startingPage }} – {{ surah.endingPage }}
+          </p>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              [value]="currentPage"
+              [min]="surah.startingPage"
+              [max]="surah.endingPage"
+              (keydown.enter)="jumpToPage($event)"
+              (blur)="jumpToPage($event)"
+              class="page-input w-16 text-center text-sm font-semibold border rounded-md px-2 py-1 focus:outline-none focus:ring-2"
+              style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);"
+              [disabled]="loadingPage">
+            <span class="text-sm font-medium" style="color: var(--color-text-secondary);">
+              / {{ surah.endingPage }}
+            </span>
+          </div>
+        </div>
+
         <button
           pButton
-          label="Répéter la sourate"
-          icon="pi pi-sync"
-          class="p-button-warning p-button-lg"
-          (click)="repeatSurah()">
+          icon="pi pi-chevron-right"
+          iconPos="right"
+          label="Page suivante"
+          class="p-button-outlined"
+          (click)="goToNextPage()"
+          [disabled]="!canGoToNextPage() || loadingPage">
         </button>
       </div>
     </div>
 
-    <!-- Ayahs List -->
-    <div class="space-y-4">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Versets</h2>
+    <!-- Translation Controls -->
+    <div class="translation-controls rounded-lg shadow-md p-4 mb-6" style="background-color: var(--color-surface);">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Language Selector -->
+        <div class="flex items-center gap-2">
+          <label class="text-sm font-medium" style="color: var(--color-text-secondary);">Langue:</label>
+          <select
+            [ngModel]="selectedLanguage"
+            (ngModelChange)="onLanguageChange($event)"
+            class="px-3 py-1 rounded-md border text-sm"
+            style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);">
+            <option value="fr">Francais</option>
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </div>
 
-      @for (ayah of surah.ayahs; track ayah.id) {
-        <app-ayah-card
-          [ayah]="ayah"
-          [showSurahInfo]="true"
-          [isSelected]="selectedAyahId === ayah.id"
-          [isMemorized]="isAyahMemorized(ayah.id)"
-          (playAyah)="onPlayAyah($event)"
-          (repeatAyah)="onRepeatAyah($event)"
-          (toggleFavorite)="onToggleFavorite($event)"
-          (toggleMemorized)="onToggleMemorized($event)">
-        </app-ayah-card>
+        <!-- Toggle Buttons -->
+        <div class="flex items-center gap-4">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [checked]="showTranslations" (change)="toggleTranslations()">
+            <span class="text-sm" style="color: var(--color-text-primary);">Traductions</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [checked]="showWordMeanings" (change)="toggleWordMeanings()">
+            <span class="text-sm" style="color: var(--color-text-primary);">Mots</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [checked]="showTafsir" (change)="toggleTafsir()">
+            <span class="text-sm" style="color: var(--color-text-primary);">Tafsir</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mushaf Page Display -->
+    <div class="rounded-xl shadow-2xl p-8 md:p-12" style="background-color: var(--color-mushaf-bg);">
+      <h2 class="text-center text-2xl font-bold mb-8" style="color: var(--color-primary-dark);">
+        صفحة {{ currentPage }}
+      </h2>
+
+      @if (loadingPage) {
+        <div class="text-center py-12">
+          <i class="pi pi-spinner pi-spin text-4xl" style="color: var(--color-accent);"></i>
+          <p class="mt-4 text-lg" style="color: var(--color-text-secondary);">Chargement de la page...</p>
+        </div>
+      } @else {
+        <!-- Mushaf-style continuous text -->
+        <div class="mushaf-page text-right leading-loose" dir="rtl">
+          <!-- Bismillah at start of page if it's the first page and not Al-Fatiha or At-Tawbah -->
+          @if (shouldShowBismillah()) {
+            <div class="bismillah-container text-center mb-8">
+              <p class="bismillah-text">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ</p>
+            </div>
+          }
+
+          <!-- Display mode depends on translation settings -->
+          @if (showTranslations || showWordMeanings || showTafsir) {
+            <!-- Verse-by-verse mode with translations -->
+            <div class="ayah-list space-y-6">
+              @for (ayah of currentAyahs; track ayah.id) {
+                <div class="ayah-block p-4 rounded-lg" style="background-color: var(--color-surface);">
+                  <!-- Arabic Text -->
+                  <div
+                    class="ayah-wrapper mb-3"
+                    [class.selectable]="isSelectionMode"
+                    [class.selected]="isAyahSelected(ayah.id)"
+                    [class.playing]="isCurrentAyah(ayah.id)"
+                    [class.playing-active]="isAyahPlaying(ayah.id)"
+                    [class.bookmarked]="isAyahBookmarked(ayah.id)"
+                    [class.has-note]="hasNote(ayah.id)"
+                    (click)="onAyahClick(ayah, $event)"
+                    (contextmenu)="onAyahContextMenu(ayah, $event)">
+                    @if (isAyahBookmarked(ayah.id)) {
+                      <span class="ayah-indicator bookmark-indicator" title="Signet">
+                        <i class="pi pi-bookmark-fill"></i>
+                      </span>
+                    }
+                    @if (hasNote(ayah.id)) {
+                      <span class="ayah-indicator note-indicator" title="Note">
+                        <i class="pi pi-comment"></i>
+                      </span>
+                    }
+                    <p class="quran-text text-right leading-loose" dir="rtl">
+                      <span class="ayah-text">{{ ayah.text }}</span>
+                      <span class="ayah-number" [class.number-playing]="isAyahPlaying(ayah.id)">
+                        &#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;
+                      </span>
+                    </p>
+                  </div>
+
+                  <!-- Translation Section -->
+                  <div class="ayah-translation-section mt-3 pt-3 border-t" style="border-color: var(--color-card-border);">
+                    @if (showTranslations && getTranslation(ayah.id)?.translations?.[selectedLanguage]) {
+                      <p class="translation-text text-sm leading-relaxed mb-3"
+                         style="color: var(--color-text-secondary); text-align: left;" dir="ltr">
+                        {{ getTranslation(ayah.id)?.translations?.[selectedLanguage]?.text }}
+                      </p>
+                    }
+
+                    @if (showWordMeanings && getTranslation(ayah.id)?.wordMeanings?.length) {
+                      <div class="word-meanings flex flex-wrap gap-2 mb-3 justify-end" dir="rtl">
+                        @for (word of getTranslation(ayah.id)?.wordMeanings; track $index) {
+                          <span class="word-chip px-2 py-1 rounded text-xs"
+                                style="background-color: var(--color-surface-hover);"
+                                [title]="word.grammar || ''">
+                            <span class="font-semibold" style="color: var(--color-primary);">{{ word.arabic }}</span>
+                            <span class="mx-1" style="color: var(--color-text-muted);">-</span>
+                            <span style="color: var(--color-text-secondary);">{{ word.meaning }}</span>
+                          </span>
+                        }
+                      </div>
+                    }
+
+                    @if (showTafsir && getTranslation(ayah.id)?.tafsir) {
+                      <div class="tafsir-section">
+                        <button
+                          class="text-xs flex items-center gap-1 cursor-pointer mb-2"
+                          style="color: var(--color-accent);"
+                          (click)="expandTafsir(ayah.id)">
+                          <i class="pi" [class.pi-chevron-down]="expandedTafsirAyahId !== ayah.id"
+                                        [class.pi-chevron-up]="expandedTafsirAyahId === ayah.id"></i>
+                          <span>Tafsir</span>
+                        </button>
+                        @if (expandedTafsirAyahId === ayah.id) {
+                          <div class="tafsir-content p-3 rounded-lg text-sm leading-relaxed"
+                               style="background-color: var(--color-surface-hover); color: var(--color-text-primary);">
+                            <p>{{ getTranslation(ayah.id)?.tafsir?.text }}</p>
+                            @if (getTranslation(ayah.id)?.tafsir?.references?.length) {
+                              <p class="mt-2 text-xs" style="color: var(--color-text-muted);">
+                                Sources: {{ getTranslation(ayah.id)?.tafsir?.references?.join(', ') }}
+                              </p>
+                            }
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <!-- Traditional Mushaf continuous text mode -->
+            <p class="quran-text">
+              @for (ayah of currentAyahs; track ayah.id; let isLast = $last) {
+                <span
+                  class="ayah-wrapper"
+                  [class.selectable]="isSelectionMode"
+                  [class.selected]="isAyahSelected(ayah.id)"
+                  [class.playing]="isCurrentAyah(ayah.id)"
+                  [class.playing-active]="isAyahPlaying(ayah.id)"
+                  [class.bookmarked]="isAyahBookmarked(ayah.id)"
+                  [class.has-note]="hasNote(ayah.id)"
+                  (click)="onAyahClick(ayah, $event)"
+                  (contextmenu)="onAyahContextMenu(ayah, $event)">
+                  @if (isAyahBookmarked(ayah.id)) {
+                    <span class="ayah-indicator bookmark-indicator" title="Signet">
+                      <i class="pi pi-bookmark-fill"></i>
+                    </span>
+                  }
+                  @if (hasNote(ayah.id)) {
+                    <span class="ayah-indicator note-indicator" title="Note">
+                      <i class="pi pi-comment"></i>
+                    </span>
+                  }
+                  <span class="ayah-text">{{ ayah.text }}</span>
+                  <span class="ayah-number" [class.number-playing]="isAyahPlaying(ayah.id)">
+                    &#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;
+                  </span>
+                </span>
+                @if (!isLast) { <span> </span> }
+              }
+            </p>
+          }
+        </div>
       }
+    </div>
+
+    <!-- Page Navigation Footer -->
+    <div class="page-navigation rounded-lg shadow-md p-4 mt-6" style="background-color: var(--color-surface);">
+      <div class="flex items-center justify-between">
+        <button
+          pButton
+          icon="pi pi-chevron-left"
+          label="Page précédente"
+          class="p-button-outlined"
+          (click)="goToPreviousPage()"
+          [disabled]="!canGoToPreviousPage() || loadingPage">
+        </button>
+
+        <div class="flex flex-col items-center gap-1">
+          <p class="text-xs" style="color: var(--color-text-muted);">
+            Pages {{ surah.startingPage }} – {{ surah.endingPage }}
+          </p>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              [value]="currentPage"
+              [min]="surah.startingPage"
+              [max]="surah.endingPage"
+              (keydown.enter)="jumpToPage($event)"
+              (blur)="jumpToPage($event)"
+              class="page-input w-16 text-center text-sm font-semibold border rounded-md px-2 py-1 focus:outline-none focus:ring-2"
+              style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);"
+              [disabled]="loadingPage">
+            <span class="text-sm font-medium" style="color: var(--color-text-secondary);">
+              / {{ surah.endingPage }}
+            </span>
+          </div>
+        </div>
+
+        <button
+          pButton
+          icon="pi pi-chevron-right"
+          iconPos="right"
+          label="Page suivante"
+          class="p-button-outlined"
+          (click)="goToNextPage()"
+          [disabled]="!canGoToNextPage() || loadingPage">
+        </button>
+      </div>
     </div>
 
   } @else {
     <div class="text-center py-20">
-      <i class="pi pi-exclamation-triangle text-6xl text-red-500 mb-4"></i>
-      <p class="text-xl text-gray-600">Sourate non trouvée</p>
+      <i class="pi pi-exclamation-triangle text-6xl mb-4" style="color: var(--color-error);"></i>
+      <p class="text-xl" style="color: var(--color-text-secondary);">Sourate non trouvée</p>
       <button
         pButton
         label="Retour à la liste"
@@ -118,8 +341,94 @@
   }
 </div>
 
+<!-- Pass context down, listen for selection mode changes -->
+<app-audio-player
+  [currentAyahs]="currentAyahs"
+  [surah]="surah"
+  [selectedAyahs]="selectedAyahsList"
+  (selectionModeChange)="onSelectionModeChange($event)">
+</app-audio-player>
+
+<!-- Context Menu for Ayah Actions -->
+@if (contextMenuAyah) {
+  <div class="context-menu-overlay" (click)="contextMenuAyah = null"></div>
+  <div class="context-menu" style="background: var(--color-surface); border: 1px solid var(--color-card-border);">
+    <div class="context-menu-header" style="border-bottom: 1px solid var(--color-card-border);">
+      <span class="text-sm font-semibold" style="color: var(--color-text-primary);">
+        Ayah {{ contextMenuAyah.numberInSurah }}
+      </span>
+      <button class="context-menu-close" (click)="contextMenuAyah = null">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+    <div class="context-menu-items">
+      @for (item of contextMenuItems; track $index) {
+        @if (item.separator) {
+          <div class="context-menu-separator" style="border-top: 1px solid var(--color-card-border);"></div>
+        } @else {
+          <button class="context-menu-item" (click)="item.command(); contextMenuAyah = null">
+            <i [class]="item.icon" style="color: var(--color-accent);"></i>
+            <span style="color: var(--color-text-primary);">{{ item.label }}</span>
+          </button>
+        }
+      }
+    </div>
+  </div>
+}
+
+<!-- Notes Dialog -->
+<p-dialog
+  [(visible)]="showNotesDialog"
+  [header]="notesAyah ? 'Note pour Ayah ' + notesAyah.numberInSurah : 'Note'"
+  [modal]="true"
+  [style]="{ width: '450px' }"
+  [closable]="true"
+  [draggable]="false"
+  (onHide)="closeNotesDialog()">
+
+  <div class="space-y-4">
+    @if (notesAyah) {
+      <div class="p-3 rounded-lg" style="background: var(--color-mushaf-bg);">
+        <p class="text-sm text-right leading-relaxed" dir="rtl"
+          style="font-family: 'UthmanicHafs', 'Scheherazade New', serif; color: var(--color-text-primary);">
+          {{ notesAyah.text.substring(0, 100) }}{{ notesAyah.text.length > 100 ? '...' : '' }}
+        </p>
+      </div>
+    }
+
+    <div class="field">
+      <label for="noteText" class="block text-sm font-semibold mb-2" style="color: var(--color-text-primary);">
+        Votre note
+      </label>
+      <textarea
+        pTextarea
+        id="noteText"
+        [(ngModel)]="notesText"
+        rows="5"
+        class="w-full"
+        placeholder="Écrivez votre note ici..."
+        style="background: var(--color-surface); border-color: var(--color-card-border); color: var(--color-text-primary);">
+      </textarea>
+      <small style="color: var(--color-text-muted);">
+        Ajoutez des réflexions, traductions ou rappels personnels
+      </small>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-2">
+      <button pButton label="Annuler" icon="pi pi-times" class="p-button-text" (click)="closeNotesDialog()"></button>
+      <button pButton label="Enregistrer" icon="pi pi-check" class="p-button-success" (click)="saveNote()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
 <!-- Repeat Controls Dialog -->
 <app-repeat-controls
   #repeatControls
-  (startRepeat)="onStartRepeat($event)">
+  [currentAyahs]="currentAyahs"
+  [selectedAyahsList]="selectedAyahsList"
+  [surah]="surah"
+  [currentPage]="currentPage">
 </app-repeat-controls>
+

@@ -1,0 +1,203 @@
+<div class="quiz-session-container">
+  <!-- Header -->
+  <div class="session-header">
+    <button pButton icon="pi pi-times" class="p-button-text p-button-danger" (click)="exitQuiz()"></button>
+    <div class="session-info">
+      <span class="quiz-type">{{ getQuizTypeName() }}</span>
+      <span class="question-counter">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
+    </div>
+    <div class="timer">
+      <i class="pi pi-clock"></i>
+      {{ formatTime(elapsedTime) }}
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <p-progressBar [value]="progressPercentage" [showValue]="false" styleClass="session-progress"></p-progressBar>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p>Préparation du quiz...</p>
+  </div>
+
+  <!-- Quiz Content -->
+  <div *ngIf="!loading && currentQuestion && !isComplete" class="quiz-content">
+
+    <!-- Fill in the Blank Quiz -->
+    <div *ngIf="quizType === QuizType.FILL_BLANK && fillBlankData" class="question-container">
+      <div class="question-label">Complétez les mots manquants:</div>
+      <div class="ayah-text fill-blank-text" dir="rtl">
+        {{ fillBlankData.textWithBlanks }}
+      </div>
+
+      <div class="blanks-inputs">
+        <div *ngFor="let blank of fillBlankData.blanks; let i = index" class="blank-input-group">
+          <label>Mot {{ i + 1 }}:</label>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="blankInputs[i]"
+            dir="rtl"
+            class="blank-input"
+            [placeholder]="'Mot manquant ' + (i + 1)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Writing Quiz -->
+    <div *ngIf="quizType === QuizType.WRITING && writingData" class="question-container">
+      <div class="question-label">Écrivez le verset de mémoire:</div>
+      <div class="ayah-reference">
+        Verset {{ writingData.ayahNumber }} ({{ writingData.wordCount }} mots)
+      </div>
+
+      <textarea
+        pTextarea
+        [(ngModel)]="userInput"
+        dir="rtl"
+        [autoResize]="true"
+        rows="4"
+        class="writing-input"
+        placeholder="Écrivez le verset ici...">
+      </textarea>
+    </div>
+
+    <!-- Audio Recognition Quiz -->
+    <div *ngIf="quizType === QuizType.AUDIO_RECOGNITION" class="question-container">
+      <div class="question-label">Écoutez et écrivez ce que vous entendez:</div>
+
+      <div class="audio-controls">
+        <button pButton icon="pi pi-play" label="Réécouter" class="p-button-outlined" (click)="playCurrentAudio()"></button>
+        <span *ngIf="playerState?.isPlaying" class="playing-indicator">
+          <i class="pi pi-volume-up"></i> Lecture en cours...
+        </span>
+      </div>
+
+      <textarea
+        pTextarea
+        [(ngModel)]="userInput"
+        dir="rtl"
+        [autoResize]="true"
+        rows="4"
+        class="writing-input"
+        placeholder="Écrivez ce que vous entendez...">
+      </textarea>
+    </div>
+
+    <!-- Sequence Order Quiz -->
+    <div *ngIf="quizType === QuizType.SEQUENCE_ORDER" class="question-container">
+      <div class="question-label">Remettez les versets dans le bon ordre:</div>
+      <div class="sequence-hint">(Cliquez sur les flèches pour déplacer)</div>
+
+      <div class="sequence-items">
+        <div *ngFor="let item of sequenceItems; let i = index" class="sequence-item" dir="rtl">
+          <div class="sequence-controls">
+            <button
+              pButton
+              icon="pi pi-arrow-up"
+              class="p-button-text p-button-sm"
+              [disabled]="i === 0"
+              (click)="moveSequenceItem(i, i - 1)">
+            </button>
+            <span class="position-badge">{{ i + 1 }}</span>
+            <button
+              pButton
+              icon="pi pi-arrow-down"
+              class="p-button-text p-button-sm"
+              [disabled]="i === sequenceItems.length - 1"
+              (click)="moveSequenceItem(i, i + 1)">
+            </button>
+          </div>
+          <div class="sequence-text">{{ item.text }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hint Section -->
+    <div class="hint-section" *ngIf="showHint">
+      <i class="pi pi-lightbulb"></i>
+      <span>{{ currentHint }}</span>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons" *ngIf="!showFeedback">
+      <button
+        pButton
+        label="Indice"
+        icon="pi pi-lightbulb"
+        class="p-button-outlined p-button-warning hint-btn"
+        (click)="useHint()"
+        [disabled]="hintsUsed >= 2">
+        <span class="hint-count">({{ 2 - hintsUsed }})</span>
+      </button>
+
+      <button
+        pButton
+        label="Valider"
+        icon="pi pi-check"
+        class="submit-btn"
+        (click)="submitAnswer()">
+      </button>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback-section" *ngIf="showFeedback">
+      <div class="feedback-result" [class.correct]="lastAnswerCorrect" [class.incorrect]="!lastAnswerCorrect">
+        <i class="pi" [ngClass]="lastAnswerCorrect ? 'pi-check-circle' : 'pi-times-circle'"></i>
+        <span>{{ lastAnswerCorrect ? 'Correct !' : 'Incorrect' }}</span>
+      </div>
+
+      <div class="correct-answer" *ngIf="!lastAnswerCorrect">
+        <strong>Réponse correcte:</strong>
+        <p dir="rtl" class="correct-text">{{ currentQuestion?.text }}</p>
+      </div>
+
+      <button pButton label="Question suivante" icon="pi pi-arrow-right" iconPos="right" (click)="nextQuestion()"></button>
+    </div>
+  </div>
+
+  <!-- Results Dialog -->
+  <p-dialog
+    header="Résultats du Quiz"
+    [(visible)]="showResultsDialog"
+    [modal]="true"
+    [closable]="false"
+    [style]="{ width: '90vw', maxWidth: '500px' }">
+
+    <div class="results-content">
+      <div class="score-circle" [class.excellent]="scorePercentage >= 80" [class.good]="scorePercentage >= 60 && scorePercentage < 80" [class.poor]="scorePercentage < 60">
+        <span class="score-value">{{ scorePercentage }}%</span>
+        <span class="score-label">Score</span>
+      </div>
+
+      <div class="results-stats">
+        <div class="stat">
+          <i class="pi pi-check-circle text-green-500"></i>
+          <span>{{ session?.correctAnswers }} correct(s)</span>
+        </div>
+        <div class="stat">
+          <i class="pi pi-times-circle text-red-500"></i>
+          <span>{{ (session?.totalQuestions || 0) - (session?.correctAnswers || 0) }} incorrect(s)</span>
+        </div>
+        <div class="stat">
+          <i class="pi pi-clock"></i>
+          <span>{{ formatTime(elapsedTime) }}</span>
+        </div>
+      </div>
+
+      <div class="results-message">
+        <span *ngIf="scorePercentage >= 80">Excellent travail ! Continuez ainsi !</span>
+        <span *ngIf="scorePercentage >= 60 && scorePercentage < 80">Bon travail ! Quelques révisions aideront.</span>
+        <span *ngIf="scorePercentage < 60">Continuez à pratiquer. La mémorisation prend du temps.</span>
+      </div>
+    </div>
+
+    <ng-template #footer>
+      <div class="results-actions">
+        <button pButton label="Recommencer" icon="pi pi-refresh" class="p-button-outlined" (click)="restartQuiz()"></button>
+        <button pButton label="Terminer" icon="pi pi-check" (click)="exitQuiz()"></button>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>

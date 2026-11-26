@@ -1,18 +1,17 @@
 <div
   class="ayah-card p-4 rounded-lg border-2 transition-all duration-300 hover:shadow-lg"
-  [class.border-quranic-gold]="isSelected"
-  [class.border-gray-200]="!isSelected"
-  [class.bg-quranic-cream]="isMemorized"
-  [class.bg-white]="!isMemorized">
+  [style.border-color]="isSelected ? 'var(--color-accent)' : 'var(--color-card-border)'"
+  [style.background-color]="isMemorized ? 'var(--color-accent-alpha)' : 'var(--color-surface)'">
 
   <!-- Ayah Info Header -->
   @if (showSurahInfo) {
-    <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-200">
+    <div class="flex items-center justify-between mb-3 pb-2 border-b" style="border-color: var(--color-card-border);">
       <div class="flex items-center space-x-3">
-        <div class="bg-quranic-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+        <div class="text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold"
+          style="background-color: var(--color-primary);">
           {{ ayah.numberInSurah }}
         </div>
-        <div class="text-xs text-gray-600">
+        <div class="text-xs" style="color: var(--color-text-secondary);">
           <span>Page {{ ayah.page }}</span>
           <span class="mx-2">•</span>
           <span>Juz {{ ayah.juz }}</span>
@@ -22,13 +21,13 @@
       <!-- Status Icons -->
       <div class="flex items-center space-x-2">
         @if (isMemorized) {
-          <i class="pi pi-check-circle text-green-600" pTooltip="Mémorisé"></i>
+          <i class="pi pi-check-circle" style="color: var(--color-success);" pTooltip="Mémorisé"></i>
         }
         @if (isFavorite) {
-          <i class="pi pi-heart-fill text-red-500" pTooltip="Favori"></i>
+          <i class="pi pi-heart-fill" style="color: var(--color-error);" pTooltip="Favori"></i>
         }
         @if (ayah.sajda) {
-          <i class="pi pi-star text-quranic-gold" pTooltip="Sajda"></i>
+          <i class="pi pi-star" style="color: var(--color-accent);" pTooltip="Sajda"></i>
         }
       </div>
     </div>
@@ -40,7 +39,7 @@
   </div>
 
   <!-- Actions -->
-  <div class="flex items-center justify-between pt-3 border-t border-gray-200">
+  <div class="flex items-center justify-between pt-3 border-t" style="border-color: var(--color-card-border);">
     <div class="flex items-center space-x-2">
       <!-- Play Button -->
       <button
@@ -86,7 +85,8 @@
     </div>
 
     <!-- Ayah Number Badge -->
-    <div class="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
+    <div class="text-xs font-mono px-2 py-1 rounded"
+      style="color: var(--color-text-muted); background-color: var(--color-surface-hover);">
       #{{ ayah.id }}
     </div>
   </div>

@@ -1,0 +1,391 @@
+.study-container {
+  min-height: 100vh;
+  background: var(--surface-ground);
+  padding-bottom: 2rem;
+}
+
+/* Header */
+.study-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--surface-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-left h1 {
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.header-center {
+  flex: 1;
+  max-width: 400px;
+}
+
+:host ::ng-deep .surah-select {
+  width: 100%;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.font-size-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--surface-100);
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.font-label {
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+  padding: 0 0.5rem;
+}
+
+/* Loading & Empty States */
+.loading-container,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--text-color-secondary);
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-state h2 {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.empty-state p {
+  max-width: 400px;
+}
+
+/* Surah Info Bar */
+.surah-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--surface-card);
+  margin: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.surah-name {
+  font-family: 'Uthmanic', 'Amiri', serif;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.progress-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.memorized-count {
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+}
+
+:host ::ng-deep .progress-mini {
+  width: 120px;
+  height: 6px;
+}
+
+:host ::ng-deep .progress-mini .p-progressbar-value {
+  background: var(--primary-color);
+}
+
+/* Loading Ayahs */
+.loading-ayahs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: var(--text-color-secondary);
+}
+
+/* Ayahs List */
+.ayahs-list {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Ayah Study Card */
+.ayah-study-card {
+  background: var(--surface-card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ayah-study-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.ayah-study-card.playing {
+  border-color: var(--primary-color);
+  background: var(--primary-50, rgba(var(--primary-color-rgb), 0.05));
+}
+
+.ayah-study-card.memorized {
+  border-color: var(--green-500);
+}
+
+.ayah-study-card.memorized::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 30px solid var(--green-500);
+  border-left: 30px solid transparent;
+  border-top-right-radius: 14px;
+}
+
+/* Ayah Number Badge */
+.ayah-number-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-card);
+  border: 2px solid var(--surface-border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Uthmanic', 'Amiri', serif;
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+}
+
+.playing .ayah-number-badge {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* Arabic Text */
+.ayah-arabic {
+  font-family: 'Uthmanic', 'Amiri', serif;
+  line-height: 2.2;
+  text-align: center;
+  direction: rtl;
+  padding: 1.5rem 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: color 0.2s ease;
+}
+
+.ayah-arabic:hover {
+  color: var(--primary-color);
+}
+
+/* Translation */
+.ayah-translation {
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background: var(--surface-100);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.translation-placeholder {
+  margin: 0;
+  color: var(--text-color-secondary);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Action Bar */
+.ayah-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface-border);
+  margin-top: 1rem;
+}
+
+.action-btn {
+  color: var(--text-color-secondary) !important;
+}
+
+.action-btn:hover {
+  color: var(--primary-color) !important;
+  background: var(--primary-100) !important;
+}
+
+.play-btn {
+  color: var(--primary-color) !important;
+}
+
+.memorized-btn {
+  color: var(--yellow-500) !important;
+}
+
+.has-note {
+  color: var(--blue-500) !important;
+}
+
+/* Playing Indicator */
+.playing-indicator {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  height: 20px;
+}
+
+.playing-indicator .bar {
+  width: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
+  animation: sound-wave 0.5s ease-in-out infinite alternate;
+}
+
+.playing-indicator .bar:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+}
+
+.playing-indicator .bar:nth-child(2) {
+  height: 16px;
+  animation-delay: 0.1s;
+}
+
+.playing-indicator .bar:nth-child(3) {
+  height: 12px;
+  animation-delay: 0.2s;
+}
+
+@keyframes sound-wave {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0.5); }
+}
+
+/* Notes Dialog */
+.notes-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ayah-preview {
+  background: var(--surface-100);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.ayah-ref {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ayah-text-preview {
+  font-family: 'Uthmanic', 'Amiri', serif;
+  font-size: 1.25rem;
+  direction: rtl;
+  text-align: right;
+  margin: 0.5rem 0 0 0;
+  line-height: 1.8;
+  max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .study-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-left {
+    justify-content: space-between;
+  }
+
+  .header-center {
+    max-width: none;
+  }
+
+  .header-right {
+    justify-content: center;
+  }
+
+  .surah-info-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .progress-info {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  :host ::ng-deep .progress-mini {
+    flex: 1;
+    max-width: 150px;
+  }
+
+  .ayah-study-card {
+    padding: 1rem;
+  }
+
+  .ayah-arabic {
+    font-size: 1.5rem !important;
+    padding: 1rem 0.25rem;
+  }
+}

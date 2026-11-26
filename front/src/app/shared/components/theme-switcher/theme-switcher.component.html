@@ -1,0 +1,64 @@
+<div class="theme-switcher">
+  <p-select
+    [options]="themeOptions"
+    [(ngModel)]="selectedTheme"
+    (onChange)="onThemeChange($event)"
+    optionLabel="name"
+    scrollHeight="400px"
+    [showClear]="false"
+    styleClass="theme-select"
+    placeholder="Choisir un thème"
+    appendTo="body"
+    [style]="{'min-width': '200px'}">
+
+    <ng-template let-option pTemplate="item">
+      <div class="theme-option flex items-center gap-3 py-1">
+        <div class="flex gap-1">
+          <div
+            class="color-swatch"
+            [style.background-color]="option.primaryColor"
+            [style.width.px]="20"
+            [style.height.px]="20"
+            [style.border-radius.%]="50"
+            [style.border]="'1px solid rgba(0,0,0,0.1)'">
+          </div>
+          <div
+            class="color-swatch"
+            [style.background-color]="option.accentColor"
+            [style.width.px]="20"
+            [style.height.px]="20"
+            [style.border-radius.%]="50"
+            [style.border]="'1px solid rgba(0,0,0,0.1)'">
+          </div>
+        </div>
+        <span>{{ option.name }}</span>
+      </div>
+    </ng-template>
+
+    <ng-template let-option pTemplate="selectedItem">
+      @if (option) {
+        <div class="theme-selected flex items-center gap-2">
+          <div class="flex gap-1">
+            <div
+              class="color-swatch"
+              [style.background-color]="option.primaryColor"
+              [style.width.px]="16"
+              [style.height.px]="16"
+              [style.border-radius.%]="50"
+              [style.border]="'1px solid rgba(0,0,0,0.1)'">
+            </div>
+            <div
+              class="color-swatch"
+              [style.background-color]="option.accentColor"
+              [style.width.px]="16"
+              [style.height.px]="16"
+              [style.border-radius.%]="50"
+              [style.border]="'1px solid rgba(0,0,0,0.1)'">
+            </div>
+          </div>
+          <span class="truncate">{{ option.name }}</span>
+        </div>
+      }
+    </ng-template>
+  </p-select>
+</div>

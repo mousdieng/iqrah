@@ -1,1 +1,11 @@
 /* Additional home page styles */
+
+.quick-link-card {
+  background-color: var(--color-surface);
+  border-color: transparent;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.quick-link-card:hover {
+  border-color: var(--color-accent) !important;
+}

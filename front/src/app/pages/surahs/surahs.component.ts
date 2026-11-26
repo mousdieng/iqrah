@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +26,7 @@ export class SurahsComponent implements OnInit {
   filteredSurahs: SurahDTO[] = [];
   searchQuery = '';
   selectedType: string | null = null;
+  loading = true;
 
   revelationTypes = [
     { label: 'Tous', value: null },
@@ -35,7 +36,8 @@ export class SurahsComponent implements OnInit {
 
   constructor(
     private quranService: QuranService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +45,19 @@ export class SurahsComponent implements OnInit {
   }
 
   loadSurahs(): void {
-    this.quranService.getAllSurahs().subscribe(surahs => {
-      this.surahs = surahs;
-      this.filteredSurahs = surahs;
+    this.loading = true;
+    this.quranService.getAllSurahs().subscribe({
+      next: (surahs) => {
+        this.surahs = surahs;
+        this.filteredSurahs = surahs;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading surahs:', error);
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -57,9 +69,9 @@ export class SurahsComponent implements OnInit {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(surah =>
         surah.name.toLowerCase().includes(query) ||
-        surah.transliteratedName.toLowerCase().includes(query) ||
-        surah.translatedName.toLowerCase().includes(query) ||
-        surah.id.toString().includes(query)
+        surah.englishName.toLowerCase().includes(query) ||
+        surah.englishNameTranslation.toLowerCase().includes(query) ||
+        surah.number.toString().includes(query)
       );
     }
 

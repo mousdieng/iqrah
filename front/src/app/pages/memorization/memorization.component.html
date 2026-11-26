@@ -1,17 +1,17 @@
 <div class="container mx-auto px-4 py-8">
   <!-- Header -->
   <div class="mb-8">
-    <h1 class="text-4xl font-bold text-quranic-darkGreen mb-2">
+    <h1 class="text-4xl font-bold mb-2" style="color: var(--color-primary-dark);">
       Mémorisation
     </h1>
-    <p class="text-gray-600">
+    <p style="color: var(--color-text-secondary);">
       Suivez votre progression et révisez vos ayahs mémorisées
     </p>
   </div>
 
   <!-- Stats Overview -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6 shadow-lg">
+    <div class="stat-card stat-card-green text-white rounded-xl p-6 shadow-lg">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm opacity-90">Total Mémorisé</p>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-6 shadow-lg">
+    <div class="stat-card stat-card-orange text-white rounded-xl p-6 shadow-lg">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm opacity-90">À Réviser</p>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
+    <div class="stat-card stat-card-purple text-white rounded-xl p-6 shadow-lg">
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm opacity-90">Progression</p>
@@ -52,25 +52,21 @@
   </div>
 
   <!-- Tabs -->
-  <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+  <div class="tabs-container rounded-xl shadow-lg overflow-hidden">
     <!-- Tab Headers -->
-    <div class="flex border-b border-gray-200">
+    <div class="flex border-b" style="border-color: var(--color-card-border);">
       <button
-        class="flex-1 py-4 px-6 text-center font-semibold transition-colors"
-        [class.text-quranic-green]="activeTab === 0"
+        class="tab-button flex-1 py-4 px-6 text-center font-semibold"
+        [class.active]="activeTab === 0"
         [class.border-b-2]="activeTab === 0"
-        [class.border-quranic-green]="activeTab === 0"
-        [class.text-gray-600]="activeTab !== 0"
         (click)="activeTab = 0">
         <i class="pi pi-check-circle mr-2"></i>
         Ayahs Mémorisées
       </button>
       <button
-        class="flex-1 py-4 px-6 text-center font-semibold transition-colors"
-        [class.text-quranic-green]="activeTab === 1"
+        class="tab-button flex-1 py-4 px-6 text-center font-semibold"
+        [class.active]="activeTab === 1"
         [class.border-b-2]="activeTab === 1"
-        [class.border-quranic-green]="activeTab === 1"
-        [class.text-gray-600]="activeTab !== 1"
         (click)="activeTab = 1">
         <i class="pi pi-sync mr-2"></i>
         À Réviser
@@ -85,14 +81,14 @@
         <div class="space-y-4">
           @for (progress of memorizedAyahs; track progress.id) {
             @if (getAyah(progress.ayahId); as ayah) {
-              <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg transition-shadow">
+              <div class="ayah-card rounded-lg shadow p-4">
                 <div class="flex items-start justify-between">
                   <div class="flex-1">
                     <div class="flex items-center space-x-3 mb-2">
-                      <span class="bg-quranic-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                      <span class="ayah-badge rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
                         {{ ayah.numberInSurah }}
                       </span>
-                      <span class="text-sm text-gray-600">
+                      <span class="text-sm" style="color: var(--color-text-secondary);">
                         Sourate {{ ayah.surahId }} - Page {{ ayah.page }}
                       </span>
                       <span
@@ -106,7 +102,7 @@
                       {{ ayah.text.substring(0, 100) }}{{ ayah.text.length > 100 ? '...' : '' }}
                     </div>
 
-                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-4 text-sm" style="color: var(--color-text-secondary);">
                       <span>
                         <i class="pi pi-sync mr-1"></i>
                         {{ progress.reviewCount }} révisions
@@ -118,8 +114,8 @@
                     </div>
 
                     @if (progress.notes) {
-                      <div class="mt-2 p-2 bg-blue-50 rounded text-sm">
-                        <i class="pi pi-info-circle text-blue-600 mr-1"></i>
+                      <div class="note-box mt-2 p-2 rounded text-sm">
+                        <i class="pi pi-info-circle mr-1" style="color: var(--color-info);"></i>
                         {{ progress.notes }}
                       </div>
                     }
@@ -138,8 +134,8 @@
         </div>
       } @else {
         <div class="text-center py-12">
-          <i class="pi pi-star text-6xl text-gray-300 mb-4"></i>
-          <p class="text-xl text-gray-600 mb-4">
+          <i class="pi pi-star text-6xl mb-4 empty-state-icon"></i>
+          <p class="text-xl mb-4" style="color: var(--color-text-secondary);">
             Vous n'avez pas encore mémorisé d'ayahs
           </p>
           <button
@@ -156,14 +152,14 @@
       <!-- Review Tab -->
       @if (activeTab === 1) {
         @if (dueForReview.length > 0) {
-        <div class="mb-4 p-4 bg-orange-50 border-l-4 border-orange-500 rounded">
+        <div class="review-warning mb-4 p-4 border-l-4 rounded">
           <div class="flex items-center space-x-3">
-            <i class="pi pi-exclamation-triangle text-orange-600 text-2xl"></i>
+            <i class="pi pi-exclamation-triangle text-2xl" style="color: var(--color-warning);"></i>
             <div>
-              <p class="font-semibold text-orange-900">
+              <p class="font-semibold" style="color: var(--color-text-primary);">
                 {{ dueForReview.length }} ayah(s) à réviser
               </p>
-              <p class="text-sm text-orange-800">
+              <p class="text-sm" style="color: var(--color-text-secondary);">
                 Ces ayahs nécessitent une révision selon le système de répétition espacée
               </p>
             </div>
@@ -173,14 +169,14 @@
         <div class="space-y-4">
           @for (progress of dueForReview; track progress.id) {
             @if (getAyah(progress.ayahId); as ayah) {
-              <div class="bg-white rounded-lg shadow p-4 border-l-4 border-orange-500">
+              <div class="ayah-card review-card rounded-lg shadow p-4 border-l-4">
                 <div class="flex items-start justify-between">
                   <div class="flex-1">
                     <div class="flex items-center space-x-3 mb-2">
-                      <span class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                      <span class="rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold text-white" style="background-color: var(--color-warning);">
                         {{ ayah.numberInSurah }}
                       </span>
-                      <span class="text-sm text-gray-600">
+                      <span class="text-sm" style="color: var(--color-text-secondary);">
                         Sourate {{ ayah.surahId }} - Page {{ ayah.page }}
                       </span>
                       <span
@@ -194,7 +190,7 @@
                       {{ ayah.text.substring(0, 100) }}{{ ayah.text.length > 100 ? '...' : '' }}
                     </div>
 
-                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-4 text-sm" style="color: var(--color-text-secondary);">
                       <span>
                         <i class="pi pi-sync mr-1"></i>
                         {{ progress.reviewCount }} révisions
@@ -219,11 +215,11 @@
         </div>
       } @else {
         <div class="text-center py-12">
-          <i class="pi pi-check-circle text-6xl text-green-500 mb-4"></i>
-          <p class="text-xl text-gray-600">
+          <i class="pi pi-check-circle text-6xl mb-4" style="color: var(--color-success);"></i>
+          <p class="text-xl" style="color: var(--color-text-secondary);">
             Aucune ayah à réviser pour le moment !
           </p>
-          <p class="text-gray-500 mt-2">
+          <p class="mt-2" style="color: var(--color-text-muted);">
             Continuez votre excellent travail de mémorisation
           </p>
         </div>

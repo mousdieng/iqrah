@@ -1,1 +1,11 @@
 /* Surahs page styles */
+
+.surah-card {
+  background-color: var(--color-surface);
+  border-color: transparent;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.surah-card:hover {
+  border-color: var(--color-accent) !important;
+}

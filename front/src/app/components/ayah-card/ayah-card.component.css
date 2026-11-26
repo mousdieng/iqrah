@@ -1,12 +1,9 @@
 .ayah-card {
   cursor: pointer;
   user-select: text;
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 .ayah-card:hover {
-  background-color: #fafafa;
-}
-
-.ayah-card.bg-quranic-cream:hover {
-  background-color: #f0f0d8;
+  background-color: var(--color-surface-hover) !important;
 }

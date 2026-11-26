@@ -1,6 +1,8 @@
 package com.iqrah.quran.service;
 
 import com.iqrah.quran.dto.AudioType;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -21,9 +23,10 @@ import java.util.stream.Stream;
 
 @Service
 public class AudioService {
-//
-    private static final String AUDIO_BASE_PATH_RECITER = "api/src/main/resources/audio/reciter/";
-    private static final String AUDIO_BASE_PATH_TRANSLATOR = "api/src/main/resources/audio/tafsir/";
+
+    @Value("${audio.base-path:#{null}}")
+    private String externalAudioPath;
+
     private static final String RECITER_CLASSPATH = "classpath:audio/reciter/*";
     private static final String TAFSIR_CLASSPATH  = "classpath:audio/tafsir/*";
 
@@ -34,24 +37,24 @@ public class AudioService {
             int ayaNumber
     ) {
         try {
-            Path filePath = buildFilePath(type, sourceName, surahNumber, ayaNumber);
-            File file = filePath.toFile();
+            String relativePath = buildRelativePath(type, sourceName, surahNumber, ayaNumber);
+            Resource resource = resolveAudioResource(relativePath);
 
-            if (!file.exists() || !file.isFile()) {
-                System.err.println("Audio file not found: " + filePath.toAbsolutePath());
+            if (resource == null || !resource.exists()) {
+                System.err.println("Audio file not found: " + relativePath);
                 return ResponseEntity.notFound().build();
             }
 
-            Resource resource = new FileSystemResource(file);
+            String filename = resource.getFilename() != null ? resource.getFilename() : "audio.mp3";
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
                     .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
                     .header(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET, OPTIONS")
                     .header(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*")
                     .header(HttpHeaders.CACHE_CONTROL, "public, max-age=31536000")
                     .contentType(MediaType.parseMediaType("audio/mpeg"))
-                    .contentLength(file.length())
+                    .contentLength(resource.contentLength())
                     .body(resource);
 
         } catch (Exception e) {
@@ -60,22 +63,37 @@ public class AudioService {
         }
     }
 
-    private Path buildFilePath(AudioType type, String sourceName, int surahNumber, int ayaNumber) {
-
+    private String buildRelativePath(AudioType type, String sourceName, int surahNumber, int ayaNumber) {
         return switch (type) {
-
-            // reciter/<reciter>/<surah>_<ayah>.mp3
-            case RECITATION -> Paths.get(
-                    AUDIO_BASE_PATH_RECITER,
-                    String.format("%s/%d_%d.mp3", sourceName, surahNumber, ayaNumber)
-            );
-
-            // tafsir/<tafsir>/<surah>/<ayah>.mp3
-            case TRANSLATOR -> Paths.get(
-                    AUDIO_BASE_PATH_TRANSLATOR,
-                    String.format("%s/%d/%d_%d.mp3", sourceName, surahNumber, surahNumber, ayaNumber)
-            );
+            // audio/reciter/<reciter>/<surah>_<ayah>.mp3
+            case RECITATION -> String.format("audio/reciter/%s/%d_%d.mp3", sourceName, surahNumber, ayaNumber);
+            // audio/tafsir/<tafsir>/<surah>/<surah>_<ayah>.mp3
+            case TRANSLATOR -> String.format("audio/tafsir/%s/%d/%d_%d.mp3", sourceName, surahNumber, surahNumber, ayaNumber);
         };
+    }
+
+    private Resource resolveAudioResource(String relativePath) {
+        // 1. Try external path if configured
+        if (externalAudioPath != null && !externalAudioPath.isBlank()) {
+            Path externalFile = Paths.get(externalAudioPath, relativePath);
+            if (Files.exists(externalFile)) {
+                return new FileSystemResource(externalFile);
+            }
+        }
+
+        // 2. Try classpath resource (works in JAR and IDE)
+        Resource classpathResource = new ClassPathResource(relativePath);
+        if (classpathResource.exists()) {
+            return classpathResource;
+        }
+
+        // 3. Fallback: try relative to working directory (for development)
+        Path workingDirPath = Paths.get("src/main/resources", relativePath);
+        if (Files.exists(workingDirPath)) {
+            return new FileSystemResource(workingDirPath);
+        }
+
+        return null;
     }
 
     public ResponseEntity<Resource> serveReciterAudioByPath(String reciter, int surahNumber, int ayaNumber) {

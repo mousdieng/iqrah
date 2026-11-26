@@ -1,0 +1,83 @@
+{
+  "version": "1.0.0",
+  "createdAt": "2026-11-23",
+  "totalAyahs": 1596,
+  "languages": [
+    "en",
+    "fr",
+    "de"
+  ],
+  "sources": {
+    "en": "Sahih International",
+    "fr": "Muhammad Hamidullah",
+    "de": "Abu Rida Muhammad ibn Ahmad"
+  },
+  "surahs": [
+    {
+      "id": 1,
+      "name": "Al-Fatiha",
+      "verses": 7,
+      "startAyahId": 1
+    },
+    {
+      "id": 2,
+      "name": "Al-Baqarah",
+      "verses": 286,
+      "startAyahId": 8
+    },
+    {
+      "id": 3,
+      "name": "Al-Imran",
+      "verses": 200,
+      "startAyahId": 294
+    },
+    {
+      "id": 4,
+      "name": "An-Nisa",
+      "verses": 176,
+      "startAyahId": 494
+    },
+    {
+      "id": 5,
+      "name": "Al-Ma'idah",
+      "verses": 120,
+      "startAyahId": 670
+    },
+    {
+      "id": 6,
+      "name": "Al-An'am",
+      "verses": 165,
+      "startAyahId": 790
+    },
+    {
+      "id": 7,
+      "name": "Al-A'raf",
+      "verses": 206,
+      "startAyahId": 955
+    },
+    {
+      "id": 8,
+      "name": "Al-Anfal",
+      "verses": 75,
+      "startAyahId": 1161
+    },
+    {
+      "id": 9,
+      "name": "At-Tawbah",
+      "verses": 129,
+      "startAyahId": 1236
+    },
+    {
+      "id": 10,
+      "name": "Yunus",
+      "verses": 109,
+      "startAyahId": 1365
+    },
+    {
+      "id": 11,
+      "name": "Hud",
+      "verses": 123,
+      "startAyahId": 1474
+    }
+  ]
+}

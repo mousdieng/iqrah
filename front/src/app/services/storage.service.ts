@@ -12,6 +12,8 @@ export class StorageService {
   private readonly PROGRESS_KEY = 'quran_user_progress';
   private readonly FAVORITES_KEY = 'quran_favorites';
   private readonly SETTINGS_KEY = 'quran_settings';
+  private readonly BOOKMARKS_KEY = 'quran_bookmarks';
+  private readonly NOTES_KEY = 'quran_notes';
 
   private progressSubject = new BehaviorSubject<UserProgress[]>(this.loadProgress());
   private favoritesSubject = new BehaviorSubject<FavoriteAya[]>(this.loadFavorites());
@@ -53,6 +55,17 @@ export class StorageService {
    */
   getProgress(): UserProgress[] {
     return this.progressSubject.value;
+  }
+
+  /**
+   * Get all progress as a map (ayahId -> progress)
+   */
+  getAllProgress(): { [ayahId: number]: UserProgress } {
+    const progressMap: { [ayahId: number]: UserProgress } = {};
+    for (const p of this.progressSubject.value) {
+      progressMap[p.ayahId] = p;
+    }
+    return progressMap;
   }
 
   /**
@@ -286,7 +299,120 @@ export class StorageService {
     localStorage.removeItem(this.PROGRESS_KEY);
     localStorage.removeItem(this.FAVORITES_KEY);
     localStorage.removeItem(this.SETTINGS_KEY);
+    localStorage.removeItem(this.BOOKMARKS_KEY);
+    localStorage.removeItem(this.NOTES_KEY);
     this.progressSubject.next([]);
     this.favoritesSubject.next([]);
+  }
+
+  // ========== Bookmarks Methods ==========
+
+  /**
+   * Get all bookmarks
+   */
+  getBookmarks(): { ayahId: number; createdAt: Date }[] {
+    try {
+      const data = localStorage.getItem(this.BOOKMARKS_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch (error) {
+      console.error('Error loading bookmarks:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Add a bookmark
+   */
+  addBookmark(ayahId: number): void {
+    const bookmarks = this.getBookmarks();
+    if (!bookmarks.some(b => b.ayahId === ayahId)) {
+      bookmarks.push({ ayahId, createdAt: new Date() });
+      localStorage.setItem(this.BOOKMARKS_KEY, JSON.stringify(bookmarks));
+    }
+  }
+
+  /**
+   * Remove a bookmark
+   */
+  removeBookmark(ayahId: number): void {
+    const bookmarks = this.getBookmarks().filter(b => b.ayahId !== ayahId);
+    localStorage.setItem(this.BOOKMARKS_KEY, JSON.stringify(bookmarks));
+  }
+
+  /**
+   * Check if ayah is bookmarked
+   */
+  isBookmarked(ayahId: number): boolean {
+    return this.getBookmarks().some(b => b.ayahId === ayahId);
+  }
+
+  /**
+   * Toggle bookmark
+   */
+  toggleBookmark(ayahId: number): void {
+    if (this.isBookmarked(ayahId)) {
+      this.removeBookmark(ayahId);
+    } else {
+      this.addBookmark(ayahId);
+    }
+  }
+
+  // ========== Notes Methods ==========
+
+  /**
+   * Get all notes
+   */
+  private getNotes(): { [ayahId: number]: string } {
+    try {
+      const data = localStorage.getItem(this.NOTES_KEY);
+      return data ? JSON.parse(data) : {};
+    } catch (error) {
+      console.error('Error loading notes:', error);
+      return {};
+    }
+  }
+
+  /**
+   * Get note for a specific ayah
+   */
+  getNote(ayahId: number): string | null {
+    const notes = this.getNotes();
+    return notes[ayahId] || null;
+  }
+
+  /**
+   * Save a note for an ayah
+   */
+  saveNote(ayahId: number, text: string): void {
+    const notes = this.getNotes();
+    notes[ayahId] = text;
+    localStorage.setItem(this.NOTES_KEY, JSON.stringify(notes));
+  }
+
+  /**
+   * Remove a note
+   */
+  removeNote(ayahId: number): void {
+    const notes = this.getNotes();
+    delete notes[ayahId];
+    localStorage.setItem(this.NOTES_KEY, JSON.stringify(notes));
+  }
+
+  /**
+   * Check if ayah has a note
+   */
+  hasNote(ayahId: number): boolean {
+    return !!this.getNote(ayahId);
+  }
+
+  /**
+   * Get all ayahs with notes
+   */
+  getAllNotes(): { ayahId: number; text: string }[] {
+    const notes = this.getNotes();
+    return Object.entries(notes).map(([ayahId, text]) => ({
+      ayahId: parseInt(ayahId),
+      text
+    }));
   }
 }

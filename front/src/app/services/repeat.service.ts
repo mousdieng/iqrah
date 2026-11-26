@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, interval, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, interval, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Ayah, RepeatConfig, RepeatMode, RepeatState } from '../models';
+import { Ayah, RepeatConfig, RepeatMode, RepeatState, RepeatStyle } from '../models';
 import { AudioService } from './audio.service';
 import { QuranService } from './quran.service';
 
@@ -11,17 +11,25 @@ import { QuranService } from './quran.service';
 export class RepeatService {
   private repeatStateSubject = new BehaviorSubject<RepeatState>({
     mode: RepeatMode.NONE,
+    repeatStyle: RepeatStyle.WHOLE,
     isActive: false,
     currentIteration: 0,
     totalIterations: 1,
+    currentAyahRepetition: 0,
+    currentAyahIndex: 0,
+    totalAyahs: 0,
     pauseDuration: 0
   });
 
   public repeatState$ = this.repeatStateSubject.asObservable();
 
+  private pageNavigationSubject = new Subject<'next' | 'prev'>();
+  public pageNavigation$ = this.pageNavigationSubject.asObservable();
+
   private pauseSubscription?: Subscription;
   private currentAyahs: Ayah[] = [];
-  private currentAyahIndex: number = 0;
+  private currentConfig?: RepeatConfig;
+  private awaitingPageLoad = false;
 
   constructor(
     private audioService: AudioService,
@@ -38,55 +46,93 @@ export class RepeatService {
    */
   repeatAyah(ayah: Ayah, config: RepeatConfig): void {
     this.currentAyahs = [ayah];
-    this.startRepeat(RepeatMode.AYAH, config, ayah.id);
+    this.currentConfig = { ...config, repeatStyle: RepeatStyle.PER_AYAH }; // Single ayah always per-ayah
+    this.startRepeat(RepeatMode.AYAH, this.currentConfig, ayah.id);
   }
 
   /**
    * Start repeating a Surah
    */
-  repeatSurah(surahNumber: number, config: RepeatConfig): void {
-    this.quranService.getSurah(surahNumber).subscribe(surah => {
-      if (surah && surah.ayahs) {
-        this.currentAyahs = surah.ayahs;
-        this.startRepeat(RepeatMode.SURAH, config, surahNumber);
-      }
+  repeatSurah(pageAyahs: Ayah[], config: RepeatConfig): void {
+    if (!pageAyahs.length) return;
+    this.currentAyahs = [...pageAyahs];
+    this.currentConfig = config;
+    this.startRepeat(RepeatMode.SURAH, config);
+  }
+
+  /**
+   * Update page ayahs when navigating during surah repeat
+   */
+  updatePageAyahs(ayahs: Ayah[]): void {
+    if (!this.awaitingPageLoad) return;
+    this.currentAyahs = [...ayahs];
+    this.awaitingPageLoad = false;
+
+    this.updateState({
+      currentAyahIndex: 0,
+      currentAyahRepetition: 0,
+      totalAyahs: ayahs.length,
+      currentAyah: ayahs[0]
     });
+
+    this.playCurrentAyah();
+  }
+
+  /**
+   * Start repeating selected Ayahs
+   */
+  repeatSelected(selectedAyahs: Ayah[], config: RepeatConfig): void {
+    if (selectedAyahs && selectedAyahs.length > 0) {
+      this.currentAyahs = [...selectedAyahs];
+      this.currentConfig = config;
+      this.startRepeat(RepeatMode.SELECTED, config);
+    }
   }
 
   /**
    * Start repeating a Page
    */
-  repeatPage(pageNumber: number, config: RepeatConfig): void {
-    this.quranService.getPage(pageNumber).subscribe(ayahs => {
-      if (ayahs && ayahs.length > 0) {
-        this.currentAyahs = ayahs;
-        this.startRepeat(RepeatMode.PAGE, config, pageNumber);
-      }
-    });
+  repeatPage(pageAyahs: Ayah[], config: RepeatConfig): void {
+    if (pageAyahs && pageAyahs.length > 0) {
+      this.currentAyahs = [...pageAyahs];
+      this.currentConfig = config;
+      this.startRepeat(RepeatMode.PAGE, config, pageAyahs[0].page);
+    }
   }
 
   /**
-   * Start repeating a Juz
+   * Start repeating a Juz (page by page like Surah mode)
    */
-  repeatJuz(juzNumber: number, config: RepeatConfig): void {
-    this.quranService.getJuz(juzNumber).subscribe(ayahs => {
-      if (ayahs && ayahs.length > 0) {
-        this.currentAyahs = ayahs;
-        this.startRepeat(RepeatMode.JUZ, config, juzNumber);
-      }
-    });
+  repeatJuz(juzNumber: number, config: RepeatConfig, pageAyahs?: Ayah[]): void {
+    this.currentConfig = config;
+
+    if (pageAyahs && pageAyahs.length > 0) {
+      // Use provided page ayahs (for page-by-page repeat)
+      this.currentAyahs = [...pageAyahs];
+      this.startRepeat(RepeatMode.JUZ, config, juzNumber);
+    } else {
+      // Fallback: load first page of juz
+      this.quranService.getJuz(juzNumber).subscribe(ayahs => {
+        if (ayahs && ayahs.length > 0) {
+          // Get only the first page's ayahs
+          const firstPage = ayahs[0].page;
+          const firstPageAyahs = ayahs.filter(a => a.page === firstPage);
+          this.currentAyahs = [...firstPageAyahs];
+          this.startRepeat(RepeatMode.JUZ, config, juzNumber);
+        }
+      });
+    }
   }
 
   /**
    * Start repeating a range of Ayahs
    */
   repeatRange(from: number, to: number, config: RepeatConfig): void {
+    this.currentConfig = config;
     this.quranService.getAyahRange(from, to).subscribe(ayahs => {
       if (ayahs && ayahs.length > 0) {
-        this.currentAyahs = ayahs;
-        this.updateState({
-          ayahRange: { from, to }
-        });
+        this.currentAyahs = [...ayahs];
+        this.updateState({ ayahRange: { from, to } });
         this.startRepeat(RepeatMode.RANGE, config);
       }
     });
@@ -101,25 +147,39 @@ export class RepeatService {
       return;
     }
 
+    console.log('Starting repeat:', {
+      mode,
+      style: config.repeatStyle,
+      count: config.count,
+      ayahsCount: this.currentAyahs.length
+    });
+
     // Update state
     this.updateState({
       mode,
+      repeatStyle: config.repeatStyle,
       isActive: true,
       currentIteration: 0,
       totalIterations: config.count,
+      currentAyahRepetition: 0,
+      currentAyahIndex: 0,
+      totalAyahs: this.currentAyahs.length,
       pauseDuration: config.pauseDuration,
       targetId,
       currentAyah: this.currentAyahs[0]
     });
 
     // Configure audio service
-    this.audioService.setAutoPlay(true);
-    if (config.reciter) {
+    this.audioService.setAutoPlay(false); // We handle auto-play ourselves
+    this.audioService.setAudioType(config.audioType);
+
+    if (config.audioType === 'recitation' && config.reciter) {
       this.audioService.setReciter(config.reciter);
+    } else if (config.audioType === 'tafsir' && config.tafsir) {
+      this.audioService.setTafsir(config.tafsir);
     }
 
     // Start playing
-    this.currentAyahIndex = 0;
     this.playCurrentAyah();
   }
 
@@ -129,13 +189,27 @@ export class RepeatService {
   private playCurrentAyah(): void {
     const state = this.repeatStateSubject.value;
 
-    if (!state.isActive || this.currentAyahIndex >= this.currentAyahs.length) {
+    if (!state.isActive || state.currentAyahIndex >= this.currentAyahs.length) {
       return;
     }
 
-    const ayah = this.currentAyahs[this.currentAyahIndex];
+    const ayah = this.currentAyahs[state.currentAyahIndex];
     this.updateState({ currentAyah: ayah });
-    this.audioService.loadAyah(ayah);
+
+    console.log('Playing ayah:', {
+      index: state.currentAyahIndex,
+      ayahNum: ayah.numberInSurah,
+      iteration: state.currentIteration,
+      ayahRepetition: state.currentAyahRepetition
+    });
+
+    // Load ayah with appropriate audio type
+    if (this.currentConfig?.audioType === 'recitation') {
+      this.audioService.loadAyah(ayah, this.currentConfig.reciter);
+    } else {
+      this.audioService.loadAyah(ayah, undefined, this.currentConfig?.tafsir);
+    }
+
     this.audioService.play();
   }
 
@@ -167,36 +241,107 @@ export class RepeatService {
   private continueRepeat(): void {
     const state = this.repeatStateSubject.value;
 
-    if (state.mode === RepeatMode.AYAH) {
-      // For single ayah, just repeat the same ayah
-      if (state.currentIteration < state.totalIterations - 1) {
+    console.log('Continue repeat:', {
+      mode: state.mode,
+      style: state.repeatStyle,
+      currentAyahIndex: state.currentAyahIndex,
+      currentAyahRepetition: state.currentAyahRepetition,
+      currentIteration: state.currentIteration,
+      totalIterations: state.totalIterations
+    });
+
+    if (state.repeatStyle === RepeatStyle.PER_AYAH) {
+      this.continuePerAyahRepeat(state);
+    } else {
+      this.continueWholeRepeat(state);
+    }
+  }
+
+  /**
+   * Continue repeat in PER_AYAH style: repeat each ayah X times before moving to next
+   */
+  private continuePerAyahRepeat(state: RepeatState): void {
+    const nextAyahRepetition = state.currentAyahRepetition + 1;
+
+    // Check if we need more repetitions of current ayah
+    if (nextAyahRepetition < state.totalIterations) {
+      this.updateState({ currentAyahRepetition: nextAyahRepetition });
+      this.playCurrentAyah();
+      return;
+    }
+
+    // Current ayah repetitions complete, move to next ayah
+    const nextAyahIndex = state.currentAyahIndex + 1;
+
+    if (nextAyahIndex < this.currentAyahs.length) {
+      // More ayahs to play
+      this.updateState({
+        currentAyahIndex: nextAyahIndex,
+        currentAyahRepetition: 0
+      });
+      this.playCurrentAyah();
+    } else if (state.mode === RepeatMode.SURAH || state.mode === RepeatMode.JUZ) {
+      // Surah/Juz mode: navigate to next page
+      this.awaitingPageLoad = true;
+      this.updateState({
+        currentAyahIndex: 0,
+        currentAyahRepetition: 0
+      });
+      this.pageNavigationSubject.next('next');
+    } else {
+      // All ayahs complete
+      this.stop();
+    }
+  }
+
+  /**
+   * Continue repeat in WHOLE style: play all ayahs, then repeat the whole set
+   */
+  private continueWholeRepeat(state: RepeatState): void {
+    const nextAyahIndex = state.currentAyahIndex + 1;
+
+    if (nextAyahIndex < this.currentAyahs.length) {
+      // More ayahs to play in current iteration
+      this.updateState({ currentAyahIndex: nextAyahIndex });
+      this.playCurrentAyah();
+      return;
+    }
+
+    // Reached end of ayahs list
+    if (state.mode === RepeatMode.SURAH || state.mode === RepeatMode.JUZ) {
+      // Surah/Juz mode: repeat this page X times, then move to next page
+      const nextIteration = state.currentIteration + 1;
+
+      if (nextIteration < state.totalIterations) {
+        // Repeat this page again
         this.updateState({
-          currentIteration: state.currentIteration + 1
+          currentAyahIndex: 0,
+          currentIteration: nextIteration
         });
         this.playCurrentAyah();
       } else {
-        this.stop();
+        // Page iterations complete, move to next page
+        this.awaitingPageLoad = true;
+        this.updateState({
+          currentAyahIndex: 0,
+          currentIteration: 0
+        });
+        this.pageNavigationSubject.next('next');
       }
     } else {
-      // For surah/page/juz/range, move to next ayah
-      this.currentAyahIndex++;
+      // Page/Selected/Range mode - repeat the whole set X times
+      const nextIteration = state.currentIteration + 1;
 
-      if (this.currentAyahIndex >= this.currentAyahs.length) {
-        // Reached end of ayahs list
-        if (state.currentIteration < state.totalIterations - 1) {
-          // Start over with next iteration
-          this.currentAyahIndex = 0;
-          this.updateState({
-            currentIteration: state.currentIteration + 1
-          });
-          this.playCurrentAyah();
-        } else {
-          // All iterations completed
-          this.stop();
-        }
-      } else {
-        // Play next ayah
+      if (nextIteration < state.totalIterations) {
+        // Start over with next iteration
+        this.updateState({
+          currentAyahIndex: 0,
+          currentIteration: nextIteration
+        });
         this.playCurrentAyah();
+      } else {
+        // All iterations completed
+        this.stop();
       }
     }
   }
@@ -233,22 +378,31 @@ export class RepeatService {
 
     this.updateState({
       mode: RepeatMode.NONE,
+      repeatStyle: RepeatStyle.WHOLE,
       isActive: false,
       currentIteration: 0,
+      currentAyahRepetition: 0,
+      currentAyahIndex: 0,
+      totalAyahs: 0,
       currentAyah: undefined
     });
 
     this.currentAyahs = [];
-    this.currentAyahIndex = 0;
+    this.currentConfig = undefined;
+    this.awaitingPageLoad = false;
   }
 
   /**
    * Skip to next ayah
    */
   skipToNext(): void {
-    if (this.currentAyahIndex < this.currentAyahs.length - 1) {
+    const state = this.repeatStateSubject.value;
+    if (state.currentAyahIndex < this.currentAyahs.length - 1) {
       this.audioService.stop();
-      this.currentAyahIndex++;
+      this.updateState({
+        currentAyahIndex: state.currentAyahIndex + 1,
+        currentAyahRepetition: 0
+      });
       this.playCurrentAyah();
     }
   }
@@ -257,9 +411,13 @@ export class RepeatService {
    * Skip to previous ayah
    */
   skipToPrevious(): void {
-    if (this.currentAyahIndex > 0) {
+    const state = this.repeatStateSubject.value;
+    if (state.currentAyahIndex > 0) {
       this.audioService.stop();
-      this.currentAyahIndex--;
+      this.updateState({
+        currentAyahIndex: state.currentAyahIndex - 1,
+        currentAyahRepetition: 0
+      });
       this.playCurrentAyah();
     }
   }
@@ -268,8 +426,6 @@ export class RepeatService {
    * Update repeat configuration
    */
   updateConfig(config: Partial<RepeatConfig>): void {
-    const state = this.repeatStateSubject.value;
-
     if (config.count !== undefined) {
       this.updateState({ totalIterations: config.count });
     }
@@ -278,8 +434,24 @@ export class RepeatService {
       this.updateState({ pauseDuration: config.pauseDuration });
     }
 
+    if (config.repeatStyle !== undefined) {
+      this.updateState({ repeatStyle: config.repeatStyle });
+    }
+
+    if (config.audioType) {
+      this.audioService.setAudioType(config.audioType);
+    }
+
     if (config.reciter) {
       this.audioService.setReciter(config.reciter);
+    }
+
+    if (config.tafsir) {
+      this.audioService.setTafsir(config.tafsir);
+    }
+
+    if (this.currentConfig) {
+      this.currentConfig = { ...this.currentConfig, ...config };
     }
   }
 
@@ -303,12 +475,32 @@ export class RepeatService {
    */
   getProgress(): number {
     const state = this.repeatStateSubject.value;
-    if (state.totalIterations === 0) return 0;
+    if (state.totalIterations === 0 || state.totalAyahs === 0) return 0;
 
-    const totalAyahs = this.currentAyahs.length * state.totalIterations;
-    const completedAyahs = (state.currentIteration * this.currentAyahs.length) + this.currentAyahIndex;
+    if (state.repeatStyle === RepeatStyle.PER_AYAH) {
+      // For per-ayah: (completed ayahs * iterations + current ayah repetitions) / (total ayahs * iterations)
+      const totalUnits = state.totalAyahs * state.totalIterations;
+      const completedUnits = (state.currentAyahIndex * state.totalIterations) + state.currentAyahRepetition;
+      return (completedUnits / totalUnits) * 100;
+    } else {
+      // For whole: (completed iterations * ayahs + current ayah index) / (total iterations * ayahs)
+      const totalUnits = state.totalIterations * state.totalAyahs;
+      const completedUnits = (state.currentIteration * state.totalAyahs) + state.currentAyahIndex;
+      return (completedUnits / totalUnits) * 100;
+    }
+  }
 
-    return (completedAyahs / totalAyahs) * 100;
+  /**
+   * Get human-readable progress text
+   */
+  getProgressText(): string {
+    const state = this.repeatStateSubject.value;
+
+    if (state.repeatStyle === RepeatStyle.PER_AYAH) {
+      return `Ayah ${state.currentAyahIndex + 1}/${state.totalAyahs} - Rép. ${state.currentAyahRepetition + 1}/${state.totalIterations}`;
+    } else {
+      return `Ayah ${state.currentAyahIndex + 1}/${state.totalAyahs} - Tour ${state.currentIteration + 1}/${state.totalIterations}`;
+    }
   }
 
   /**

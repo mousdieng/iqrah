@@ -8,11 +8,14 @@ import { Ayah, PlayerState, RepeatMode } from '../models';
 export class AudioService {
   private apiUrl = 'http://localhost:8080/api/audio';
   private audio: HTMLAudioElement;
+  private wakeLock: WakeLockSentinel | null = null;
 
   // State management
   private playerStateSubject = new BehaviorSubject<PlayerState>({
     isPlaying: false,
-    currentReciter: 'ar.alafasy',
+    currentReciter: 'minshawi',
+    currentTafsir: undefined,
+    audioType: 'recitation',
     volume: 1,
     playbackRate: 1,
     autoPlay: false,
@@ -31,12 +34,14 @@ export class AudioService {
   constructor() {
     this.audio = new Audio();
     this.setupAudioListeners();
+    this.setupWakeLockListeners();
   }
 
   private setupAudioListeners(): void {
     this.audio.addEventListener('ended', () => {
       this.audioEnded$.next();
       this.updateState({ isPlaying: false });
+      // Don't release wake lock here - repeat service might play next ayah
     });
 
     this.audio.addEventListener('error', (error) => {
@@ -61,6 +66,46 @@ export class AudioService {
   }
 
   /**
+   * Setup wake lock listeners to re-acquire lock when page becomes visible
+   */
+  private setupWakeLockListeners(): void {
+    document.addEventListener('visibilitychange', async () => {
+      if (document.visibilityState === 'visible' && this.playerStateSubject.value.isPlaying) {
+        await this.requestWakeLock();
+      }
+    });
+  }
+
+  /**
+   * Request screen wake lock to keep screen on during playback
+   */
+  private async requestWakeLock(): Promise<void> {
+    if ('wakeLock' in navigator) {
+      try {
+        this.wakeLock = await navigator.wakeLock.request('screen');
+        console.log('Wake lock acquired');
+      } catch (err) {
+        console.warn('Wake lock request failed:', err);
+      }
+    }
+  }
+
+  /**
+   * Release screen wake lock
+   */
+  private async releaseWakeLock(): Promise<void> {
+    if (this.wakeLock) {
+      try {
+        await this.wakeLock.release();
+        this.wakeLock = null;
+        console.log('Wake lock released');
+      } catch (err) {
+        console.warn('Wake lock release failed:', err);
+      }
+    }
+  }
+
+  /**
    * Get the audio URL for a specific Ayah
    */
   getAudioUrl(ayah: Ayah, reciter?: string): string {
@@ -78,10 +123,16 @@ export class AudioService {
   /**
    * Load an Ayah's audio
    */
-  loadAyah(ayah: Ayah, reciter?: string): void {
-    const url = this.getAudioUrl(ayah, reciter);
+  loadAyah(ayah: Ayah, reciter?: string, tafsir?: string): void {
+    const state = this.playerStateSubject.value;
+    const url = state.audioType === 'recitation'
+      ? this.getAudioUrl(ayah, reciter)
+      : this.getTafsirUrl(ayah, tafsir || state.currentTafsir || 'default');
     this.audio.src = url;
     this.audio.load();
+    // Re-apply playback rate and volume after loading (browser resets these)
+    this.audio.playbackRate = state.playbackRate;
+    this.audio.volume = state.volume;
     this.updateState({ currentAyah: ayah });
   }
 
@@ -94,6 +145,7 @@ export class AudioService {
       promise
         .then(() => {
           this.updateState({ isPlaying: true });
+          this.requestWakeLock();
         })
         .catch(error => {
           console.error('Play error:', error);
@@ -108,6 +160,7 @@ export class AudioService {
   pause(): void {
     this.audio.pause();
     this.updateState({ isPlaying: false });
+    this.releaseWakeLock();
   }
 
   /**
@@ -128,6 +181,7 @@ export class AudioService {
     this.audio.pause();
     this.audio.currentTime = 0;
     this.updateState({ isPlaying: false });
+    this.releaseWakeLock();
   }
 
   /**
@@ -151,6 +205,20 @@ export class AudioService {
    */
   setReciter(reciter: string): void {
     this.updateState({ currentReciter: reciter });
+  }
+
+  /**
+   * Set the audio type (recitation or tafsir)
+   */
+  setAudioType(type: 'recitation' | 'tafsir'): void {
+    this.updateState({ audioType: type });
+  }
+
+  /**
+   * Set the current tafsir
+   */
+  setTafsir(tafsir: string): void {
+    this.updateState({ currentTafsir: tafsir });
   }
 
   /**
@@ -264,6 +332,7 @@ export class AudioService {
    */
   destroy(): void {
     this.stop();
+    this.releaseWakeLock();
     this.audio.src = '';
     this.playerStateSubject.complete();
     this.audioEnded$.complete();

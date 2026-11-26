@@ -5,6 +5,15 @@ spring:
   application:
     name: quran-api
 
+  devtools:
+    restart:
+      enabled: true
+      poll-interval: 1s
+      quiet-period: 400ms
+      additional-paths: src/main/java
+    livereload:
+      enabled: true
+
   datasource:
     url: jdbc:postgresql://localhost:5432/quran_db
     driver-class-name: org.postgresql.Driver
@@ -31,6 +40,11 @@ spring:
   sql:
     init:
       mode: never
+
+# Audio files configuration
+# Set this to an external directory path if audio files are outside the project
+# audio:
+#   base-path: C:/path/to/audio/files
 
 logging:
   level:

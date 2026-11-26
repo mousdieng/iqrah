@@ -1,4 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles - Theme System */
+
+/* Theme CSS Variables */
+@import './styles/variables.css';
 
 /* PrimeIcons */
 @import "primeicons/primeicons.css";
@@ -6,23 +9,50 @@
 /* Google Fonts - Arabic */
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
 
+/* Theme-aware animations */
+@import './styles/animations.css';
+
 /* Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles */
+/* Custom Fonts */
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/lang/Figtree/Figtree.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuraNames';
+  src: url('/fonts/quran/surah-names/v1/sura_names.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Global Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #f8f9fa;
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Text Direction & Alignment */
 .arabic-text {
   font-family: 'Amiri', serif;
   direction: rtl;
@@ -36,24 +66,112 @@ body {
   direction: rtl;
   text-align: right;
   line-height: 2.5;
-  color: #1a2e0d;
+  color: var(--color-ayah-text);
+  transition: color var(--transition-normal);
 }
 
-/* Scrollbar customization */
+/* Scrollbar Customization - Theme-aware */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-scrollbar-track);
+  transition: background-color var(--transition-normal);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--color-scrollbar-thumb);
   border-radius: 4px;
+  transition: background-color var(--transition-normal);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--color-primary);
+}
+
+/* PrimeNG Global Overrides - Theme-aware */
+.p-button {
+  transition: all var(--transition-normal);
+}
+
+.p-button.p-button-primary {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.p-button.p-button-primary:hover {
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+}
+
+.p-select {
+  color: var(--color-text-primary) !important;
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-card-border) !important;
+}
+
+.p-select:focus {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 0.2rem var(--color-accent-alpha) !important;
+}
+
+.p-input-text {
+  color: var(--color-text-primary) !important;
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-card-border) !important;
+}
+
+.p-input-text:focus {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 0.2rem var(--color-accent-alpha) !important;
+}
+
+.p-dialog .p-dialog-header {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-card-border) !important;
+}
+
+.p-dialog .p-dialog-content {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Link styles */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-normal);
+}
+
+a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-background);
+}
+
+::-moz-selection {
+  background-color: var(--color-accent);
+  color: var(--color-background);
 }

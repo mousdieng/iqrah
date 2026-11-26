@@ -41,20 +41,65 @@
       <small class="text-gray-600">Temps de pause entre chaque répétition</small>
     </div>
 
-    <!-- Reciter Selection -->
+
+    <!-- Audio Type Selection -->
     <div class="field">
+      <label class="block text-sm font-semibold mb-3">
+        Type d'audio
+      </label>
+      <div class="flex gap-6">
+        <div class="flex items-center">
+          <p-radioButton
+            inputId="recitation"
+            name="audioType"
+            value="recitation"
+            [(ngModel)]="audioType">
+          </p-radioButton>
+          <label for="recitation" class="ml-2 cursor-pointer">Récitation</label>
+        </div>
+        <div class="flex items-center">
+          <p-radioButton
+            inputId="tafsir"
+            name="audioType"
+            value="tafsir"
+            [(ngModel)]="audioType">
+          </p-radioButton>
+          <label for="tafsir" class="ml-2 cursor-pointer">Tafsir</label>
+        </div>
+      </div>
+      <small class="text-gray-600">Choisissez entre récitation et tafsir</small>
+    </div>
+
+    <!-- Reciter Selection (conditional) -->
+    <div class="field" *ngIf="audioType === 'recitation'">
       <label for="reciter" class="block text-sm font-semibold mb-2">
         Récitateur
       </label>
       <p-select
         [(ngModel)]="selectedReciter"
-        [options]="reciters"
+        [options]="reciterOptions"
         optionLabel="label"
         optionValue="value"
         placeholder="Choisir un récitateur"
         [style]="{ width: '100%' }">
       </p-select>
       <small class="text-gray-600">Sélectionnez votre récitateur préféré</small>
+    </div>
+
+    <!-- Tafsir Selection (conditional) -->
+    <div class="field" *ngIf="audioType === 'tafsir'">
+      <label for="tafsir" class="block text-sm font-semibold mb-2">
+        Tafsir
+      </label>
+      <p-select
+        [(ngModel)]="selectedTafsir"
+        [options]="tafsirOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Choisir un tafsir"
+        [style]="{ width: '100%' }">
+      </p-select>
+      <small class="text-gray-600">Sélectionnez votre tafsir préféré</small>
     </div>
 
     <!-- Preview Info -->
@@ -66,7 +111,13 @@
           <ul class="text-sm text-blue-800 space-y-1">
             <li>• Répétitions: {{ repeatCount }} fois</li>
             <li>• Pause: {{ pauseDuration }} secondes</li>
-            <li>• Récitateur: {{ reciters.find(r => r.value === selectedReciter)?.label }}</li>
+            <li>• Type: {{ audioType === 'recitation' ? 'Récitation' : 'Tafsir' }}</li>
+            <li *ngIf="audioType === 'recitation'">
+              • Récitateur: {{ reciterOptions.find(r => r.value === selectedReciter)?.label }}
+            </li>
+            <li *ngIf="audioType === 'tafsir'">
+              • Tafsir: {{ tafsirOptions.find(t => t.value === selectedTafsir)?.label }}
+            </li>
           </ul>
         </div>
       </div>

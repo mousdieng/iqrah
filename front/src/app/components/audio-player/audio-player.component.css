@@ -11,21 +11,157 @@
   animation: spin 2s linear infinite;
 }
 
+/* Audio player uses theme variables */
+:host {
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
 :host ::ng-deep {
   .p-slider {
-    background: #e5e7eb;
+    background: var(--color-card-border);
   }
 
   .p-slider .p-slider-range {
-    background: #D4AF37;
+    background: var(--color-accent);
   }
 
   .p-slider .p-slider-handle {
-    border-color: #D4AF37;
+    border-color: var(--color-accent);
   }
 
   .p-slider .p-slider-handle:hover {
-    background: #D4AF37;
-    border-color: #D4AF37;
+    background: var(--color-accent);
+    border-color: var(--color-accent);
   }
+
+  /* Select styling */
+  .p-select {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-card-border) !important;
+  }
+
+  .p-select .p-select-label {
+    color: var(--color-text-primary) !important;
+  }
+
+  .p-select-panel {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-card-border) !important;
+  }
+
+  .p-select-item {
+    color: var(--color-text-primary) !important;
+  }
+
+  .p-select-item:hover {
+    background-color: var(--color-surface-hover) !important;
+  }
+
+  .p-select-item.p-highlight {
+    background-color: var(--color-accent-alpha) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  /* Button styling */
+  .p-button {
+    transition: all var(--transition-normal);
+  }
+
+  .p-button-primary {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+  }
+
+  .p-button-primary:hover {
+    background-color: var(--color-primary-dark) !important;
+    border-color: var(--color-primary-dark) !important;
+  }
+}
+
+/* Native range input styling for progress and volume */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Track styling */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--color-card-border);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--color-card-border);
+}
+
+/* Thumb styling */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 2px solid var(--color-surface);
+  margin-top: -5px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 2px solid var(--color-surface);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+  transform: scale(1.15);
+}
+
+/* Fill the track up to the thumb position using a linear gradient trick */
+input[type="range"].progress-bar {
+  --progress: 0%;
+}
+
+input[type="range"].progress-bar::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    var(--color-accent) 0%,
+    var(--color-accent) var(--progress),
+    var(--color-card-border) var(--progress),
+    var(--color-card-border) 100%
+  );
+}
+
+input[type="range"].progress-bar::-moz-range-track {
+  background: linear-gradient(
+    to right,
+    var(--color-accent) 0%,
+    var(--color-accent) var(--progress),
+    var(--color-card-border) var(--progress),
+    var(--color-card-border) 100%
+  );
+}
+
+/* Disabled state */
+input[type="range"]:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
 }

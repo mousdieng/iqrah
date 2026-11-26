@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Connection Test</h1>
+    <button onclick="testAPI()">Test Backend Connection</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Loading...';
+
+            try {
+                const response = await fetch('http://localhost:8080/api/quran/surahs');
+                const data = await response.json();
+
+                resultDiv.textContent = `SUCCESS!\n\nReceived ${data.data.length} Surahs\n\nFirst Surah:\n${JSON.stringify(data.data[0], null, 2)}`;
+            } catch (error) {
+                resultDiv.textContent = `ERROR: ${error.message}\n\n${error.stack}`;
+            }
+        }
+    </script>
+</body>
+</html>

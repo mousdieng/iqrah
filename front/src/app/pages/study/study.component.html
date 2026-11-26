@@ -1,0 +1,151 @@
+<div class="study-container">
+  <!-- Header -->
+  <div class="study-header">
+    <div class="header-left">
+      <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/surahs"></button>
+      <h1>Mode Étude</h1>
+    </div>
+
+    <div class="header-center">
+      <p-select
+        [options]="surahOptions"
+        [(ngModel)]="surahId"
+        (onChange)="onSurahChange($event.value)"
+        placeholder="Choisir une sourate"
+        [filter]="true"
+        filterPlaceholder="Rechercher..."
+        styleClass="surah-select">
+      </p-select>
+    </div>
+
+    <div class="header-right">
+      <div class="font-size-controls">
+        <button pButton icon="pi pi-minus" class="p-button-text p-button-sm"
+          (click)="fontSize = fontSize === 'large' ? 'medium' : 'small'"
+          [disabled]="fontSize === 'small'"></button>
+        <span class="font-label">Aa</span>
+        <button pButton icon="pi pi-plus" class="p-button-text p-button-sm"
+          (click)="fontSize = fontSize === 'small' ? 'medium' : 'large'"
+          [disabled]="fontSize === 'large'"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !surahId" class="empty-state">
+    <i class="pi pi-book" style="font-size: 4rem; opacity: 0.5;"></i>
+    <h2>Sélectionnez une sourate</h2>
+    <p>Choisissez une sourate dans le menu ci-dessus pour commencer votre session d'étude.</p>
+  </div>
+
+  <!-- Surah Content -->
+  <div *ngIf="!loading && selectedSurah" class="study-content">
+    <!-- Surah Info Bar -->
+    <div class="surah-info-bar">
+      <div class="surah-name">{{ selectedSurah.name }}</div>
+      <div class="progress-info">
+        <span class="memorized-count">{{ memorizedCount }} / {{ currentAyahs.length }} mémorisées</span>
+        <p-progressBar [value]="memorizedPercentage" [showValue]="false" styleClass="progress-mini"></p-progressBar>
+      </div>
+    </div>
+
+    <!-- Loading Ayahs -->
+    <div *ngIf="loadingAyahs" class="loading-ayahs">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Chargement des versets...</span>
+    </div>
+
+    <!-- Ayahs List -->
+    <div *ngIf="!loadingAyahs" class="ayahs-list">
+      <div *ngFor="let ayah of currentAyahs; let i = index"
+        class="ayah-study-card"
+        [class.playing]="isCurrentAyah(ayah.id)"
+        [class.memorized]="isAyahMemorized(ayah.id)">
+
+        <!-- Ayah Number Badge -->
+        <div class="ayah-number-badge">
+          <span>{{ convertToArabicNumber(ayah.numberInSurah) }}</span>
+        </div>
+
+        <!-- Arabic Text -->
+        <div class="ayah-arabic" [class]="getFontSizeClass()" (click)="togglePlayAyah(ayah)">
+          {{ ayah.text }}
+        </div>
+
+        <!-- Translation Placeholder -->
+        <div *ngIf="showTranslation" class="ayah-translation">
+          <p class="translation-placeholder">La traduction sera ajoutée prochainement...</p>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="ayah-actions">
+          <button pButton
+            [icon]="isAyahPlaying(ayah.id) ? 'pi pi-pause' : 'pi pi-play'"
+            class="p-button-rounded p-button-text action-btn play-btn"
+            (click)="togglePlayAyah(ayah)"
+            pTooltip="Écouter"></button>
+
+          <button pButton
+            [icon]="isAyahMemorized(ayah.id) ? 'pi pi-star-fill' : 'pi pi-star'"
+            class="p-button-rounded p-button-text action-btn"
+            [class.memorized-btn]="isAyahMemorized(ayah.id)"
+            (click)="toggleMemorized(ayah, $event)"
+            [pTooltip]="isAyahMemorized(ayah.id) ? 'Retirer mémorisé' : 'Marquer mémorisé'"></button>
+
+          <button pButton
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-text action-btn"
+            [class.has-note]="hasNote(ayah.id)"
+            (click)="openNotesDialog(ayah, $event)"
+            pTooltip="Notes"></button>
+        </div>
+
+        <!-- Playing Indicator -->
+        <div *ngIf="isAyahPlaying(ayah.id)" class="playing-indicator">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notes Dialog -->
+<p-dialog
+  header="Notes"
+  [(visible)]="showNotesDialog"
+  [modal]="true"
+  [style]="{ width: '90vw', maxWidth: '500px' }"
+  [closable]="true"
+  [draggable]="false">
+
+  <div *ngIf="notesAyah" class="notes-dialog-content">
+    <div class="ayah-preview">
+      <span class="ayah-ref">Ayah {{ notesAyah.numberInSurah }}</span>
+      <p class="ayah-text-preview">{{ notesAyah.text }}</p>
+    </div>
+
+    <textarea
+      pTextarea
+      [(ngModel)]="notesText"
+      [autoResize]="true"
+      placeholder="Ajoutez vos notes ici..."
+      rows="5"
+      class="w-full">
+    </textarea>
+  </div>
+
+  <ng-template #footer>
+    <div class="dialog-footer">
+      <button pButton label="Annuler" class="p-button-text" (click)="closeNotesDialog()"></button>
+      <button pButton label="Sauvegarder" (click)="saveNote()"></button>
+    </div>
+  </ng-template>
+</p-dialog>

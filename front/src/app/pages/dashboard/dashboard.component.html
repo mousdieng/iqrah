@@ -1,0 +1,175 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/"></button>
+      <div class="header-title">
+        <h1>Tableau de Bord</h1>
+        <p>Votre progression de mémorisation</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading" class="dashboard-content">
+
+    <!-- Stats Cards -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <!-- Total Memorized -->
+        <div class="stat-card main-stat">
+          <div class="stat-icon bg-primary">
+            <i class="pi pi-star"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.memorized }}</span>
+            <span class="stat-label">Versets mémorisés</span>
+            <span class="stat-secondary">{{ stats.memorizedPercentage }}% du Coran</span>
+          </div>
+          <div class="progress-ring">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle"
+                [attr.stroke-dasharray]="stats.memorizedPercentage + ', 100'"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Due for Review -->
+        <div class="stat-card" routerLink="/study">
+          <div class="stat-icon bg-orange">
+            <i class="pi pi-refresh"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.dueForReview }}</span>
+            <span class="stat-label">À réviser</span>
+          </div>
+        </div>
+
+        <!-- Current Streak -->
+        <div class="stat-card">
+          <div class="stat-icon bg-green">
+            <i class="pi pi-bolt"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.currentStreak }}</span>
+            <span class="stat-label">Jours consécutifs</span>
+          </div>
+        </div>
+
+        <!-- Quiz Stats -->
+        <div class="stat-card" routerLink="/quiz">
+          <div class="stat-icon bg-purple">
+            <i class="pi pi-question-circle"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.totalQuizzes }}</span>
+            <span class="stat-label">Quiz complétés</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activity Calendar -->
+    <section class="section">
+      <div class="section-header">
+        <h2>Activité récente</h2>
+        <span class="subtitle">30 derniers jours</span>
+      </div>
+      <div class="activity-calendar">
+        <div class="calendar-grid">
+          <div
+            *ngFor="let day of activityDays"
+            class="calendar-day"
+            [class.none]="getActivityLevel(day.count) === 'none'"
+            [class.low]="getActivityLevel(day.count) === 'low'"
+            [class.medium]="getActivityLevel(day.count) === 'medium'"
+            [class.high]="getActivityLevel(day.count) === 'high'"
+            [title]="formatDate(day.date) + ': ' + day.count + ' activités'">
+          </div>
+        </div>
+        <div class="calendar-legend">
+          <span>Moins</span>
+          <div class="legend-squares">
+            <div class="calendar-day none"></div>
+            <div class="calendar-day low"></div>
+            <div class="calendar-day medium"></div>
+            <div class="calendar-day high"></div>
+          </div>
+          <span>Plus</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress by Surah -->
+    <section class="section" *ngIf="surahProgress.length > 0">
+      <div class="section-header">
+        <h2>Progression par sourate</h2>
+        <span class="subtitle">Top 10</span>
+      </div>
+      <div class="surah-progress-list">
+        <div *ngFor="let surah of surahProgress" class="surah-progress-item">
+          <div class="surah-info">
+            <span class="surah-name">{{ surah.surahName }}</span>
+            <span class="surah-count">{{ surah.memorized }} / {{ surah.totalAyahs }}</span>
+          </div>
+          <p-progressBar [value]="surah.percentage" [showValue]="false" styleClass="surah-progress-bar"></p-progressBar>
+          <span class="percentage">{{ surah.percentage }}%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="section" *ngIf="recentActivity.length > 0">
+      <div class="section-header">
+        <h2>Activité récente</h2>
+      </div>
+      <div class="activity-list">
+        <div *ngFor="let activity of recentActivity" class="activity-item">
+          <div class="activity-icon">
+            <i class="pi" [ngClass]="{
+              'pi-star': activity.type === 'memorization',
+              'pi-check': activity.type === 'quiz',
+              'pi-refresh': activity.type === 'review'
+            }"></i>
+          </div>
+          <div class="activity-info">
+            <span class="activity-desc">{{ activity.description }}</span>
+            <span class="activity-time">{{ getTimeAgo(activity.date) }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="section quick-actions">
+      <h2>Actions rapides</h2>
+      <div class="actions-grid">
+        <button pButton class="action-btn" routerLink="/study">
+          <i class="pi pi-book"></i>
+          <span>Mode Étude</span>
+        </button>
+        <button pButton class="action-btn" routerLink="/quiz">
+          <i class="pi pi-question-circle"></i>
+          <span>Faire un Quiz</span>
+        </button>
+        <button pButton class="action-btn" routerLink="/surahs">
+          <i class="pi pi-list"></i>
+          <span>Sourates</span>
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

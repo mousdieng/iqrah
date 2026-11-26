@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
+import { ThemeSwitcherComponent } from '../../shared/components/theme-switcher/theme-switcher.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule],
+  imports: [CommonModule, RouterModule, ButtonModule, ThemeSwitcherComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

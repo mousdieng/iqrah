@@ -1,0 +1,109 @@
+<div class="quiz-hub-container">
+  <!-- Header -->
+  <div class="quiz-header">
+    <div class="header-content">
+      <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/"></button>
+      <div class="header-title">
+        <h1>Quiz de Mémorisation</h1>
+        <p class="memorized-info">
+          <i class="pi pi-star-fill"></i>
+          {{ memorizedCount }} verset(s) mémorisé(s)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && memorizedCount === 0" class="empty-state">
+    <i class="pi pi-exclamation-circle" style="font-size: 4rem; color: var(--orange-500);"></i>
+    <h2>Aucun verset mémorisé</h2>
+    <p>Commencez par mémoriser quelques versets dans le mode Étude avant de faire un quiz.</p>
+    <button pButton label="Aller au mode Étude" icon="pi pi-book" routerLink="/study"></button>
+  </div>
+
+  <!-- Quiz Selection -->
+  <div *ngIf="!loading && memorizedCount > 0" class="quiz-content">
+    <!-- Quiz Type Selection -->
+    <section class="section">
+      <h2 class="section-title">Choisir un type de quiz</h2>
+      <div class="quiz-types-grid">
+        <div
+          *ngFor="let quiz of quizTypes"
+          class="quiz-type-card"
+          [class.selected]="isQuizTypeSelected(quiz.type)"
+          [attr.data-color]="quiz.color"
+          (click)="selectQuizType(quiz.type)">
+
+          <div class="quiz-icon" [class]="'bg-' + quiz.color">
+            <i class="pi" [ngClass]="quiz.icon"></i>
+          </div>
+          <h3>{{ quiz.label }}</h3>
+          <p>{{ quiz.description }}</p>
+
+          <div class="selected-indicator" *ngIf="isQuizTypeSelected(quiz.type)">
+            <i class="pi pi-check"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Configuration -->
+    <section class="section" *ngIf="selectedQuizType">
+      <h2 class="section-title">Configuration</h2>
+      <div class="config-grid">
+        <!-- Surah Filter -->
+        <div class="config-item">
+          <label>Sourate</label>
+          <p-select
+            [options]="surahOptions"
+            [(ngModel)]="selectedSurah"
+            placeholder="Toutes les sourates"
+            [filter]="true"
+            filterPlaceholder="Rechercher..."
+            styleClass="w-full">
+          </p-select>
+        </div>
+
+        <!-- Difficulty -->
+        <div class="config-item">
+          <label>Difficulté</label>
+          <p-select
+            [options]="difficultyOptions"
+            [(ngModel)]="selectedDifficulty"
+            styleClass="w-full">
+          </p-select>
+        </div>
+
+        <!-- Question Count -->
+        <div class="config-item">
+          <label>Nombre de questions</label>
+          <p-inputNumber
+            [(ngModel)]="questionCount"
+            [min]="1"
+            [max]="50"
+            [showButtons]="true"
+            styleClass="w-full">
+          </p-inputNumber>
+        </div>
+      </div>
+    </section>
+
+    <!-- Start Button -->
+    <div class="start-section" *ngIf="selectedQuizType">
+      <button
+        pButton
+        label="Commencer le quiz"
+        icon="pi pi-play"
+        class="start-button"
+        [disabled]="!canStartQuiz()"
+        (click)="startQuiz()">
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,240 @@
+{
+  "surahId": 1,
+  "name": "Al-Fatiha",
+  "verses": 7,
+  "startAyahId": 1,
+  "ayahs": {
+    "1": {
+      "ayahId": 1,
+      "surahId": 1,
+      "numberInSurah": 1,
+      "translations": {
+        "en": {
+          "text": "In the name of Allah, the Entirely Merciful, the Especially Merciful.",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux.",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "Im Namen Allahs, des Allerbarmers, des Barmherzigen.",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "بِسْمِ", "grammar": "Nom (ism) au cas indirect (jarr) avec préposition ب", "meaning": "Au nom de" },
+          { "arabic": "اللَّهِ", "grammar": "Nom propre (ism 'alam) au cas indirect (majrur)", "meaning": "Allah (Dieu)" },
+          { "arabic": "الرَّحْمَٰنِ", "grammar": "Adjectif qualificatif (sifa) au cas indirect, forme intensive (fa'lan)", "meaning": "le Tout Miséricordieux" },
+          { "arabic": "الرَّحِيمِ", "grammar": "Adjectif qualificatif (sifa) au cas indirect, forme intensive (fa'il)", "meaning": "le Très Miséricordieux" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Cette formule d'ouverture, appelée 'Basmala', est une invocation par laquelle le musulman commence toute action importante. Elle rappelle que toute bénédiction vient d'Allah. Les deux noms 'Ar-Rahman' (le Tout Miséricordieux) et 'Ar-Rahim' (le Très Miséricordieux) expriment l'immensité de la miséricorde divine : Ar-Rahman englobe toute la création, tandis qu'Ar-Rahim désigne une miséricorde particulière envers les croyants.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "2": {
+      "ayahId": 2,
+      "surahId": 1,
+      "numberInSurah": 2,
+      "translations": {
+        "en": {
+          "text": "[All] praise is [due] to Allah, Lord of the worlds -",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "Louange à Allah, Seigneur de l'univers.",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "(Alles) Lob gehört Allah, dem Herrn der Welten,",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "الْحَمْدُ", "grammar": "Nom (ism) défini au cas nominatif (marfu'), sujet (mubtada')", "meaning": "la louange" },
+          { "arabic": "لِلَّهِ", "grammar": "Préposition ل + Nom propre au cas indirect (majrur), prédicat (khabar)", "meaning": "appartient à Allah" },
+          { "arabic": "رَبِّ", "grammar": "Nom (ism) au cas indirect, apposition (badal) ou qualificatif", "meaning": "Seigneur de" },
+          { "arabic": "الْعَالَمِينَ", "grammar": "Nom pluriel masculin sain au cas indirect (majrur), complément du nom (mudaf ilayh)", "meaning": "les mondes, l'univers" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Ce verset établit le fondement de la relation entre le Créateur et Sa création. 'Al-Hamd' (la louange) implique gratitude et reconnaissance pour toutes les perfections d'Allah. 'Rabb al-'Alamin' (Seigneur des mondes) indique qu'Allah est le Maître, le Sustentateur et l'Éducateur de tout l'univers - visible et invisible, humains, djinns, anges et toutes les créatures.",
+          "references": ["Ibn Kathir", "Al-Qurtubi"]
+        }
+      }
+    },
+    "3": {
+      "ayahId": 3,
+      "surahId": 1,
+      "numberInSurah": 3,
+      "translations": {
+        "en": {
+          "text": "The Entirely Merciful, the Especially Merciful,",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "Le Tout Miséricordieux, le Très Miséricordieux,",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "dem Allerbarmer, dem Barmherzigen,",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "الرَّحْمَٰنِ", "grammar": "Adjectif (sifa) ou apposition (badal) au cas indirect, forme fa'lan (intensif)", "meaning": "le Tout Miséricordieux" },
+          { "arabic": "الرَّحِيمِ", "grammar": "Adjectif (sifa) au cas indirect, forme fa'il (intensif persistant)", "meaning": "le Très Miséricordieux" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "La répétition de ces deux attributs divins après la Basmala souligne l'importance de la miséricorde dans la nature divine. Ar-Rahman est un attribut exclusif à Allah, décrivant Sa miséricorde qui englobe toutes Ses créatures sans distinction. Ar-Rahim exprime la miséricorde spéciale réservée aux croyants dans l'au-delà.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "4": {
+      "ayahId": 4,
+      "surahId": 1,
+      "numberInSurah": 4,
+      "translations": {
+        "en": {
+          "text": "Sovereign of the Day of Recompense.",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "Maître du Jour de la rétribution.",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "dem Herrscher am Tag des Gerichts.",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "مَالِكِ", "grammar": "Nom d'agent (ism fa'il) au cas indirect, apposition ou qualificatif de Allah", "meaning": "Maître, Souverain" },
+          { "arabic": "يَوْمِ", "grammar": "Nom (ism) au cas indirect, complément du nom (mudaf ilayh)", "meaning": "du jour" },
+          { "arabic": "الدِّينِ", "grammar": "Nom (ism) au cas indirect, second complément du nom", "meaning": "de la rétribution, du jugement" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Ce verset affirme la souveraineté absolue d'Allah sur le Jour du Jugement, où chaque âme sera rétribuée selon ses actes. 'Yawm ad-Din' (le Jour de la Rétribution) est le jour où toutes les créatures seront jugées. Allah seul possède l'autorité complète ce jour-là, car toutes les royautés terrestres auront disparu.",
+          "references": ["Ibn Kathir", "Al-Qurtubi", "At-Tabari"]
+        }
+      }
+    },
+    "5": {
+      "ayahId": 5,
+      "surahId": 1,
+      "numberInSurah": 5,
+      "translations": {
+        "en": {
+          "text": "It is You we worship and You we ask for help.",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "C'est Toi [Seul] que nous adorons, et c'est Toi [Seul] dont nous implorons secours.",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "Dir (allein) dienen wir, und Dich (allein) bitten wir um Hilfe.",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "إِيَّاكَ", "grammar": "Pronom personnel accusatif antéposé (maf'ul bihi muqaddam) pour l'exclusivité", "meaning": "Toi seul" },
+          { "arabic": "نَعْبُدُ", "grammar": "Verbe au présent (mudari'), 1ère personne pluriel, forme I", "meaning": "nous adorons" },
+          { "arabic": "وَإِيَّاكَ", "grammar": "Conjonction و + pronom accusatif antéposé", "meaning": "et Toi seul" },
+          { "arabic": "نَسْتَعِينُ", "grammar": "Verbe au présent, 1ère personne pluriel, forme X (istaf'ala) - demande", "meaning": "nous implorons secours" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Ce verset marque le pivot de la sourate, passant de la louange à l'invocation directe. Il établit le principe fondamental du Tawhid (l'unicité divine) : l'adoration et la demande d'aide sont exclusivement réservées à Allah. La structure grammatique arabe, plaçant 'iyyaka' (Toi) avant le verbe, renforce cette exclusivité absolue.",
+          "references": ["Ibn Kathir", "At-Tabari", "Al-Qurtubi"]
+        }
+      }
+    },
+    "6": {
+      "ayahId": 6,
+      "surahId": 1,
+      "numberInSurah": 6,
+      "translations": {
+        "en": {
+          "text": "Guide us to the straight path -",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "Guide-nous dans le droit chemin,",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "Führe uns den geraden Weg,",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "اهْدِنَا", "grammar": "Verbe à l'impératif (fi'l amr) + pronom suffixe نا (objet direct)", "meaning": "guide-nous" },
+          { "arabic": "الصِّرَاطَ", "grammar": "Nom (ism) au cas accusatif (mansub), second objet direct", "meaning": "le chemin, la voie" },
+          { "arabic": "الْمُسْتَقِيمَ", "grammar": "Adjectif qualificatif (sifa) au cas accusatif, participe actif forme X", "meaning": "droit, rectiligne" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Cette invocation est l'essence de toute prière. 'As-Sirat al-Mustaqim' (le droit chemin) représente l'Islam, la voie de la guidance divine qui mène au Paradis. Les savants expliquent que cette demande quotidienne (répétée au minimum 17 fois par jour dans les prières) rappelle au croyant son besoin constant de guidance divine dans tous les aspects de sa vie.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "7": {
+      "ayahId": 7,
+      "surahId": 1,
+      "numberInSurah": 7,
+      "translations": {
+        "en": {
+          "text": "The path of those upon whom You have bestowed favor, not of those who have earned [Your] anger or of those who are astray.",
+          "translator": "Sahih International"
+        },
+        "fr": {
+          "text": "Le chemin de ceux que Tu as comblés de faveurs, non pas de ceux qui ont encouru Ta colère, ni des égarés.",
+          "translator": "Muhammad Hamidullah"
+        },
+        "de": {
+          "text": "den Weg derer, denen Du Gnade erwiesen hast, nicht (den Weg) derer, die (Deinen) Zorn erregt haben, und nicht (den Weg) der Irregehenden.",
+          "translator": "Abu Rida Muhammad ibn Ahmad"
+        }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "صِرَاطَ", "grammar": "Nom au cas accusatif, apposition (badal) de الصراط المستقيم", "meaning": "le chemin de" },
+          { "arabic": "الَّذِينَ", "grammar": "Pronom relatif (ism mawsul) pluriel", "meaning": "ceux qui" },
+          { "arabic": "أَنْعَمْتَ", "grammar": "Verbe au passé (fi'l madi), 2ème personne singulier, forme IV (af'ala)", "meaning": "Tu as comblé de faveurs" },
+          { "arabic": "عَلَيْهِمْ", "grammar": "Préposition عَلَى + pronom suffixe هِمْ (3ème pers. pl.)", "meaning": "sur eux" },
+          { "arabic": "غَيْرِ", "grammar": "Nom au cas indirect, complément d'exception ou qualificatif", "meaning": "non pas, autre que" },
+          { "arabic": "الْمَغْضُوبِ", "grammar": "Participe passif (ism maf'ul) au cas indirect, forme I", "meaning": "ceux qui ont encouru la colère" },
+          { "arabic": "عَلَيْهِمْ", "grammar": "Préposition + pronom suffixe", "meaning": "sur eux" },
+          { "arabic": "وَلَا", "grammar": "Conjonction و + particule de négation لا", "meaning": "et non pas" },
+          { "arabic": "الضَّالِّينَ", "grammar": "Participe actif (ism fa'il) pluriel au cas indirect", "meaning": "les égarés" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Ce verset final précise la nature du droit chemin : celui des prophètes, des véridiques, des martyrs et des vertueux - ceux qu'Allah a comblés de Ses bienfaits. Il distingue ce chemin de deux déviations : ceux qui connaissent la vérité mais ne la suivent pas (ayant encouru la colère divine), et ceux qui s'égarent par ignorance. Le croyant demande ainsi d'être guidé vers la connaissance et l'action conformes à la volonté divine.",
+          "references": ["Ibn Kathir", "At-Tabari", "Al-Qurtubi"]
+        }
+      }
+    }
+  }
+}
