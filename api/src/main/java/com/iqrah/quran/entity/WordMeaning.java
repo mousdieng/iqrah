@@ -25,7 +25,8 @@ public class WordMeaning {
     @Column(name = "word_index", nullable = false)
     private Integer wordIndex;
 
-    @Column(name = "arabic_word", nullable = false)
+    // Holds a whole Arabic phrase, which can exceed 255 characters
+    @Column(name = "arabic_word", nullable = false, columnDefinition = "TEXT")
     private String arabicWord;
 
     @Column(name = "grammar_fr", columnDefinition = "TEXT")
