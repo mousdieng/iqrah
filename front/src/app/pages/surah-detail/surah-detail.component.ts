@@ -13,6 +13,7 @@ import { AudioService } from '../../services/audio.service';
 import { RepeatService } from '../../services/repeat.service';
 import { StorageService } from '../../services/storage.service';
 import { TranslationService } from '../../services/translation.service';
+import { ReadingHistoryService } from '../../services/reading-history.service';
 import { SurahDTO, Ayah, RepeatConfig, RepeatMode, RepeatStyle, PlayerState, AyahTranslation } from '../../models';
 import { RepeatControlsComponent } from '../../components/repeat-controls/repeat-controls.component';
 import { AudioPlayerComponent } from "../../components/audio-player/audio-player.component";
@@ -101,6 +102,9 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   // View mode
   viewMode: ViewMode = 'mushaf';
 
+  /** Ayah to highlight and scroll to, from ?ayah= (global ayah id) */
+  focusAyahId: number | null = null;
+
   // Mushaf page: every ayah printed on the current page, across surahs
   pageAyahs: Ayah[] = [];
   pageBlocks: PageBlock[] = [];
@@ -129,6 +133,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
     private repeatService: RepeatService,
     private storageService: StorageService,
     private translationService: TranslationService,
+    private readingHistory: ReadingHistoryService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -139,6 +144,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
       .subscribe(([params, queryParams]) => {
         this.surahId = +params['id'];
         this.savedPageFromUrl = queryParams['page'] ? +queryParams['page'] : null;
+        this.focusAyahId = queryParams['ayah'] ? +queryParams['ayah'] : null;
         const urlMode = queryParams['mode'];
         const storedMode = localStorage.getItem(VIEW_MODE_KEY);
         this.viewMode = this.isViewMode(urlMode) ? urlMode
@@ -205,7 +211,15 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
           ? restored
           : start;
 
-        this.loadPage(this.currentPage);
+        // Opened on a specific ayah (e.g. from Mémoriser) without a page: find the page that holds it first
+        if (this.focusAyahId && !restored) {
+          this.quranService.getAyah(this.focusAyahId).subscribe(ayah => {
+            if (ayah?.page && ayah.page >= start && ayah.page <= end) this.currentPage = ayah.page;
+            this.loadPage(this.currentPage);
+          });
+        } else {
+          this.loadPage(this.currentPage);
+        }
         this.loadSurahTranslations();
         this.cdr.detectChanges();
       },
@@ -241,8 +255,10 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
         this.loading      = false;
         this.loadingPage  = false;
 
-        // Persist current page in the URL (replaceUrl keeps history clean)
+        // Persist current page in the URL (replaceUrl keeps history clean) and for "Reprendre la lecture"
         this.updatePageUrl();
+        this.readingHistory.record(this.surahId, pageNumber);
+        this.scrollToFocusedAyah();
 
         // Hand new ayahs to RepeatService if it is waiting for them
         if (this.repeatService.getState().mode === RepeatMode.SURAH) {
@@ -401,6 +417,16 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** Brings the ?ayah= ayah into view once its page is rendered */
+  private scrollToFocusedAyah(): void {
+    const id = this.focusAyahId;
+    if (!id || !this.pageAyahs.some(a => a.id === id)) return;
+    this.cdr.detectChanges();
+    requestAnimationFrame(() => {
+      document.querySelector(`[data-ayah-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   isQuarterStart(ayahId: number): boolean {
     return this.quarterStartIds.has(ayahId);
   }
@@ -451,21 +477,13 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
     this.storageService.toggleFavorite(ayahId);
   }
 
-  onToggleMemorized(ayahId: number): void {
-    const ayah = this.surah?.ayahs.find(a => a.id === ayahId);
-    if (ayah) {
-      const progress = this.storageService.getAyahProgress(ayahId);
-      if (progress?.memorized) {
-        // Already memorized, unmark it
-        this.storageService.updateProgress({
-          ayahId,
-          surahId: ayah.surahId,
-          memorized: false
-        });
-      } else {
-        // Mark as memorized
-        this.storageService.markAsMemorized(ayahId, ayah.surahId);
-      }
+  /** Uses the ayah itself (the surah endpoint does not return its ayahs, so they can't be looked up there) */
+  onToggleMemorized(ayah: Ayah): void {
+    const progress = this.storageService.getAyahProgress(ayah.id);
+    if (progress?.memorized) {
+      this.storageService.updateProgress({ ayahId: ayah.id, surahId: ayah.surahId, memorized: false });
+    } else {
+      this.storageService.markAsMemorized(ayah.id, ayah.surahId);
     }
   }
 
@@ -575,7 +593,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
       {
         label: isMemorized ? 'Retirer mémorisé' : 'Marquer comme mémorisé',
         icon: isMemorized ? 'pi pi-star-fill' : 'pi pi-star',
-        command: () => this.onToggleMemorized(ayah.id)
+        command: () => this.onToggleMemorized(ayah)
       }
     ];
   }

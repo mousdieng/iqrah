@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import {
   QuizType, DifficultyLevel, Ayah, QuizSession, QuizResult,
   FillBlankQuestion, WritingQuestion, PlayerState
 } from '../../models';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, forkJoin, takeUntil } from 'rxjs';
 
 interface QuizAnswer {
   ayahId: number;
@@ -96,7 +96,8 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
     private router: Router,
     private quranService: QuranService,
     private audioService: AudioService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +114,7 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
     // Audio state subscription
     this.audioService.playerState$.pipe(takeUntil(this.destroy$)).subscribe(state => {
       this.playerState = state;
+      this.cdr.markForCheck();
     });
   }
 
@@ -133,7 +135,7 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
       .map(([id, _]) => parseInt(id));
 
     if (memorizedAyahIds.length === 0) {
-      this.router.navigate(['/quiz']);
+      this.router.navigate(['/memorize/quiz']);
       return;
     }
 
@@ -155,19 +157,17 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
   }
 
   loadAyahs(ayahIds: number[]): void {
-    // For simplicity, load all surahs and extract ayahs
-    // In a real app, you'd have a backend endpoint for this
-    this.quranService.getAllSurahs().subscribe({
-      next: (surahs) => {
-        const allAyahs: Ayah[] = [];
-        surahs.forEach(surah => {
-          if (surah.ayahs) {
-            allAyahs.push(...surah.ayahs);
-          }
-        });
+    if (!ayahIds.length) {
+      this.questions = [];
+      this.loading = false;
+      this.cdr.markForCheck();
+      return;
+    }
 
-        this.questions = allAyahs.filter(a => ayahIds.includes(a.id));
-        this.questions = this.shuffleArray(this.questions);
+    // Fetch exactly the selected ayahs (the surah list endpoint does not include ayah texts)
+    forkJoin(ayahIds.map(id => this.quranService.getAyah(id))).subscribe({
+      next: (ayahs) => {
+        this.questions = this.shuffleArray(ayahs.filter((a): a is Ayah => !!a));
 
         // Create session
         this.session = {
@@ -180,10 +180,12 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
 
         this.loading = false;
         this.loadCurrentQuestion();
+        this.cdr.markForCheck();
       },
       error: (error) => {
         console.error('Error loading ayahs:', error);
         this.loading = false;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -315,6 +317,7 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
     this.elapsedTime = 0;
     this.timerInterval = setInterval(() => {
       this.elapsedTime = Math.floor((Date.now() - this.questionStartTime) / 1000);
+      this.cdr.markForCheck();
     }, 1000);
   }
 
@@ -494,7 +497,7 @@ export class QuizSessionComponent implements OnInit, OnDestroy {
   }
 
   exitQuiz(): void {
-    this.router.navigate(['/quiz']);
+    this.router.navigate(['/memorize/quiz']);
   }
 
   restartQuiz(): void {

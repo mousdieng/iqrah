@@ -1,5 +1,4 @@
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
 import { Theme, CSS_VARIABLE_MAP } from '../models/theme.models';
 import { THEMES, DEFAULT_THEME } from '../config/themes.config';
 import { StorageService } from '../../services/storage.service';
@@ -8,78 +7,47 @@ import { StorageService } from '../../services/storage.service';
 export class ThemeService {
   private storageService = inject(StorageService);
 
-  private themeSubject = new BehaviorSubject<Theme>(DEFAULT_THEME);
-  public theme$ = this.themeSubject.asObservable();
+  /** Current theme; templates can read it directly */
+  readonly theme = signal<Theme>(DEFAULT_THEME);
 
   constructor() {
     this.loadSavedTheme();
   }
 
-  /**
-   * Get current theme
-   */
   getTheme(): Theme {
-    return this.themeSubject.value;
+    return this.theme();
   }
 
-  /**
-   * Get all available themes
-   */
   getThemes(): Theme[] {
     return THEMES;
   }
 
-  /**
-   * Get themes grouped by category
-   */
-  getThemesByCategory() {
-    return {
-      islamic: THEMES.filter(t => t.category === 'islamic'),
-      accessibility: THEMES.filter(t => t.category === 'accessibility'),
-    };
-  }
-
-  /**
-   * Set theme by ID
-   */
+  /** Applies a theme by id; unknown ids (e.g. themes from an older version) fall back to the default */
   setTheme(themeId: string): void {
-    const theme = THEMES.find(t => t.id === themeId);
-    if (theme) {
-      this.themeSubject.next(theme);
-      this.applyTheme(theme);
-      this.storageService.saveSetting('theme', themeId);
-    }
+    const theme = THEMES.find(t => t.id === themeId) ?? DEFAULT_THEME;
+    this.theme.set(theme);
+    this.applyTheme(theme);
+    this.storageService.saveSetting('theme', theme.id);
   }
 
-  /**
-   * Apply theme to DOM
-   */
   private applyTheme(theme: Theme): void {
-    // Set data-theme attribute for CSS selector
-    document.documentElement.setAttribute('data-theme', theme.id);
-    document.body.setAttribute('data-theme', theme.id);
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme.id);
+    root.style.colorScheme = theme.id === 'sombre' ? 'dark' : 'light';
 
-    // Apply CSS custom properties
     Object.entries(theme.colors).forEach(([colorKey, colorValue]) => {
       const cssVar = CSS_VARIABLE_MAP[colorKey as keyof typeof CSS_VARIABLE_MAP];
-      if (cssVar) {
-        document.documentElement.style.setProperty(cssVar, colorValue);
-      }
+      if (cssVar) root.style.setProperty(cssVar, colorValue);
     });
 
-    // Apply effects (shadows, etc.)
     Object.entries(theme.effects).forEach(([effectKey, effectValue]) => {
-      document.documentElement.style.setProperty(`--effect-${effectKey}`, effectValue);
+      root.style.setProperty(`--effect-${effectKey}`, effectValue);
     });
   }
 
-  /**
-   * Load saved theme from storage or use default
-   */
   private loadSavedTheme(): void {
     try {
-      const savedThemeId = this.storageService.loadSetting('theme', DEFAULT_THEME.id) as string;
-      this.setTheme(savedThemeId);
+      this.setTheme(this.storageService.loadSetting('theme', DEFAULT_THEME.id) as string);
     } catch (error) {
       console.error('Error loading theme:', error);
       this.setTheme(DEFAULT_THEME.id);

@@ -1,164 +1,79 @@
-<div class="container mx-auto px-4 py-8 pb-32">
+<div class="page reader">
   @if (loading) {
-    <div class="text-center py-20">
-      <i class="pi pi-spinner pi-spin text-6xl" style="color: var(--color-accent);"></i>
-      <p class="mt-4 text-xl" style="color: var(--color-text-secondary);">Chargement...</p>
-    </div>
+    <div class="loading-state"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Chargement de la sourate…</div>
   } @else if (surah) {
-    <!-- Surah Header -->
-    <div class="text-white rounded-xl shadow-xl p-8 mb-8" style="background: var(--color-header-bg);">
-      <div class="flex items-center justify-between mb-6">
-        <button
-          pButton
-          icon="pi pi-arrow-left"
-          class="p-button-rounded p-button-text text-white"
-          (click)="navigateToSurah('prev')"
-          [disabled]="surahId === 1">
+    <a routerLink="/surahs" class="btn btn-ghost btn-sm back-link">
+      <i class="pi pi-arrow-left" aria-hidden="true"></i> Toutes les sourates
+    </a>
+
+    <!-- Surah header -->
+    <header class="reader-head">
+      <button type="button" class="icon-button" (click)="navigateToSurah('prev')" [disabled]="surahId === 1"
+              title="Sourate précédente" aria-label="Sourate précédente">
+        <i class="pi pi-chevron-left" aria-hidden="true"></i>
+      </button>
+
+      <div class="reader-title">
+        <p class="reader-arabic" lang="ar" dir="rtl">{{ surah.name }}</p>
+        <h1 class="page-title">{{ surah.number }}. {{ surah.englishName }}</h1>
+        <p class="reader-meta">
+          {{ surah.englishNameTranslation }} · {{ surah.numberOfAyahs }} versets ·
+          {{ surah.revelationType === 'Meccan' ? 'La Mecque' : 'Médine' }}
+          @if (surah.startingPage) { · pages {{ surah.startingPage }}–{{ surah.endingPage }} }
+        </p>
+      </div>
+
+      <button type="button" class="icon-button" (click)="navigateToSurah('next')" [disabled]="surahId === 114"
+              title="Sourate suivante" aria-label="Sourate suivante">
+        <i class="pi pi-chevron-right" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <!-- Toolbar: reading mode + page -->
+    <div class="reader-toolbar">
+      <div class="segmented" role="tablist" aria-label="Mode d'affichage">
+        <button type="button" role="tab" [class.active]="viewMode === 'mushaf'" [attr.aria-selected]="viewMode === 'mushaf'"
+                (click)="setViewMode('mushaf')" title="Le texte tel qu'imprimé dans le Mushaf">
+          <i class="pi pi-book" aria-hidden="true"></i> Mushaf
         </button>
-
-        <div class="text-center flex-1">
-          <div class="text-5xl font-bold arabic-text mb-2" dir="rtl">
-            {{ surah.name }}
-          </div>
-          <h1 class="text-3xl font-bold mb-1">{{ surah.englishName }}</h1>
-          <p class="text-lg" style="color: var(--color-text-muted);">{{ surah.englishNameTranslation }}</p>
-        </div>
-
-        <button
-          pButton
-          icon="pi pi-arrow-right"
-          class="p-button-rounded p-button-text text-white"
-          (click)="navigateToSurah('next')"
-          [disabled]="surahId === 114">
+        <button type="button" role="tab" [class.active]="viewMode === 'study'" [attr.aria-selected]="viewMode === 'study'"
+                (click)="setViewMode('study')" title="Traductions, mot à mot et tafsir">
+          <i class="pi pi-language" aria-hidden="true"></i> Étude
         </button>
       </div>
 
-      <!-- Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="bg-white/10 rounded-lg p-4 text-center">
-          <i class="pi pi-hashtag text-2xl mb-2"></i>
-          <p class="text-sm opacity-90">Sourate N°</p>
-          <p class="text-2xl font-bold">{{ surah.number }}</p>
-        </div>
-        <div class="bg-white/10 rounded-lg p-4 text-center">
-          <i class="pi pi-book text-2xl mb-2"></i>
-          <p class="text-sm opacity-90">Versets</p>
-          <p class="text-2xl font-bold">{{ surah.numberOfAyahs }}</p>
-        </div>
-        <div class="bg-white/10 rounded-lg p-4 text-center">
-          <i class="pi pi-map-marker text-2xl mb-2"></i>
-          <p class="text-sm opacity-90">Révélation</p>
-          <p class="text-2xl font-bold">{{ surah.revelationType === 'Meccan' ? 'La Mecque' : 'Médine' }}</p>
-        </div>
-        <div class="bg-white/10 rounded-lg p-4 text-center">
-          <i class="pi pi-file text-2xl mb-2"></i>
-          <p class="text-sm opacity-90">Pages</p>
-          <p class="text-2xl font-bold">{{ surah.startingPage }} - {{ surah.endingPage }}</p>
-        </div>
-      </div>
+      <ng-container *ngTemplateOutlet="pager"></ng-container>
     </div>
 
-    <!-- Page Navigation Header -->
-    <div class="page-navigation rounded-lg shadow-md p-4 mb-6" style="background-color: var(--color-surface);">
-      <div class="flex items-center justify-between">
-        <button
-          pButton
-          icon="pi pi-chevron-left"
-          label="Page précédente"
-          class="p-button-outlined"
-          (click)="goToPreviousPage()"
-          [disabled]="!canGoToPreviousPage() || loadingPage">
-        </button>
-
-        <div class="flex flex-col items-center gap-1">
-          <p class="text-xs" style="color: var(--color-text-muted);">
-            Pages {{ surah.startingPage }} – {{ surah.endingPage }}
-          </p>
-          <div class="flex items-center gap-2">
-            <input
-              type="number"
-              [value]="currentPage"
-              [min]="surah.startingPage"
-              [max]="surah.endingPage"
-              (keydown.enter)="jumpToPage($event)"
-              (blur)="jumpToPage($event)"
-              class="page-input w-16 text-center text-sm font-semibold border rounded-md px-2 py-1 focus:outline-none focus:ring-2"
-              style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);"
-              [disabled]="loadingPage">
-            <span class="text-sm font-medium" style="color: var(--color-text-secondary);">
-              / {{ surah.endingPage }}
-            </span>
-          </div>
-        </div>
-
-        <button
-          pButton
-          icon="pi pi-chevron-right"
-          iconPos="right"
-          label="Page suivante"
-          class="p-button-outlined"
-          (click)="goToNextPage()"
-          [disabled]="!canGoToNextPage() || loadingPage">
-        </button>
-      </div>
-    </div>
-
-    <!-- View mode switch (+ study options) -->
-    <div class="view-toolbar rounded-lg shadow-md p-3 mb-6" style="background-color: var(--color-surface);">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div class="mode-switch" role="tablist" aria-label="Mode d'affichage">
-          <button type="button" role="tab" class="mode-option"
-                  [class.active]="viewMode === 'mushaf'" [attr.aria-selected]="viewMode === 'mushaf'"
-                  (click)="setViewMode('mushaf')">
-            <i class="pi pi-book"></i>
-            <span>Mushaf</span>
+    @if (viewMode === 'study') {
+      <div class="study-options">
+        <label class="study-lang">
+          Langue
+          <select class="input input-sm" [ngModel]="selectedLanguage" (ngModelChange)="onLanguageChange($event)">
+            @for (lang of languages; track lang.code) {
+              <option [value]="lang.code">{{ lang.label }}</option>
+            }
+          </select>
+        </label>
+        <div class="section-toggles" role="group" aria-label="Sections affichées">
+          <button type="button" class="section-toggle" [class.on]="showTranslations" [attr.aria-pressed]="showTranslations" (click)="toggleSection('translations')">
+            <i class="pi" [class.pi-check]="showTranslations" [class.pi-plus]="!showTranslations" aria-hidden="true"></i> Traductions
           </button>
-          <button type="button" role="tab" class="mode-option"
-                  [class.active]="viewMode === 'study'" [attr.aria-selected]="viewMode === 'study'"
-                  (click)="setViewMode('study')">
-            <i class="pi pi-language"></i>
-            <span>Étude</span>
+          <button type="button" class="section-toggle" [class.on]="showWordMeanings" [attr.aria-pressed]="showWordMeanings" (click)="toggleSection('wordMeanings')">
+            <i class="pi" [class.pi-check]="showWordMeanings" [class.pi-plus]="!showWordMeanings" aria-hidden="true"></i> Mot à mot
+          </button>
+          <button type="button" class="section-toggle" [class.on]="showTafsir" [attr.aria-pressed]="showTafsir" (click)="toggleSection('tafsir')">
+            <i class="pi" [class.pi-check]="showTafsir" [class.pi-plus]="!showTafsir" aria-hidden="true"></i> Tafsir
+          </button>
+          <button type="button" class="section-toggle" [class.on]="showAyahInfo" [attr.aria-pressed]="showAyahInfo" (click)="toggleSection('ayahInfo')">
+            <i class="pi" [class.pi-check]="showAyahInfo" [class.pi-plus]="!showAyahInfo" aria-hidden="true"></i> Repères
           </button>
         </div>
-
-        @if (viewMode === 'study') {
-          <div class="flex flex-wrap items-center gap-4">
-            <label class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
-              Langue principale
-              <select
-                [ngModel]="selectedLanguage"
-                (ngModelChange)="onLanguageChange($event)"
-                class="px-2 py-1 rounded-md border text-sm"
-                style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);">
-                @for (lang of languages; track lang.code) {
-                  <option [value]="lang.code">{{ lang.label }}</option>
-                }
-              </select>
-            </label>
-            <div class="section-toggles">
-              <button type="button" class="section-toggle" [class.on]="showTranslations" (click)="toggleSection('translations')">
-                <i class="pi" [class.pi-check-square]="showTranslations" [class.pi-stop]="!showTranslations"></i> Traductions
-              </button>
-              <button type="button" class="section-toggle" [class.on]="showWordMeanings" (click)="toggleSection('wordMeanings')">
-                <i class="pi" [class.pi-check-square]="showWordMeanings" [class.pi-stop]="!showWordMeanings"></i> Mot à mot
-              </button>
-              <button type="button" class="section-toggle" [class.on]="showTafsir" (click)="toggleSection('tafsir')">
-                <i class="pi" [class.pi-check-square]="showTafsir" [class.pi-stop]="!showTafsir"></i> Tafsir
-              </button>
-              <button type="button" class="section-toggle" [class.on]="showAyahInfo" (click)="toggleSection('ayahInfo')">
-                <i class="pi" [class.pi-check-square]="showAyahInfo" [class.pi-stop]="!showAyahInfo"></i> Repères
-              </button>
-            </div>
-          </div>
-        }
       </div>
-    </div>
+    }
 
     @if (loadingPage) {
-      <div class="text-center py-12">
-        <i class="pi pi-spinner pi-spin text-4xl" style="color: var(--color-accent);"></i>
-        <p class="mt-4 text-lg" style="color: var(--color-text-secondary);">Chargement de la page...</p>
-      </div>
+      <div class="loading-state"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Chargement de la page…</div>
     } @else if (viewMode === 'mushaf') {
       <!-- ═══ Mushaf mode: the page exactly as printed ═══ -->
       <div class="mushaf-book">
@@ -192,6 +107,8 @@
                   }
                   <span
                     class="ayah-wrapper"
+                    [attr.data-ayah-id]="ayah.id"
+                    [class.focused]="focusAyahId === ayah.id"
                     [class.other-surah]="ayah.surahId !== surahId"
                     [class.selectable]="isSelectionMode && ayah.surahId === surahId"
                     [class.selected]="isAyahSelected(ayah.id)"
@@ -232,6 +149,8 @@
 
         @for (ayah of currentAyahs; track ayah.id) {
           <article class="study-card"
+                   [attr.data-ayah-id]="ayah.id"
+                   [class.focused]="focusAyahId === ayah.id"
                    [class.playing]="isCurrentAyah(ayah.id)"
                    [class.selected]="isAyahSelected(ayah.id)">
             <header class="study-card-head">
@@ -252,6 +171,12 @@
                 <button type="button" class="icon-btn" [title]="isAyahPlaying(ayah.id) ? 'En lecture' : 'Écouter'"
                         (click)="playAyah(ayah)">
                   <i class="pi" [class.pi-volume-up]="isAyahPlaying(ayah.id)" [class.pi-play]="!isAyahPlaying(ayah.id)"></i>
+                </button>
+                <button type="button" class="icon-btn" [class.memorized]="isAyahMemorized(ayah.id)"
+                        [title]="isAyahMemorized(ayah.id) ? 'Mémorisé — cliquer pour retirer' : 'Marquer comme mémorisé'"
+                        [attr.aria-pressed]="isAyahMemorized(ayah.id)"
+                        (click)="onToggleMemorized(ayah)">
+                  <i class="pi" [class.pi-check-circle]="isAyahMemorized(ayah.id)" [class.pi-circle]="!isAyahMemorized(ayah.id)"></i>
                 </button>
                 <button type="button" class="icon-btn" [title]="isAyahBookmarked(ayah.id) ? 'Retirer le signet' : 'Ajouter un signet'"
                         (click)="toggleBookmark(ayah.id)">
@@ -326,62 +251,43 @@
       </div>
     }
 
-    <!-- Page Navigation Footer -->
-    <div class="page-navigation rounded-lg shadow-md p-4 mt-6" style="background-color: var(--color-surface);">
-      <div class="flex items-center justify-between">
-        <button
-          pButton
-          icon="pi pi-chevron-left"
-          label="Page précédente"
-          class="p-button-outlined"
-          (click)="goToPreviousPage()"
-          [disabled]="!canGoToPreviousPage() || loadingPage">
+    <!-- End of page: pager, then the next surah once the last page is reached -->
+    <div class="reader-foot">
+      <ng-container *ngTemplateOutlet="pager"></ng-container>
+      @if (!canGoToNextPage() && surahId < 114) {
+        <button type="button" class="btn btn-primary" (click)="navigateToSurah('next')">
+          Sourate suivante <i class="pi pi-arrow-right" aria-hidden="true"></i>
         </button>
-
-        <div class="flex flex-col items-center gap-1">
-          <p class="text-xs" style="color: var(--color-text-muted);">
-            Pages {{ surah.startingPage }} – {{ surah.endingPage }}
-          </p>
-          <div class="flex items-center gap-2">
-            <input
-              type="number"
-              [value]="currentPage"
-              [min]="surah.startingPage"
-              [max]="surah.endingPage"
-              (keydown.enter)="jumpToPage($event)"
-              (blur)="jumpToPage($event)"
-              class="page-input w-16 text-center text-sm font-semibold border rounded-md px-2 py-1 focus:outline-none focus:ring-2"
-              style="border-color: var(--color-card-border); background-color: var(--color-surface); color: var(--color-text-primary);"
-              [disabled]="loadingPage">
-            <span class="text-sm font-medium" style="color: var(--color-text-secondary);">
-              / {{ surah.endingPage }}
-            </span>
-          </div>
-        </div>
-
-        <button
-          pButton
-          icon="pi pi-chevron-right"
-          iconPos="right"
-          label="Page suivante"
-          class="p-button-outlined"
-          (click)="goToNextPage()"
-          [disabled]="!canGoToNextPage() || loadingPage">
-        </button>
-      </div>
+      }
     </div>
 
+    <ng-template #pager>
+      <div class="pager" role="group" aria-label="Pages de la sourate">
+        <button type="button" class="icon-button" (click)="goToPreviousPage()"
+                [disabled]="!canGoToPreviousPage() || loadingPage" aria-label="Page précédente" title="Page précédente">
+          <i class="pi pi-chevron-left" aria-hidden="true"></i>
+        </button>
+        <label class="pager-label">
+          <span>Page</span>
+          <input type="number" class="pager-input"
+                 [value]="currentPage" [min]="surah.startingPage" [max]="surah.endingPage"
+                 (keydown.enter)="jumpToPage($event)" (blur)="jumpToPage($event)"
+                 [disabled]="loadingPage" aria-label="Aller à la page">
+          <span class="pager-total">/ {{ surah.endingPage }}</span>
+        </label>
+        <button type="button" class="icon-button" (click)="goToNextPage()"
+                [disabled]="!canGoToNextPage() || loadingPage" aria-label="Page suivante" title="Page suivante">
+          <i class="pi pi-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </ng-template>
+
   } @else {
-    <div class="text-center py-20">
-      <i class="pi pi-exclamation-triangle text-6xl mb-4" style="color: var(--color-error);"></i>
-      <p class="text-xl" style="color: var(--color-text-secondary);">Sourate non trouvée</p>
-      <button
-        pButton
-        label="Retour à la liste"
-        icon="pi pi-arrow-left"
-        class="mt-4"
-        [routerLink]="['/surahs']">
-      </button>
+    <div class="card empty-state">
+      <span class="empty-icon"><i class="pi pi-exclamation-triangle" aria-hidden="true"></i></span>
+      <h3>Sourate introuvable</h3>
+      <p>Cette sourate n'a pas pu être chargée. Vérifiez votre connexion puis réessayez.</p>
+      <a routerLink="/surahs" class="btn btn-secondary">Retour aux sourates</a>
     </div>
   }
 </div>

@@ -1,97 +1,83 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { SelectModule } from 'primeng/select';
-import { QuranService } from '../../services/quran.service';
-import { SurahDTO } from '../../models';
+import { Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { SurahCatalogService } from '../../services/surah-catalog.service';
+import { StorageService } from '../../services/storage.service';
+
+type Revelation = 'all' | 'Meccan' | 'Medinan';
 
 @Component({
   selector: 'app-surahs',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ButtonModule,
-    InputTextModule,
-    SelectModule
-  ],
+  imports: [RouterLink],
   templateUrl: './surahs.component.html',
   styleUrls: ['./surahs.component.css']
 })
-export class SurahsComponent implements OnInit {
-  surahs: SurahDTO[] = [];
-  filteredSurahs: SurahDTO[] = [];
-  searchQuery = '';
-  selectedType: string | null = null;
-  loading = true;
+export class SurahsComponent {
+  private catalog = inject(SurahCatalogService);
+  private storage = inject(StorageService);
 
-  revelationTypes = [
-    { label: 'Tous', value: null },
-    { label: 'Mecquoise', value: 'Meccan' },
-    { label: 'Médinoise', value: 'Medinan' }
+  readonly query = signal('');
+  readonly revelation = signal<Revelation>('all');
+  readonly loading = this.catalog.loading;
+
+  readonly filters: { value: Revelation; label: string }[] = [
+    { value: 'all', label: 'Toutes' },
+    { value: 'Meccan', label: 'Mecquoises' },
+    { value: 'Medinan', label: 'Médinoises' }
   ];
 
-  constructor(
-    private quranService: QuranService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private readonly progress = toSignal(this.storage.progress$, { initialValue: this.storage.getProgress() });
 
-  ngOnInit(): void {
-    this.loadSurahs();
-  }
-
-  loadSurahs(): void {
-    this.loading = true;
-    this.quranService.getAllSurahs().subscribe({
-      next: (surahs) => {
-        this.surahs = surahs;
-        this.filteredSurahs = surahs;
-        this.loading = false;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error loading surahs:', error);
-        this.loading = false;
-        this.cdr.detectChanges();
-      }
-    });
-  }
-
-  filterSurahs(): void {
-    let filtered = this.surahs;
-
-    // Filter by search query
-    if (this.searchQuery) {
-      const query = this.searchQuery.toLowerCase();
-      filtered = filtered.filter(surah =>
-        surah.name.toLowerCase().includes(query) ||
-        surah.englishName.toLowerCase().includes(query) ||
-        surah.englishNameTranslation.toLowerCase().includes(query) ||
-        surah.number.toString().includes(query)
-      );
+  /** Memorized ayahs per surah */
+  private readonly memorizedBySurah = computed(() => {
+    const counts = new Map<number, number>();
+    for (const p of this.progress()) {
+      if (p.memorized) counts.set(p.surahId, (counts.get(p.surahId) ?? 0) + 1);
     }
+    return counts;
+  });
 
-    // Filter by revelation type
-    if (this.selectedType) {
-      filtered = filtered.filter(surah =>
-        surah.revelationType === this.selectedType
-      );
-    }
+  readonly surahs = computed(() => {
+    const raw = this.query().trim();
+    const q = this.normalize(raw);
+    const rev = this.revelation();
+    const memorized = this.memorizedBySurah();
+    return this.catalog.surahs()
+      .filter(s => rev === 'all' || s.revelationType === rev)
+      .filter(s => !raw
+        || String(s.number) === raw
+        || (!!q && this.normalize(s.englishName).includes(q))
+        || (!!q && this.normalize(s.englishNameTranslation).includes(q))
+        || s.name.includes(raw))
+      .map(s => {
+        const done = memorized.get(s.number) ?? 0;
+        return { ...s, memorized: done, percent: Math.round((done / s.numberOfAyahs) * 100) };
+      });
+  });
 
-    this.filteredSurahs = filtered;
+  onSearch(event: Event): void {
+    this.query.set((event.target as HTMLInputElement).value);
   }
 
-  openSurah(surahId: number): void {
-    this.router.navigate(['/surah', surahId]);
+  clearSearch(): void {
+    this.query.set('');
   }
 
-  getRevelationBadgeClass(type: string): string {
-    return type === 'Meccan'
-      ? 'bg-blue-100 text-blue-800'
-      : 'bg-green-100 text-green-800';
+  /**
+   * Lowercase, no accents, no punctuation, common transliteration variants folded
+   * (ee→i, oo→u, doubled letters) — so "yasin" finds "Yaseen" and "al fatiha" finds "Al-Faatiha"
+   */
+  private normalize(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/ee/g, 'i')
+      .replace(/oo/g, 'u')
+      .replace(/(.)\1+/g, '$1')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 }

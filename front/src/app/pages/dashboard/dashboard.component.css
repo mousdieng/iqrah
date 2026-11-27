@@ -1,413 +1,132 @@
-.dashboard-container {
-  min-height: 100vh;
-  background: var(--surface-ground);
-  padding-bottom: 2rem;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
-/* Header */
-.dashboard-header {
-  background: var(--surface-card);
-  border-bottom: 1px solid var(--surface-border);
-  padding: 1rem;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.header-title h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: var(--text-color);
-}
-
-.header-title p {
-  margin: 0.25rem 0 0 0;
-  font-size: 0.875rem;
-  color: var(--text-color-secondary);
-}
-
-/* Loading */
-.loading-container {
+.stat {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-  gap: 1rem;
-  color: var(--text-color-secondary);
+  gap: 0.15rem;
 }
 
-/* Content */
-.dashboard-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
+.stat-bar {
+  margin-top: 0.6rem;
 }
 
-/* Sections */
-.section {
-  margin-bottom: 2rem;
-}
-
-.section-header {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.section-header h2 {
+/* Progress per surah */
+.surah-progress-list {
+  list-style: none;
   margin: 0;
-  font-size: 1.25rem;
-  color: var(--text-color);
-}
-
-.subtitle {
-  font-size: 0.875rem;
-  color: var(--text-color-secondary);
-}
-
-/* Stats Grid */
-.stats-section {
-  margin-bottom: 2rem;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.stat-card {
-  background: var(--surface-card);
-  border-radius: 16px;
-  padding: 1.25rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  position: relative;
+  padding: 0;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card-bg);
   overflow: hidden;
 }
 
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+.surah-progress-list li + li {
+  border-top: 1px solid var(--color-card-border);
 }
 
-.stat-card.main-stat {
-  grid-column: span 2;
-}
-
-.stat-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.stat-icon i {
-  font-size: 1.25rem;
-  color: white;
-}
-
-.stat-icon.bg-primary { background: linear-gradient(135deg, var(--primary-400), var(--primary-600)); }
-.stat-icon.bg-orange { background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); }
-.stat-icon.bg-green { background: linear-gradient(135deg, var(--green-400), var(--green-600)); }
-.stat-icon.bg-purple { background: linear-gradient(135deg, var(--purple-400), var(--purple-600)); }
-
-.stat-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.stat-value {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-color);
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 0.875rem;
-  color: var(--text-color-secondary);
-}
-
-.stat-secondary {
-  font-size: 0.75rem;
-  color: var(--primary-color);
-  font-weight: 500;
-}
-
-/* Progress Ring */
-.progress-ring {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 80px;
-  height: 80px;
-}
-
-.circular-chart {
-  width: 100%;
-  height: 100%;
-}
-
-.circle-bg {
-  fill: none;
-  stroke: var(--surface-200);
-  stroke-width: 3;
-}
-
-.circle {
-  fill: none;
-  stroke: var(--primary-color);
-  stroke-width: 3;
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  transition: stroke-dasharray 0.5s ease;
-}
-
-/* Activity Calendar */
-.activity-calendar {
-  background: var(--surface-card);
-  border-radius: 12px;
-  padding: 1.5rem;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(30, 1fr);
-  gap: 4px;
-  margin-bottom: 1rem;
-}
-
-.calendar-day {
-  aspect-ratio: 1;
-  border-radius: 3px;
-  min-width: 10px;
-}
-
-.calendar-day.none { background: var(--surface-200); }
-.calendar-day.low { background: var(--green-200); }
-.calendar-day.medium { background: var(--green-400); }
-.calendar-day.high { background: var(--green-600); }
-
-.calendar-legend {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--text-color-secondary);
-}
-
-.legend-squares {
-  display: flex;
-  gap: 3px;
-}
-
-.legend-squares .calendar-day {
-  width: 12px;
-  height: 12px;
-}
-
-/* Surah Progress List */
-.surah-progress-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.surah-progress-item {
+.surah-progress-row {
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: var(--surface-card);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.1rem;
+  color: inherit;
 }
 
-.surah-info {
-  min-width: 150px;
+.surah-progress-row:hover {
+  background: var(--color-surface-hover);
+  color: inherit;
+}
+
+.sp-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
 }
 
-.surah-name {
-  font-family: 'Uthmanic', 'Amiri', serif;
-  font-size: 1rem;
-  color: var(--text-color);
+.sp-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.surah-count {
-  font-size: 0.75rem;
-  color: var(--text-color-secondary);
-}
-
-:host ::ng-deep .surah-progress-bar {
-  flex: 1;
-  height: 8px;
-}
-
-:host ::ng-deep .surah-progress-bar .p-progressbar-value {
-  background: var(--primary-color);
-}
-
-.percentage {
-  min-width: 45px;
-  text-align: right;
-  font-size: 0.875rem;
+.sp-name {
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--color-text-primary);
 }
 
-/* Activity List */
-.activity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.sp-count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
 }
 
-.activity-item {
+.sp-percent {
+  width: 3.25rem;
+  text-align: right;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Recent quizzes */
+.quiz-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quiz-row {
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: var(--surface-card);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1.1rem;
 }
 
-.activity-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--primary-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.quiz-row + .quiz-row {
+  border-top: 1px solid var(--color-card-border);
 }
 
-.activity-icon i {
-  color: var(--primary-color);
-  font-size: 1rem;
-}
-
-.activity-info {
+.quiz-type {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
+  font-weight: 600;
 }
 
-.activity-desc {
-  font-size: 0.875rem;
-  color: var(--text-color);
+.quiz-date {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
 }
 
-.activity-time {
-  font-size: 0.75rem;
-  color: var(--text-color-secondary);
+.quiz-score {
+  font-weight: 700;
+  color: var(--color-warning);
 }
 
-/* Quick Actions */
-.quick-actions h2 {
-  margin-bottom: 1rem;
+.quiz-score.good {
+  color: var(--color-success);
 }
 
-.actions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
+.quiz-empty {
+  color: var(--color-text-secondary);
+  font-size: 0.925rem;
 }
 
-.action-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1.5rem 1rem !important;
-  background: var(--surface-card) !important;
-  border: 1px solid var(--surface-border) !important;
-  color: var(--text-color) !important;
-  border-radius: 12px !important;
-  transition: all 0.3s ease !important;
-}
-
-.action-btn:hover {
-  border-color: var(--primary-color) !important;
-  transform: translateY(-2px);
-}
-
-.action-btn i {
-  font-size: 1.5rem;
-  color: var(--primary-color);
-}
-
-.action-btn span {
-  font-size: 0.875rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .stats-grid {
+@media (max-width: 900px) {
+  .stats {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stat-card.main-stat {
-    grid-column: span 2;
-  }
-
-  .progress-ring {
-    width: 60px;
-    height: 60px;
-  }
-
-  .calendar-grid {
-    grid-template-columns: repeat(15, 1fr);
-  }
-
-  .surah-info {
-    min-width: 100px;
-  }
-
-  .surah-progress-item {
-    flex-wrap: wrap;
-  }
-
-  :host ::ng-deep .surah-progress-bar {
-    width: 100%;
-    order: 3;
-  }
-
-  .percentage {
-    order: 2;
   }
 }
 
 @media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
+  .stats {
+    gap: 0.6rem;
   }
 
-  .stat-card.main-stat {
-    grid-column: span 1;
-  }
-
-  .calendar-grid {
-    grid-template-columns: repeat(10, 1fr);
+  .stat-value {
+    font-size: 1.4rem;
   }
 }

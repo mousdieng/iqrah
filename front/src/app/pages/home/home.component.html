@@ -1,131 +1,95 @@
-<div class="container mx-auto px-4 py-8">
-  <!-- Hero Section -->
-  <div class="text-center mb-12">
-    <h1 class="text-5xl font-bold mb-4" style="color: var(--color-primary-dark);">
-      <span style="color: var(--color-accent);">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</span>
-    </h1>
-    <h2 class="text-3xl font-bold mb-2" style="color: var(--color-text-primary);">
-      Bienvenue sur Iqrah
-    </h2>
-    <p class="text-xl" style="color: var(--color-text-secondary);">
-      Votre compagnon pour la mémorisation du Saint Coran
-    </p>
+<div class="page">
+  <header class="welcome">
+    <p class="basmala" lang="ar" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+    <h1 class="page-title">Bienvenue sur Iqrah</h1>
+    <p class="page-subtitle">Lisez, comprenez et mémorisez le Coran, à votre rythme.</p>
+  </header>
+
+  <!-- Two main actions -->
+  <div class="actions">
+    <a class="card card-link action action-primary"
+       [routerLink]="['/surah', resume().surahId]"
+       [queryParams]="resume().isFirstVisit ? null : { page: resume().page }">
+      <div class="action-top">
+        <span class="action-label">
+          <i class="pi pi-book" aria-hidden="true"></i>
+          {{ resume().isFirstVisit ? 'Commencer la lecture' : 'Reprendre la lecture' }}
+        </span>
+        @if (resume().arabicName) {
+          <span class="action-arabic" lang="ar" dir="rtl">{{ resume().arabicName }}</span>
+        }
+      </div>
+      <div class="action-title">{{ resume().englishName }}</div>
+      <div class="action-meta">
+        {{ resume().meaning }}@if (!resume().isFirstVisit) { · page {{ resume().page }} }
+      </div>
+      <span class="btn btn-primary action-btn">
+        {{ resume().isFirstVisit ? 'Ouvrir Al-Fatiha' : 'Continuer' }}
+        <i class="pi pi-arrow-right" aria-hidden="true"></i>
+      </span>
+    </a>
+
+    <a class="card card-link action" routerLink="/memorize">
+      <div class="action-top">
+        <span class="action-label">
+          <i class="pi pi-refresh" aria-hidden="true"></i>
+          Révision du jour
+        </span>
+      </div>
+      @if (dueCount() > 0) {
+        <div class="action-title">{{ dueCount() }} verset{{ dueCount() > 1 ? 's' : '' }} à réviser</div>
+        <div class="action-meta">Révisez-les pour bien les retenir.</div>
+        <span class="btn btn-secondary action-btn">Réviser <i class="pi pi-arrow-right" aria-hidden="true"></i></span>
+      } @else if (memorizedCount() > 0) {
+        <div class="action-title">Tout est à jour</div>
+        <div class="action-meta">Aucune révision prévue aujourd'hui.</div>
+        <span class="btn btn-secondary action-btn">Voir mes versets <i class="pi pi-arrow-right" aria-hidden="true"></i></span>
+      } @else {
+        <div class="action-title">Rien à réviser pour l'instant</div>
+        <div class="action-meta">Marquez des versets comme mémorisés pendant la lecture.</div>
+        <span class="btn btn-secondary action-btn">Comment ça marche <i class="pi pi-arrow-right" aria-hidden="true"></i></span>
+      }
+    </a>
   </div>
 
-  <!-- Stats Section -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-    <div class="text-white rounded-xl p-6 shadow-lg" style="background: linear-gradient(135deg, var(--color-info) 0%, var(--color-primary) 100%);">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm opacity-90">Total Mémorisé</p>
-          <p class="text-4xl font-bold">{{ memorizedCount }}</p>
-          <p class="text-sm opacity-75">sur {{ totalAyahs }} ayahs</p>
-        </div>
-        <i class="pi pi-check-circle text-5xl opacity-20"></i>
+  <!-- Progress summary, only once there is something to show -->
+  @if (memorizedCount() > 0) {
+    <a class="card card-link summary" routerLink="/progress">
+      <div class="summary-text">
+        <strong>{{ memorizedCount() }}</strong> verset{{ memorizedCount() > 1 ? 's' : '' }} mémorisé{{ memorizedCount() > 1 ? 's' : '' }}
+        <span class="muted">· {{ memorizedPercent() | number:'1.1-1' }} % du Coran</span>
       </div>
-      <div class="mt-4 bg-white/20 rounded-full h-2">
-        <div
-          class="bg-white h-2 rounded-full transition-all duration-500"
-          [style.width.%]="progressPercentage">
-        </div>
-      </div>
-    </div>
-
-    <div class="text-white rounded-xl p-6 shadow-lg" style="background: linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%);">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm opacity-90">À réviser</p>
-          <p class="text-4xl font-bold">{{ dueForReview.length }}</p>
-          <p class="text-sm opacity-75">ayahs en attente</p>
-        </div>
-        <i class="pi pi-sync text-5xl opacity-20"></i>
-      </div>
-    </div>
-
-    <div class="text-white rounded-xl p-6 shadow-lg" style="background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary-dark) 100%);">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm opacity-90">Progrès</p>
-          <p class="text-4xl font-bold">{{ progressPercentage.toFixed(1) }}%</p>
-          <p class="text-sm opacity-75">du Coran</p>
-        </div>
-        <i class="pi pi-chart-bar text-5xl opacity-20"></i>
-      </div>
-    </div>
-  </div>
-
-  <!-- Random Ayah of the Day -->
-  @if (randomAyah) {
-    <div class="mb-12">
-      <div class="rounded-xl shadow-lg p-8 border-l-4" style="background-color: var(--color-surface); border-color: var(--color-accent);">
-        <h3 class="text-2xl font-bold mb-4 flex items-center" style="color: var(--color-primary-dark);">
-          <i class="pi pi-star-fill mr-3" style="color: var(--color-accent);"></i>
-          Ayah du jour
-        </h3>
-        <div class="quran-text text-2xl mb-4 text-center" dir="rtl">
-          {{ randomAyah.text }}
-        </div>
-        <div class="text-center mb-4" style="color: var(--color-text-secondary);">
-          <span>Sourate {{ randomAyah.surahId }} - Ayah {{ randomAyah.numberInSurah }}</span>
-        </div>
-        <div class="flex justify-center">
-          <button
-            pButton
-            label="Mémoriser cette ayah"
-            icon="pi pi-star"
-            class="p-button-success"
-            (click)="navigateTo('/surah/' + randomAyah.surahId)">
-          </button>
-        </div>
-      </div>
-    </div>
+      <div class="progress summary-bar"><span [style.width.%]="memorizedPercent()"></span></div>
+    </a>
   }
 
-  <!-- Quick Links -->
-  <div class="mb-12">
-    <h3 class="text-2xl font-bold mb-6" style="color: var(--color-text-primary);">Accès rapide</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      @for (link of quickLinks; track link.route) {
-        <div
-          class="quick-link-card rounded-xl shadow-lg p-6 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl border-2"
-          (click)="navigateTo(link.route)">
-          <div class="flex items-center justify-between mb-4">
-            <div [class]="link.color + ' text-white rounded-full w-16 h-16 flex items-center justify-center'">
-              <i [class]="link.icon + ' text-3xl'"></i>
-            </div>
-          </div>
-          <h4 class="text-xl font-bold mb-2" style="color: var(--color-text-primary);">{{ link.title }}</h4>
-          <p class="text-sm" style="color: var(--color-text-secondary);">{{ link.description }}</p>
+  <!-- Verse of the day -->
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Verset à méditer</h2>
+      <button type="button" class="btn btn-ghost btn-sm" (click)="newVerse()" [disabled]="!verse()">
+        <i class="pi pi-refresh" aria-hidden="true"></i> Un autre
+      </button>
+    </div>
+
+    <div class="card verse-card">
+      @if (verse(); as v) {
+        <p class="verse-arabic" lang="ar" dir="rtl">
+          {{ displayText(v) }}
+          <span class="verse-number">﴿{{ arabicNumber(v.numberInSurah) }}﴾</span>
+        </p>
+        @if (verseTranslation()) {
+          <p class="verse-translation">{{ verseTranslation() }}</p>
+        }
+        <div class="verse-foot">
+          <span class="muted">{{ verseSurah()?.englishName ?? 'Sourate ' + v.surahId }}, verset {{ v.numberInSurah }}</span>
+          <a class="btn btn-ghost btn-sm" [routerLink]="['/surah', v.surahId]" [queryParams]="{ page: v.page }">
+            Lire dans son contexte <i class="pi pi-arrow-right" aria-hidden="true"></i>
+          </a>
         </div>
+      } @else {
+        <div class="loading-state"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Chargement…</div>
       }
     </div>
-  </div>
-
-  <!-- Features Section -->
-  <div class="text-white rounded-xl p-8 shadow-lg" style="background: var(--color-header-bg);">
-    <h3 class="text-3xl font-bold mb-6 text-center">Fonctionnalités</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="text-center">
-        <i class="pi pi-sync text-5xl mb-4" style="color: var(--color-accent);"></i>
-        <h4 class="text-xl font-bold mb-2">Répétition intelligente</h4>
-        <p style="color: var(--color-text-secondary);">
-          Répétez les ayahs, sourates, pages ou juz avec des intervalles personnalisables
-        </p>
-      </div>
-      <div class="text-center">
-        <i class="pi pi-volume-up text-5xl mb-4" style="color: var(--color-accent);"></i>
-        <h4 class="text-xl font-bold mb-2">Audio de qualité</h4>
-        <p style="color: var(--color-text-secondary);">
-          Écoutez avec plusieurs récitateurs renommés
-        </p>
-      </div>
-      <div class="text-center">
-        <i class="pi pi-chart-line text-5xl mb-4" style="color: var(--color-accent);"></i>
-        <h4 class="text-xl font-bold mb-2">Suivi de progression</h4>
-        <p style="color: var(--color-text-secondary);">
-          Suivez votre mémorisation avec un système de révision espacée
-        </p>
-      </div>
-    </div>
-  </div>
+  </section>
 </div>

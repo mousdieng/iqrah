@@ -1,67 +1,41 @@
-<header class="text-white shadow-lg sticky top-0 z-50" style="background: var(--color-header-bg);">
-  <div class="container mx-auto px-4">
-    <div class="flex items-center justify-between py-4">
-      <!-- Logo -->
-      <div class="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" routerLink="/">
-        <div class="text-3xl font-bold">
-          <span style="color: var(--color-accent);">إِقْرَأْ</span>
-          <span class="text-sm block" style="color: var(--color-text-secondary);">Iqrah - Mémorisation du Coran</span>
-        </div>
-      </div>
+<a class="skip-link" href="#main">Aller au contenu</a>
 
-      <!-- Navigation Desktop -->
-      <nav class="hidden md:flex items-center space-x-6">
-        @for (item of menuItems; track item.label) {
-          <a
-            [routerLink]="item.routerLink"
-            routerLinkActive="border-b-2"
-            [routerLinkActiveOptions]="{ exact: false }"
-            class="flex items-center space-x-2 py-2 px-3 hover:opacity-80 transition-colors cursor-pointer"
-            [style.border-bottom-color]="'var(--color-accent)'"
-            [style.color]="'var(--color-text-secondary)'">
-            <i [class]="item.icon"></i>
-            <span>{{ item.label }}</span>
-          </a>
-        }
-      </nav>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a routerLink="/" class="brand" aria-label="Iqrah, accueil">
+      <span class="brand-arabic" lang="ar">إقرأ</span>
+      <span class="brand-name">Iqrah</span>
+    </a>
 
-      <!-- Theme Switcher & Mobile Menu Button Container -->
-      <div class="flex items-center space-x-4">
-        <!-- Theme Switcher Desktop -->
-        <div class="hidden md:flex">
-          <app-theme-switcher></app-theme-switcher>
-        </div>
+    <nav class="nav" aria-label="Navigation principale">
+      @for (item of navItems; track item.link) {
+        <a [routerLink]="item.link"
+           class="nav-link"
+           [class.active]="isActive(item)"
+           [attr.aria-current]="isActive(item) ? 'page' : null">
+          <i [class]="item.icon" aria-hidden="true"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
 
-        <!-- Mobile Menu Button -->
-        <button
-          class="md:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
-          (click)="toggleMobileMenu()">
-          <i class="pi pi-bars text-2xl"></i>
-        </button>
-      </div>
+    <div class="topbar-actions">
+      <app-theme-switcher></app-theme-switcher>
     </div>
-
-    <!-- Mobile Navigation -->
-    @if (mobileMenuOpen) {
-      <nav class="md:hidden pb-4 animate-fade-in">
-        <!-- Theme Switcher Mobile -->
-        <div class="px-4 py-3 border-b" style="border-color: var(--color-card-border);">
-          <app-theme-switcher></app-theme-switcher>
-        </div>
-
-        @for (item of menuItems; track item.label) {
-          <a
-            [routerLink]="item.routerLink"
-            routerLinkActive="bg-white/10"
-            [routerLinkActiveOptions]="{ exact: false }"
-            (click)="toggleMobileMenu()"
-            class="flex items-center space-x-3 py-3 px-4 hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
-            [style.color]="'var(--color-text-secondary)'">
-            <i [class]="item.icon"></i>
-            <span>{{ item.label }}</span>
-          </a>
-        }
-      </nav>
-    }
   </div>
 </header>
+
+<!-- Phones: bottom tab bar -->
+@if (!onReader()) {
+  <nav class="tabbar" aria-label="Navigation principale">
+    @for (item of navItems; track item.link) {
+      <a [routerLink]="item.link"
+         class="tab"
+         [class.active]="isActive(item)"
+         [attr.aria-current]="isActive(item) ? 'page' : null">
+        <i [class]="item.icon" aria-hidden="true"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+}

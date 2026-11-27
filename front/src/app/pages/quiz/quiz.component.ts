@@ -1,153 +1,75 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { SelectModule } from 'primeng/select';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { QuranService } from '../../services/quran.service';
+import { Component, computed, inject, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { StorageService } from '../../services/storage.service';
-import { QuizType, DifficultyLevel, SurahDTO } from '../../models';
+import { SurahCatalogService } from '../../services/surah-catalog.service';
+import { QuizType, DifficultyLevel } from '../../models';
 
 interface QuizTypeOption {
   type: QuizType;
   label: string;
   description: string;
   icon: string;
-  color: string;
 }
 
+/** Quiz setup: choose a type and a few options, then start the session */
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ButtonModule,
-    CardModule,
-    SelectModule,
-    InputNumberModule
-  ],
+  imports: [RouterLink],
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent implements OnInit {
-  // Quiz types
-  quizTypes: QuizTypeOption[] = [
-    {
-      type: QuizType.FILL_BLANK,
-      label: 'Remplir les blancs',
-      description: 'Complétez les mots manquants dans le verset',
-      icon: 'pi-pencil',
-      color: 'blue'
-    },
-    {
-      type: QuizType.AUDIO_RECOGNITION,
-      label: 'Reconnaissance audio',
-      description: 'Écoutez et tapez le verset que vous entendez',
-      icon: 'pi-volume-up',
-      color: 'green'
-    },
-    {
-      type: QuizType.SEQUENCE_ORDER,
-      label: 'Ordre des versets',
-      description: 'Remettez les versets dans le bon ordre',
-      icon: 'pi-sort-alt',
-      color: 'orange'
-    },
-    {
-      type: QuizType.WRITING,
-      label: 'Écriture de mémoire',
-      description: 'Écrivez le verset entier de mémoire',
-      icon: 'pi-file-edit',
-      color: 'purple'
-    }
+export class QuizComponent {
+  private router = inject(Router);
+  private storage = inject(StorageService);
+  private catalog = inject(SurahCatalogService);
+
+  readonly quizTypes: QuizTypeOption[] = [
+    { type: QuizType.FILL_BLANK, label: 'Mots manquants', description: 'Complétez les mots qui manquent dans le verset.', icon: 'pi pi-pencil' },
+    { type: QuizType.SEQUENCE_ORDER, label: 'Ordre des versets', description: 'Remettez les versets dans le bon ordre.', icon: 'pi pi-sort-alt' },
+    { type: QuizType.AUDIO_RECOGNITION, label: 'Reconnaissance audio', description: 'Écoutez la récitation et retrouvez le verset.', icon: 'pi pi-volume-up' },
+    { type: QuizType.WRITING, label: 'Écriture', description: 'Écrivez le verset entier de mémoire.', icon: 'pi pi-file-edit' }
   ];
 
-  // Selected options
-  selectedQuizType: QuizType | null = null;
-  selectedSurah: number | null = null;
-  selectedDifficulty: DifficultyLevel = DifficultyLevel.MEDIUM;
-  questionCount: number = 10;
-
-  // Options lists
-  surahOptions: { label: string; value: number }[] = [];
-  difficultyOptions = [
-    { label: 'Facile', value: DifficultyLevel.EASY },
-    { label: 'Moyen', value: DifficultyLevel.MEDIUM },
-    { label: 'Difficile', value: DifficultyLevel.HARD },
-    { label: 'Mixte', value: DifficultyLevel.MIXED }
+  readonly difficulties = [
+    { value: DifficultyLevel.EASY, label: 'Facile' },
+    { value: DifficultyLevel.MEDIUM, label: 'Moyen' },
+    { value: DifficultyLevel.HARD, label: 'Difficile' }
   ];
 
-  // Stats
-  memorizedCount: number = 0;
-  loading = true;
+  readonly counts = [5, 10, 20];
 
-  constructor(
-    private router: Router,
-    private quranService: QuranService,
-    private storageService: StorageService
-  ) {}
+  readonly type = signal<QuizType>(QuizType.FILL_BLANK);
+  readonly surah = signal<number>(0);
+  readonly difficulty = signal<DifficultyLevel>(DifficultyLevel.MEDIUM);
+  readonly count = signal(10);
 
-  ngOnInit(): void {
-    this.loadSurahs();
-    this.loadMemorizedCount();
+  private readonly progress = toSignal(this.storage.progress$, { initialValue: this.storage.getProgress() });
+  readonly memorizedCount = computed(() => this.progress().filter(p => p.memorized).length);
+
+  /** Surahs that have memorized ayahs come first in the list */
+  readonly surahOptions = computed(() => {
+    const memorizedSurahs = new Set(this.progress().filter(p => p.memorized).map(p => p.surahId));
+    const all = this.catalog.surahs().map(s => ({ value: s.number, label: `${s.number}. ${s.englishName}`, mine: memorizedSurahs.has(s.number) }));
+    return {
+      mine: all.filter(s => s.mine),
+      others: all.filter(s => !s.mine)
+    };
+  });
+
+  onSurahChange(event: Event): void {
+    this.surah.set(+(event.target as HTMLSelectElement).value);
   }
 
-  loadSurahs(): void {
-    this.quranService.getAllSurahs().subscribe({
-      next: (surahs: SurahDTO[]) => {
-        this.surahOptions = [
-          { label: 'Toutes les sourates', value: 0 },
-          ...surahs.map(s => ({
-            label: `${s.number}. ${s.name}`,
-            value: s.number
-          }))
-        ];
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-      }
-    });
-  }
-
-  loadMemorizedCount(): void {
-    // Count memorized ayahs from local storage
-    const progress = this.storageService.getAllProgress();
-    this.memorizedCount = Object.values(progress).filter((p: any) => p.memorized).length;
-  }
-
-  selectQuizType(type: QuizType): void {
-    this.selectedQuizType = type;
-  }
-
-  isQuizTypeSelected(type: QuizType): boolean {
-    return this.selectedQuizType === type;
-  }
-
-  canStartQuiz(): boolean {
-    return this.selectedQuizType !== null && this.memorizedCount >= 1;
-  }
-
-  startQuiz(): void {
-    if (!this.canStartQuiz()) return;
-
-    // Navigate to quiz session with configuration
-    this.router.navigate(['/quiz/session'], {
+  start(): void {
+    this.router.navigate(['/memorize/quiz/session'], {
       queryParams: {
-        type: this.selectedQuizType,
-        surah: this.selectedSurah || undefined,
-        difficulty: this.selectedDifficulty,
-        count: this.questionCount
+        type: this.type(),
+        surah: this.surah() || undefined,
+        difficulty: this.difficulty(),
+        count: this.count()
       }
     });
-  }
-
-  getQuizTypeColor(type: QuizType): string {
-    const quizType = this.quizTypes.find(q => q.type === type);
-    return quizType?.color || 'blue';
   }
 }

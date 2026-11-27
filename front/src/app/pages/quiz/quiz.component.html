@@ -1,109 +1,95 @@
-<div class="quiz-hub-container">
-  <!-- Header -->
-  <div class="quiz-header">
-    <div class="header-content">
-      <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/"></button>
-      <div class="header-title">
-        <h1>Quiz de Mémorisation</h1>
-        <p class="memorized-info">
-          <i class="pi pi-star-fill"></i>
-          {{ memorizedCount }} verset(s) mémorisé(s)
-        </p>
+<div class="page quiz-setup">
+  <a routerLink="/memorize" class="btn btn-ghost btn-sm back-link">
+    <i class="pi pi-arrow-left" aria-hidden="true"></i> Mémoriser
+  </a>
+
+  <header class="page-header">
+    <h1 class="page-title">Quiz</h1>
+    <p class="page-subtitle">
+      Vérifiez ce que vous avez retenu.
+      @if (memorizedCount() > 0) {
+        Vous avez {{ memorizedCount() }} verset{{ memorizedCount() > 1 ? 's' : '' }} mémorisé{{ memorizedCount() > 1 ? 's' : '' }}.
+      }
+    </p>
+  </header>
+
+  @if (memorizedCount() === 0) {
+    <div class="card notice">
+      <i class="pi pi-info-circle" aria-hidden="true"></i>
+      <span>
+        Le quiz porte sur les versets que vous avez mémorisés. Pendant la lecture, ouvrez le menu d'un verset
+        (clic droit, appui long ou ⋮) puis choisissez « Marquer comme mémorisé ».
+        <a routerLink="/surahs" class="notice-link">Aller aux sourates</a>
+      </span>
+    </div>
+  }
+
+  <section class="section first">
+    <h2 class="section-title">1. Type de quiz</h2>
+    <div class="types" role="radiogroup" aria-label="Type de quiz">
+      @for (q of quizTypes; track q.type) {
+        <button type="button" role="radio" class="card type-card"
+                [class.selected]="type() === q.type"
+                [attr.aria-checked]="type() === q.type"
+                (click)="type.set(q.type)">
+          <span class="type-icon"><i [class]="q.icon" aria-hidden="true"></i></span>
+          <span class="type-text">
+            <strong>{{ q.label }}</strong>
+            <span>{{ q.description }}</span>
+          </span>
+          <i class="pi type-check" [class.pi-check-circle]="type() === q.type" [class.pi-circle]="type() !== q.type" aria-hidden="true"></i>
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">2. Options</h2>
+    <div class="card options">
+      <label class="option">
+        <span class="option-label">Sourate</span>
+        <select class="input" [value]="surah()" (change)="onSurahChange($event)">
+          <option [value]="0">Toutes mes sourates</option>
+          @if (surahOptions().mine.length) {
+            <optgroup label="Avec des versets mémorisés">
+              @for (s of surahOptions().mine; track s.value) {
+                <option [value]="s.value">{{ s.label }}</option>
+              }
+            </optgroup>
+          }
+          <optgroup label="Toutes les sourates">
+            @for (s of surahOptions().others; track s.value) {
+              <option [value]="s.value">{{ s.label }}</option>
+            }
+          </optgroup>
+        </select>
+      </label>
+
+      <div class="option">
+        <span class="option-label" id="difficulty-label">Difficulté</span>
+        <div class="segmented" role="group" aria-labelledby="difficulty-label">
+          @for (d of difficulties; track d.value) {
+            <button type="button" [class.active]="difficulty() === d.value" [attr.aria-pressed]="difficulty() === d.value"
+                    (click)="difficulty.set(d.value)">{{ d.label }}</button>
+          }
+        </div>
+      </div>
+
+      <div class="option">
+        <span class="option-label" id="count-label">Questions</span>
+        <div class="segmented" role="group" aria-labelledby="count-label">
+          @for (c of counts; track c) {
+            <button type="button" [class.active]="count() === c" [attr.aria-pressed]="count() === c"
+                    (click)="count.set(c)">{{ c }}</button>
+          }
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Loading -->
-  <div *ngIf="loading" class="loading-container">
-    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-    <p>Chargement...</p>
-  </div>
-
-  <!-- Empty State -->
-  <div *ngIf="!loading && memorizedCount === 0" class="empty-state">
-    <i class="pi pi-exclamation-circle" style="font-size: 4rem; color: var(--orange-500);"></i>
-    <h2>Aucun verset mémorisé</h2>
-    <p>Commencez par mémoriser quelques versets dans le mode Étude avant de faire un quiz.</p>
-    <button pButton label="Aller au mode Étude" icon="pi pi-book" routerLink="/study"></button>
-  </div>
-
-  <!-- Quiz Selection -->
-  <div *ngIf="!loading && memorizedCount > 0" class="quiz-content">
-    <!-- Quiz Type Selection -->
-    <section class="section">
-      <h2 class="section-title">Choisir un type de quiz</h2>
-      <div class="quiz-types-grid">
-        <div
-          *ngFor="let quiz of quizTypes"
-          class="quiz-type-card"
-          [class.selected]="isQuizTypeSelected(quiz.type)"
-          [attr.data-color]="quiz.color"
-          (click)="selectQuizType(quiz.type)">
-
-          <div class="quiz-icon" [class]="'bg-' + quiz.color">
-            <i class="pi" [ngClass]="quiz.icon"></i>
-          </div>
-          <h3>{{ quiz.label }}</h3>
-          <p>{{ quiz.description }}</p>
-
-          <div class="selected-indicator" *ngIf="isQuizTypeSelected(quiz.type)">
-            <i class="pi pi-check"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Quiz Configuration -->
-    <section class="section" *ngIf="selectedQuizType">
-      <h2 class="section-title">Configuration</h2>
-      <div class="config-grid">
-        <!-- Surah Filter -->
-        <div class="config-item">
-          <label>Sourate</label>
-          <p-select
-            [options]="surahOptions"
-            [(ngModel)]="selectedSurah"
-            placeholder="Toutes les sourates"
-            [filter]="true"
-            filterPlaceholder="Rechercher..."
-            styleClass="w-full">
-          </p-select>
-        </div>
-
-        <!-- Difficulty -->
-        <div class="config-item">
-          <label>Difficulté</label>
-          <p-select
-            [options]="difficultyOptions"
-            [(ngModel)]="selectedDifficulty"
-            styleClass="w-full">
-          </p-select>
-        </div>
-
-        <!-- Question Count -->
-        <div class="config-item">
-          <label>Nombre de questions</label>
-          <p-inputNumber
-            [(ngModel)]="questionCount"
-            [min]="1"
-            [max]="50"
-            [showButtons]="true"
-            styleClass="w-full">
-          </p-inputNumber>
-        </div>
-      </div>
-    </section>
-
-    <!-- Start Button -->
-    <div class="start-section" *ngIf="selectedQuizType">
-      <button
-        pButton
-        label="Commencer le quiz"
-        icon="pi pi-play"
-        class="start-button"
-        [disabled]="!canStartQuiz()"
-        (click)="startQuiz()">
-      </button>
-    </div>
+  <div class="start">
+    <button type="button" class="btn btn-primary btn-lg" (click)="start()" [disabled]="memorizedCount() === 0">
+      <i class="pi pi-play" aria-hidden="true"></i> Commencer le quiz
+    </button>
   </div>
 </div>

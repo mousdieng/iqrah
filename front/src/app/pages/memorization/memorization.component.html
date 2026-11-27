@@ -1,230 +1,97 @@
-<div class="container mx-auto px-4 py-8">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-4xl font-bold mb-2" style="color: var(--color-primary-dark);">
-      Mémorisation
-    </h1>
-    <p style="color: var(--color-text-secondary);">
-      Suivez votre progression et révisez vos ayahs mémorisées
-    </p>
-  </div>
+<div class="page">
+  <header class="page-header">
+    <h1 class="page-title">Mémoriser</h1>
+    <p class="page-subtitle">Révisez vos versets au bon moment, retrouvez vos signets et testez votre mémoire.</p>
+  </header>
 
-  <!-- Stats Overview -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="stat-card stat-card-green text-white rounded-xl p-6 shadow-lg">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm opacity-90">Total Mémorisé</p>
-          <p class="text-4xl font-bold">{{ memorizedAyahs.length }}</p>
-          <p class="text-sm opacity-75">sur {{ totalAyahs }} ayahs</p>
-        </div>
-        <i class="pi pi-check-circle text-5xl opacity-20"></i>
-      </div>
-      <div class="mt-4 bg-white/20 rounded-full h-2">
-        <div
-          class="bg-white h-2 rounded-full transition-all duration-500"
-          [style.width.%]="memorizedPercentage">
-        </div>
-      </div>
-    </div>
-
-    <div class="stat-card stat-card-orange text-white rounded-xl p-6 shadow-lg">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm opacity-90">À Réviser</p>
-          <p class="text-4xl font-bold">{{ dueForReview.length }}</p>
-          <p class="text-sm opacity-75">ayahs en attente</p>
-        </div>
-        <i class="pi pi-sync text-5xl opacity-20"></i>
-      </div>
-    </div>
-
-    <div class="stat-card stat-card-purple text-white rounded-xl p-6 shadow-lg">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm opacity-90">Progression</p>
-          <p class="text-4xl font-bold">{{ memorizedPercentage.toFixed(1) }}%</p>
-          <p class="text-sm opacity-75">du Coran</p>
-        </div>
-        <i class="pi pi-chart-bar text-5xl opacity-20"></i>
-      </div>
-    </div>
-  </div>
+  <!-- Quiz -->
+  <a class="card card-link quiz-card" routerLink="/memorize/quiz">
+    <span class="quiz-icon"><i class="pi pi-question-circle" aria-hidden="true"></i></span>
+    <span class="quiz-text">
+      <strong>Testez-vous avec un quiz</strong>
+      <span>Complétez les mots manquants, remettez les versets dans l'ordre…</span>
+    </span>
+    <span class="btn btn-primary btn-sm">Commencer <i class="pi pi-arrow-right" aria-hidden="true"></i></span>
+  </a>
 
   <!-- Tabs -->
-  <div class="tabs-container rounded-xl shadow-lg overflow-hidden">
-    <!-- Tab Headers -->
-    <div class="flex border-b" style="border-color: var(--color-card-border);">
-      <button
-        class="tab-button flex-1 py-4 px-6 text-center font-semibold"
-        [class.active]="activeTab === 0"
-        [class.border-b-2]="activeTab === 0"
-        (click)="activeTab = 0">
-        <i class="pi pi-check-circle mr-2"></i>
-        Ayahs Mémorisées
+  <div class="segmented tabs" role="tablist" aria-label="Listes">
+    @for (t of tabs; track t.id) {
+      <button type="button" role="tab"
+              [class.active]="tab() === t.id"
+              [attr.aria-selected]="tab() === t.id"
+              (click)="selectTab(t.id)">
+        <i [class]="t.icon" aria-hidden="true"></i>
+        {{ t.label }}
+        <span class="count">{{ counts()[t.id] }}</span>
       </button>
-      <button
-        class="tab-button flex-1 py-4 px-6 text-center font-semibold"
-        [class.active]="activeTab === 1"
-        [class.border-b-2]="activeTab === 1"
-        (click)="activeTab = 1">
-        <i class="pi pi-sync mr-2"></i>
-        À Réviser
-      </button>
-    </div>
-
-    <!-- Tab Panels -->
-    <div class="p-6">
-      <!-- Memorized Ayahs Tab -->
-      @if (activeTab === 0) {
-        @if (memorizedAyahs.length > 0) {
-        <div class="space-y-4">
-          @for (progress of memorizedAyahs; track progress.id) {
-            @if (getAyah(progress.ayahId); as ayah) {
-              <div class="ayah-card rounded-lg shadow p-4">
-                <div class="flex items-start justify-between">
-                  <div class="flex-1">
-                    <div class="flex items-center space-x-3 mb-2">
-                      <span class="ayah-badge rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-                        {{ ayah.numberInSurah }}
-                      </span>
-                      <span class="text-sm" style="color: var(--color-text-secondary);">
-                        Sourate {{ ayah.surahId }} - Page {{ ayah.page }}
-                      </span>
-                      <span
-                        class="px-2 py-1 rounded-full text-xs font-semibold"
-                        [ngClass]="getDifficultyClass(progress.difficulty)">
-                        {{ getDifficultyLabel(progress.difficulty) }}
-                      </span>
-                    </div>
-
-                    <div class="quran-text mb-2" dir="rtl">
-                      {{ ayah.text.substring(0, 100) }}{{ ayah.text.length > 100 ? '...' : '' }}
-                    </div>
-
-                    <div class="flex items-center space-x-4 text-sm" style="color: var(--color-text-secondary);">
-                      <span>
-                        <i class="pi pi-sync mr-1"></i>
-                        {{ progress.reviewCount }} révisions
-                      </span>
-                      <span>
-                        <i class="pi pi-calendar mr-1"></i>
-                        Dernière révision: {{ formatDate(progress.lastReviewDate) }}
-                      </span>
-                    </div>
-
-                    @if (progress.notes) {
-                      <div class="note-box mt-2 p-2 rounded text-sm">
-                        <i class="pi pi-info-circle mr-1" style="color: var(--color-info);"></i>
-                        {{ progress.notes }}
-                      </div>
-                    }
-                  </div>
-
-                  <button
-                    pButton
-                    icon="pi pi-arrow-right"
-                    class="p-button-rounded p-button-text"
-                    (click)="goToAyah(progress.ayahId)">
-                  </button>
-                </div>
-              </div>
-            }
-          }
-        </div>
-      } @else {
-        <div class="text-center py-12">
-          <i class="pi pi-star text-6xl mb-4 empty-state-icon"></i>
-          <p class="text-xl mb-4" style="color: var(--color-text-secondary);">
-            Vous n'avez pas encore mémorisé d'ayahs
-          </p>
-          <button
-            pButton
-            label="Commencer la mémorisation"
-            icon="pi pi-play"
-            class="p-button-success"
-            [routerLink]="['/surahs']">
-          </button>
-        </div>
-        }
-      }
-
-      <!-- Review Tab -->
-      @if (activeTab === 1) {
-        @if (dueForReview.length > 0) {
-        <div class="review-warning mb-4 p-4 border-l-4 rounded">
-          <div class="flex items-center space-x-3">
-            <i class="pi pi-exclamation-triangle text-2xl" style="color: var(--color-warning);"></i>
-            <div>
-              <p class="font-semibold" style="color: var(--color-text-primary);">
-                {{ dueForReview.length }} ayah(s) à réviser
-              </p>
-              <p class="text-sm" style="color: var(--color-text-secondary);">
-                Ces ayahs nécessitent une révision selon le système de répétition espacée
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          @for (progress of dueForReview; track progress.id) {
-            @if (getAyah(progress.ayahId); as ayah) {
-              <div class="ayah-card review-card rounded-lg shadow p-4 border-l-4">
-                <div class="flex items-start justify-between">
-                  <div class="flex-1">
-                    <div class="flex items-center space-x-3 mb-2">
-                      <span class="rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold text-white" style="background-color: var(--color-warning);">
-                        {{ ayah.numberInSurah }}
-                      </span>
-                      <span class="text-sm" style="color: var(--color-text-secondary);">
-                        Sourate {{ ayah.surahId }} - Page {{ ayah.page }}
-                      </span>
-                      <span
-                        class="px-2 py-1 rounded-full text-xs font-semibold"
-                        [ngClass]="getDifficultyClass(progress.difficulty)">
-                        {{ getDifficultyLabel(progress.difficulty) }}
-                      </span>
-                    </div>
-
-                    <div class="quran-text mb-2" dir="rtl">
-                      {{ ayah.text.substring(0, 100) }}{{ ayah.text.length > 100 ? '...' : '' }}
-                    </div>
-
-                    <div class="flex items-center space-x-4 text-sm" style="color: var(--color-text-secondary);">
-                      <span>
-                        <i class="pi pi-sync mr-1"></i>
-                        {{ progress.reviewCount }} révisions
-                      </span>
-                      <span>
-                        <i class="pi pi-calendar mr-1"></i>
-                        Dernière révision: {{ formatDate(progress.lastReviewDate) }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <button
-                    pButton
-                    icon="pi pi-arrow-right"
-                    class="p-button-rounded p-button-text p-button-warning"
-                    (click)="goToAyah(progress.ayahId)">
-                  </button>
-                </div>
-              </div>
-            }
-          }
-        </div>
-      } @else {
-        <div class="text-center py-12">
-          <i class="pi pi-check-circle text-6xl mb-4" style="color: var(--color-success);"></i>
-          <p class="text-xl" style="color: var(--color-text-secondary);">
-            Aucune ayah à réviser pour le moment !
-          </p>
-          <p class="mt-2" style="color: var(--color-text-muted);">
-            Continuez votre excellent travail de mémorisation
-          </p>
-        </div>
-        }
-      }
-    </div>
+    }
   </div>
+
+  @if (!rows().length) {
+    @let empty = emptyFor(tab());
+    <div class="card empty-state">
+      <span class="empty-icon"><i [class]="empty.icon" aria-hidden="true"></i></span>
+      <h3>{{ empty.title }}</h3>
+      <p>{{ empty.text }}</p>
+      <a routerLink="/surahs" class="btn btn-secondary">Aller aux sourates</a>
+    </div>
+  } @else {
+    <ul class="ayah-list" role="tabpanel">
+      @for (row of visibleRows(); track row.ayahId) {
+        <li class="ayah-row">
+          <div class="ayah-ref">
+            <span class="ayah-ref-name">{{ row.surahName || 'Verset ' + row.ayahId }}</span>
+            @if (row.numberInSurah) {
+              <span class="chip">{{ row.surahId }}:{{ row.numberInSurah }}</span>
+            }
+          </div>
+
+          @if (texts().get(row.ayahId); as ayah) {
+            <p class="ayah-arabic" lang="ar" dir="rtl">
+              {{ displayText(ayah) }} <span class="ayah-num">﴿{{ arabicNumber(ayah.numberInSurah) }}﴾</span>
+            </p>
+          } @else {
+            <p class="ayah-arabic placeholder" aria-hidden="true"></p>
+          }
+
+          @if (row.note) {
+            <p class="ayah-note"><i class="pi pi-pencil" aria-hidden="true"></i> {{ row.note }}</p>
+          }
+
+          <div class="ayah-actions">
+            @if (row.surahId) {
+              <a class="btn btn-secondary btn-sm" [routerLink]="['/surah', row.surahId]" [queryParams]="{ ayah: row.ayahId }">
+                <i class="pi pi-book" aria-hidden="true"></i> Ouvrir
+              </a>
+            }
+            @switch (tab()) {
+              @case ('due') {
+                <button type="button" class="btn btn-primary btn-sm" (click)="markReviewed(row)">
+                  <i class="pi pi-check" aria-hidden="true"></i> C'est revu
+                </button>
+              }
+              @case ('memorized') {
+                <button type="button" class="btn btn-ghost btn-sm" (click)="unmarkMemorized(row)">Retirer</button>
+              }
+              @case ('bookmarks') {
+                <button type="button" class="btn btn-ghost btn-sm" (click)="removeBookmark(row)">Retirer le signet</button>
+              }
+              @case ('notes') {
+                <button type="button" class="btn btn-ghost btn-sm" (click)="removeNote(row)">Supprimer la note</button>
+              }
+            }
+          </div>
+        </li>
+      }
+    </ul>
+
+    @if (rows().length > visibleRows().length) {
+      <div class="more">
+        <button type="button" class="btn btn-secondary" (click)="showMore()">
+          Afficher plus ({{ rows().length - visibleRows().length }} restants)
+        </button>
+      </div>
+    }
+  }
 </div>

@@ -1,84 +1,86 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { QuranService } from '../../services/quran.service';
 import { StorageService } from '../../services/storage.service';
-import { Ayah, UserProgress } from '../../models';
+import { TranslationService } from '../../services/translation.service';
+import { SurahCatalogService } from '../../services/surah-catalog.service';
+import { ReadingHistoryService } from '../../services/reading-history.service';
+import { Ayah } from '../../models';
+import { ayahDisplayText, arabicNumber } from '../../shared/quran-text';
+
+const TOTAL_AYAHS = 6236;
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule],
+  imports: [RouterLink, DecimalPipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-  randomAyah: Ayah | null = null;
-  memorizedCount = 0;
-  totalAyahs = 6236;
-  dueForReview: UserProgress[] = [];
+export class HomeComponent {
+  private quranService = inject(QuranService);
+  private storage = inject(StorageService);
+  private translationService = inject(TranslationService);
+  private catalog = inject(SurahCatalogService);
+  private history = inject(ReadingHistoryService);
 
-  quickLinks = [
-    {
-      title: 'Liste des Sourates',
-      description: 'Parcourir toutes les sourates du Coran',
-      icon: 'pi pi-book',
-      route: '/surahs',
-      color: 'bg-blue-500'
-    },
-    {
-      title: 'Mémorisation',
-      description: 'Commencer votre parcours de mémorisation',
-      icon: 'pi pi-star',
-      route: '/memorization',
-      color: 'bg-green-500'
-    },
-    {
-      title: 'Favoris',
-      description: 'Vos ayahs favorites sauvegardées',
-      icon: 'pi pi-heart',
-      route: '/favorites',
-      color: 'bg-red-500'
-    },
-    {
-      title: 'Progression',
-      description: 'Suivre votre progression de mémorisation',
-      icon: 'pi pi-chart-line',
-      route: '/progress',
-      color: 'bg-purple-500'
-    }
-  ];
+  private readonly progress = toSignal(this.storage.progress$, { initialValue: this.storage.getProgress() });
 
-  constructor(
-    private quranService: QuranService,
-    private storageService: StorageService,
-    private router: Router
-  ) {}
+  readonly memorizedCount = computed(() => this.progress().filter(p => p.memorized).length);
+  readonly memorizedPercent = computed(() => (this.memorizedCount() / TOTAL_AYAHS) * 100);
+  readonly dueCount = computed(() => {
+    this.progress();
+    return this.storage.getAyahsDueForReview().filter(p => p.memorized).length;
+  });
 
-  ngOnInit(): void {
-    this.loadRandomAyah();
-    this.loadStats();
-  }
+  /** Where to resume: last read surah, or Al-Fatiha for a first visit */
+  readonly resume = computed(() => {
+    const last = this.history.lastRead();
+    const surah = last ? this.catalog.get(last.surahId) : this.catalog.get(1);
+    return {
+      isFirstVisit: !last,
+      surahId: last?.surahId ?? 1,
+      page: last?.page ?? 1,
+      englishName: surah?.englishName ?? (last ? `Sourate ${last.surahId}` : 'Al-Faatiha'),
+      arabicName: surah?.name ?? '',
+      meaning: surah?.englishNameTranslation ?? ''
+    };
+  });
 
-  loadRandomAyah(): void {
+  // Verse of the day
+  readonly verse = signal<Ayah | null>(null);
+  readonly verseTranslation = signal<string | null>(null);
+  readonly verseSurah = computed(() => {
+    const v = this.verse();
+    return v ? this.catalog.get(v.surahId) : undefined;
+  });
+
+  constructor() {
     this.quranService.getRandomAyah().subscribe(ayah => {
-      this.randomAyah = ayah;
+      this.verse.set(ayah);
+      if (ayah) {
+        this.translationService.getAyahTranslation(ayah.id).subscribe(t => {
+          this.verseTranslation.set(t?.translations?.['fr']?.text ?? null);
+        });
+      }
     });
   }
 
-  loadStats(): void {
-    const memorized = this.storageService.getMemorizedAyahs();
-    this.memorizedCount = memorized.length;
-
-    this.dueForReview = this.storageService.getAyahsDueForReview();
+  newVerse(): void {
+    this.verse.set(null);
+    this.verseTranslation.set(null);
+    this.quranService.getRandomAyah().subscribe(ayah => {
+      this.verse.set(ayah);
+      if (ayah) {
+        this.translationService.getAyahTranslation(ayah.id).subscribe(t => {
+          this.verseTranslation.set(t?.translations?.['fr']?.text ?? null);
+        });
+      }
+    });
   }
 
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
-  }
-
-  get progressPercentage(): number {
-    return (this.memorizedCount / this.totalAyahs) * 100;
-  }
+  readonly arabicNumber = arabicNumber;
+  readonly displayText = ayahDisplayText;
 }

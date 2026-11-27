@@ -1,56 +1,42 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SelectModule } from 'primeng/select';
+import { Component, ElementRef, HostListener, computed, inject, signal } from '@angular/core';
 import { ThemeService } from '../../../core/services/theme.service';
+import { THEME_ICONS } from '../../../core/config/themes.config';
 
-interface ThemeOption {
-  id: string;
-  name: string;
-  primaryColor: string;
-  accentColor: string;
-  category: string;
-}
-
+/** Button that opens a small menu to pick the Clair, Sombre or Sépia theme */
 @Component({
   selector: 'app-theme-switcher',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectModule],
   templateUrl: './theme-switcher.component.html',
   styleUrl: './theme-switcher.component.css'
 })
-export class ThemeSwitcherComponent implements OnInit {
+export class ThemeSwitcherComponent {
   private themeService = inject(ThemeService);
+  private host = inject(ElementRef<HTMLElement>);
 
-  themeOptions: ThemeOption[] = [];
-  selectedTheme: ThemeOption | null = null;
+  readonly open = signal(false);
+  readonly themes = this.themeService.getThemes().map(t => ({ id: t.id, name: t.name, icon: THEME_ICONS[t.id] }));
+  readonly currentId = computed(() => this.themeService.theme().id);
+  readonly currentIcon = computed(() => THEME_ICONS[this.currentId()] ?? 'pi pi-sun');
+  readonly currentName = computed(() => this.themeService.theme().name);
 
-  ngOnInit(): void {
-    this.loadThemes();
-    this.initializeSelectedTheme();
+  toggle(): void {
+    this.open.update(v => !v);
   }
 
-  private loadThemes(): void {
-    const themes = this.themeService.getThemes();
-
-    // Convert all themes to options - flat list with separator labels
-    this.themeOptions = themes.map(theme => ({
-      id: theme.id,
-      name: theme.name,
-      primaryColor: theme.colors.primary,
-      accentColor: theme.colors.accent,
-      category: theme.category
-    }));
+  choose(id: string): void {
+    this.themeService.setTheme(id);
+    this.open.set(false);
   }
 
-  private initializeSelectedTheme(): void {
-    const currentTheme = this.themeService.getTheme();
-    this.selectedTheme = this.themeOptions.find(o => o.id === currentTheme.id) || null;
-  }
-
-  onThemeChange(event: any): void {
-    if (event.value) {
-      this.themeService.setTheme(event.value.id);
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.open() && !this.host.nativeElement.contains(event.target as Node)) {
+      this.open.set(false);
     }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.open.set(false);
   }
 }

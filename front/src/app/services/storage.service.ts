@@ -44,7 +44,8 @@ export class StorageService {
   private saveProgress(progress: UserProgress[]): void {
     try {
       localStorage.setItem(this.PROGRESS_KEY, JSON.stringify(progress));
-      this.progressSubject.next(progress);
+      // New array so listeners that compare by reference (signals) see the change
+      this.progressSubject.next([...progress]);
     } catch (error) {
       console.error('Error saving progress:', error);
     }
