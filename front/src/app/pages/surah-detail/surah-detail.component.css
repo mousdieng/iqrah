@@ -141,45 +141,7 @@
   cursor: pointer;
 }
 
-.ayah-wrapper.playing {
-  background: linear-gradient(90deg, transparent, var(--color-accent-alpha), transparent);
-  border-radius: 4px;
-  padding: 2px 4px;
-  margin: -2px -4px;
-}
-
-.ayah-wrapper.playing-active {
-  background: linear-gradient(90deg, transparent, var(--color-accent-alpha), transparent);
-  animation: pulse-highlight 1.5s ease-in-out infinite;
-}
-
-.ayah-wrapper.playing-active .ayah-text {
-  color: var(--color-primary-dark);
-}
-
-.ayah-number.number-playing {
-  color: var(--color-accent);
-  font-weight: bold;
-  animation: pulse-number 1s ease-in-out infinite;
-}
-
-@keyframes pulse-highlight {
-  0%, 100% {
-    background: linear-gradient(90deg, transparent, var(--color-accent-alpha), transparent);
-  }
-  50% {
-    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
-  }
-}
-
-@keyframes pulse-number {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
+/* Playing highlight: see surah-detail.views.css */
 
 /* ─── Ayah Indicators (Bookmark & Note) ────────────────────────────────────── */
 

@@ -54,6 +54,11 @@ export class AudioService {
       this.updateState({ isPlaying: false });
     });
 
+    // Duration known: tell listeners right away, without waiting for the first timeupdate
+    this.audio.addEventListener('loadedmetadata', () => {
+      this.audioProgress$.next(0);
+    });
+
     this.audio.addEventListener('timeupdate', () => {
       if (this.audio.duration) {
         const progress = (this.audio.currentTime / this.audio.duration) * 100;
@@ -132,6 +137,8 @@ export class AudioService {
       : this.getTafsirUrl(ayah, tafsir || state.currentTafsir || 'default');
     this.audio.src = url;
     this.audio.load();
+    // New ayah starts at 0: listeners must not keep the previous ayah's position
+    this.audioProgress$.next(0);
     // Re-apply playback rate and volume after loading (browser resets these)
     this.audio.playbackRate = state.playbackRate;
     this.audio.volume = state.volume;

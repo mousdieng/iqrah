@@ -303,8 +303,31 @@
   white-space: nowrap;
 }
 
+/* ─── Verse being recited ─────────────────────────────────────────────────
+   A soft band that follows the verse line by line (box-decoration-break keeps
+   each wrapped line rounded and padded), a stronger tint while the sound plays,
+   a lighter one when paused. */
+.mushaf-text .ayah-wrapper {
+  border-radius: 0.4em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.mushaf-text .ayah-wrapper.playing {
+  background-color: var(--color-accent-alpha);
+  box-shadow: 0 0 0 0.12em var(--color-accent-alpha);
+}
+
+.mushaf-text .ayah-wrapper.playing-active {
+  background-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
+  box-shadow: 0 0 0 0.12em color-mix(in srgb, var(--color-accent) 24%, transparent);
+  color: var(--color-text-primary);
+}
+
 .ayah-end.number-playing {
   color: var(--color-accent);
+  text-shadow: 0 0 0.6em color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 .hizb-mark,
@@ -378,7 +401,8 @@
 
 .study-card.playing {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px var(--color-accent-alpha);
+  box-shadow: inset 4px 0 0 var(--color-accent), 0 0 0 3px var(--color-accent-alpha);
+  background: linear-gradient(var(--color-accent-alpha), var(--color-accent-alpha)), var(--color-card-bg, var(--color-surface));
 }
 
 .study-card.selected {

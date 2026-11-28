@@ -110,8 +110,13 @@ export class AudioPlayerComponent implements OnDestroy {
     return { slots, current, lengths, allKnown };
   });
 
+  /** Thumb position while the user drags it (null otherwise) */
+  private readonly dragging = signal<number | null>(null);
+
   /** 0-100 position of the bar */
   readonly position = computed(() => {
+    const drag = this.dragging();
+    if (drag !== null) return drag;
     const t = this.timeline();
     const time = this.time();
     if (!t) return this.duration() ? (time / this.duration()) * 100 : 0;
@@ -126,6 +131,12 @@ export class AudioPlayerComponent implements OnDestroy {
 
   readonly elapsed = computed(() => {
     const t = this.timeline();
+    const drag = this.dragging();
+    if (drag !== null) {
+      // Preview the time under the thumb
+      const total = t ? (t.allKnown ? t.lengths.reduce((a, b) => a + b, 0) : NaN) : this.duration();
+      if (isFinite(total)) return this.format((drag / 100) * total);
+    }
     if (!t || !t.allKnown) return this.format(this.time());
     return this.format(t.lengths.slice(0, t.current).reduce((a, b) => a + b, 0) + this.time());
   });
@@ -177,8 +188,9 @@ export class AudioPlayerComponent implements OnDestroy {
     });
 
     this.audio.audioProgress$.subscribe(() => {
-      this.time.set(this.audio.getCurrentTime());
+      const t = this.audio.getCurrentTime();
       const d = this.audio.getDuration();
+      this.time.set(isFinite(t) ? t : 0);
       this.duration.set(isFinite(d) ? d : 0);
     });
 
@@ -264,8 +276,13 @@ export class AudioPlayerComponent implements OnDestroy {
     this.repeat.stop();
   }
 
+  onSeekInput(event: Event): void {
+    this.dragging.set(+(event.target as HTMLInputElement).value);
+  }
+
   onSeek(event: Event): void {
     const percent = +(event.target as HTMLInputElement).value;
+    this.dragging.set(null);
     const t = this.timeline();
     if (!t) {
       this.audio.seek(percent);

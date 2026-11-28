@@ -147,7 +147,7 @@
         <span class="time">{{ elapsed() }}</span>
         <input type="range" min="0" max="100" step="0.1" class="seek-range"
                [value]="position()" [style.--p]="position() + '%'"
-               (change)="onSeek($event)" [disabled]="!currentAyah()"
+               (input)="onSeekInput($event)" (change)="onSeek($event)" [disabled]="!currentAyah()"
                [attr.aria-label]="timeline() ? 'Position dans la répétition' : 'Position dans le verset'">
         <span class="time">{{ total() }}</span>
       </div>
