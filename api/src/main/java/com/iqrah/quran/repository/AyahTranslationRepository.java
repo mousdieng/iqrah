@@ -13,6 +13,8 @@ public interface AyahTranslationRepository extends JpaRepository<AyahTranslation
 
     List<AyahTranslation> findByAyahId(Integer ayahId);
 
+    boolean existsByAyahId(Integer ayahId);
+
     Optional<AyahTranslation> findByAyahIdAndLanguage(Integer ayahId, String language);
 
     List<AyahTranslation> findByAyahIdInAndLanguage(List<Integer> ayahIds, String language);

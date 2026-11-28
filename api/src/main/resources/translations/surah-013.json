@@ -1,0 +1,982 @@
+{
+  "surahId": 13,
+  "name": "Ar-Ra'd",
+  "verses": 43,
+  "startAyahId": 1708,
+  "ayahs": {
+    "1708": {
+      "ayahId": 1708,
+      "surahId": 13,
+      "numberInSurah": 1,
+      "translations": {
+        "en": { "text": "Alif, Lam, Meem, Ra. These are the verses of the Book; and what has been revealed to you from your Lord is the truth, but most of the people do not believe.", "translator": "Sahih International" },
+        "fr": { "text": "Alif, Lâm, Mîm, Râ. Voici les versets du Livre; et ce qui t'a été révélé par ton Seigneur est la vérité; mais la plupart des gens ne croient pas.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Alif Lam Mim Ra'. Das sind die Verse des Buches. Und was dir von deinem Herrn hinabgesandt wurde, ist die Wahrheit. Jedoch die meisten Menschen glauben nicht.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "المر", "grammar": "Lettres isolées (huruf muqatta'at)", "meaning": "Alif, Lam, Mim, Ra" },
+          { "arabic": "تِلْكَ آيَاتُ الْكِتَابِ", "grammar": "Démonstratif + nom + nom", "meaning": "voici les versets du Livre" },
+          { "arabic": "وَالَّذِي أُنْزِلَ إِلَيْكَ مِنْ رَبِّكَ الْحَقُّ وَلَٰكِنَّ أَكْثَرَ النَّاسِ لَا يُؤْمِنُونَ", "grammar": "Conjonction + pronom relatif + verbe passif forme IV + préposition + pronom + préposition + nom + pronom + nom + conjonction + particule + nom + nom + particule négative + verbe forme IV", "meaning": "et ce qui t'a été révélé de la part de ton Seigneur est la vérité, mais la plupart des gens ne croient pas" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Sourate dont la période (mecquoise ou médinoise) est discutée ; son thème est l'unicité d'Allah, la résurrection et la vérité de la révélation. Malgré l'évidence de la vérité, la plupart des gens la rejettent.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1709": {
+      "ayahId": 1709,
+      "surahId": 13,
+      "numberInSurah": 2,
+      "translations": {
+        "en": { "text": "It is Allah who erected the heavens without pillars that you [can] see; then He established Himself above the Throne and made subject the sun and the moon, each running [its course] for a specified term. He arranges [each] matter; He details the signs that you may, of the meeting with your Lord, be certain.", "translator": "Sahih International" },
+        "fr": { "text": "Allah est Celui qui a élevé [bien haut] les cieux sans piliers visibles. Il S'est établi [istawâ] sur le Trône et a soumis le soleil et la lune, chacun poursuivant sa course vers un terme fixé. Il règle l'Ordre [de tout] et expose en détail les signes afin que vous ayez la certitude de la rencontre de votre Seigneur.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Allah ist es, Der die Himmel, die ihr sehen könnt, ohne Stützpfeiler emporgehoben hat. Dann herrschte Er über Sein Reich. Und Er machte (Sich) Sonne und Mond dienstbar; jedes (Gestirn) läuft seine Bahn in einer vorgezeichneten Frist. Er bestimmt alle Dinge. Er macht die Zeichen deutlich, auf daß ihr an die Begegnung mit eurem Herrn fest glauben möget.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "اللَّهُ الَّذِي رَفَعَ السَّمَاوَاتِ بِغَيْرِ عَمَدٍ تَرَوْنَهَا", "grammar": "Nom propre + pronom relatif + verbe + nom + préposition + nom + nom + verbe + pronom", "meaning": "Allah est Celui qui a élevé les cieux sans piliers que vous puissiez voir" },
+          { "arabic": "ثُمَّ اسْتَوَىٰ عَلَى الْعَرْشِ", "grammar": "Particule + verbe forme VIII + préposition + nom", "meaning": "puis Il S'est établi sur le Trône" },
+          { "arabic": "وَسَخَّرَ الشَّمْسَ وَالْقَمَرَ", "grammar": "Conjonction + verbe forme II + nom + conjonction + nom", "meaning": "et a assujetti le soleil et la lune" },
+          { "arabic": "كُلٌّ يَجْرِي لِأَجَلٍ مُسَمًّى", "grammar": "Nom + verbe + préposition + nom + adjectif", "meaning": "chacun poursuit sa course vers un terme fixé" },
+          { "arabic": "يُدَبِّرُ الْأَمْرَ يُفَصِّلُ الْآيَاتِ لَعَلَّكُمْ بِلِقَاءِ رَبِّكُمْ تُوقِنُونَ", "grammar": "Verbe forme II + nom + verbe forme II + nom + particule + pronom + préposition + nom + nom + pronom + verbe forme IV", "meaning": "Il règle l'ordre de toute chose et expose les signes en détail, afin que vous ayez la certitude de la rencontre de votre Seigneur" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les cieux tiennent sans colonnes visibles, par la seule puissance d'Allah. Selon Ibn 'Abbas, il peut y avoir des piliers que l'on ne voit pas. L'établissement sur le Trône est affirmé sans comparaison ni interprétation. La course réglée des astres doit mener à la certitude de la résurrection.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1710": {
+      "ayahId": 1710,
+      "surahId": 13,
+      "numberInSurah": 3,
+      "translations": {
+        "en": { "text": "And it is He who spread the earth and placed therein firmly set mountains and rivers; and from all of the fruits He made therein two mates; He causes the night to cover the day. Indeed in that are signs for a people who give thought.", "translator": "Sahih International" },
+        "fr": { "text": "Et c'est Lui qui a étendu la terre et y a placé montagnes et fleuves. Et de chaque espèce de fruits Il y établit deux éléments de couple. Il fait que la nuit couvre le jour. Voilà bien là des preuves pour des gens qui réfléchissent.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und Er ist es, Der die Erde ausdehnte und feststehende Berge und Flüsse in ihr gründete. Und Er schuf auf ihr Früchte aller Art, ein Paar von jeder (Art) Er läßt die Nacht den Tag bedecken. Wahrlich, hierin liegen Zeichen für ein nachdenkendes Volk.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَهُوَ الَّذِي مَدَّ الْأَرْضَ وَجَعَلَ فِيهَا رَوَاسِيَ وَأَنْهَارًا", "grammar": "Conjonction + pronom + pronom relatif + verbe + nom + conjonction + verbe + préposition + pronom + nom + conjonction + nom", "meaning": "C'est Lui qui a étendu la terre et y a placé des montagnes fermes et des fleuves" },
+          { "arabic": "وَمِنْ كُلِّ الثَّمَرَاتِ جَعَلَ فِيهَا زَوْجَيْنِ اثْنَيْنِ", "grammar": "Conjonction + préposition + nom + nom + verbe + préposition + pronom + nom duel + adjectif", "meaning": "et de chaque espèce de fruits, Il y a établi deux éléments d'un couple" },
+          { "arabic": "يُغْشِي اللَّيْلَ النَّهَارَ", "grammar": "Verbe forme IV + nom + nom", "meaning": "Il couvre le jour par la nuit" },
+          { "arabic": "إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ", "grammar": "Particule + préposition + démonstratif + particule + nom + préposition + nom + verbe forme V", "meaning": "Il y a en cela des signes pour des gens qui réfléchissent" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "La terre étendue, stabilisée par les montagnes, irriguée par les fleuves, et la loi du couple dans le monde végétal sont des signes de la sagesse du Créateur pour qui médite.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1711": {
+      "ayahId": 1711,
+      "surahId": 13,
+      "numberInSurah": 4,
+      "translations": {
+        "en": { "text": "And within the land are neighboring plots and gardens of grapevines and crops and palm trees, [growing] several from a root or otherwise, watered with one water; but We make some of them exceed others in [quality of] fruit. Indeed in that are signs for a people who reason.", "translator": "Sahih International" },
+        "fr": { "text": "Et sur la terre il y a des parcelles voisines les unes des autres, des jardins [plantés] de vignes, et des céréales et des palmiers, en touffes ou espacés, arrosés de la même eau, cependant Nous rendons supérieurs les uns aux autres quant au goût. Voilà bien là des preuves pour des gens qui raisonnent.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und auf der Erde liegen dicht beieinander Landstriche und Gärten von Weinstöcken, Kornfeldern und Dattelpalmen, die auf Doppel- und auf Einzelstämmen aus einer Wurzel zusammenwachsen; sie werden mit demselben Wasser getränkt, dennoch lassen Wir die einen von ihnen die anderen an Frucht übertreffen. Hierin liegen wahrlich Zeichen für ein verständiges Volk.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَفِي الْأَرْضِ قِطَعٌ مُتَجَاوِرَاتٌ وَجَنَّاتٌ مِنْ أَعْنَابٍ وَزَرْعٌ وَنَخِيلٌ صِنْوَانٌ وَغَيْرُ صِنْوَانٍ يُسْقَىٰ بِمَاءٍ وَاحِدٍ وَنُفَضِّلُ بَعْضَهَا عَلَىٰ بَعْضٍ فِي الْأُكُلِ", "grammar": "Conjonction + préposition + nom + nom + adjectif + conjonction + nom + préposition + nom + conjonction + nom + conjonction + nom + adjectif + conjonction + nom + adjectif + verbe passif + préposition + nom + adjectif + conjonction + verbe forme II + nom + pronom + préposition + nom + préposition + nom", "meaning": "Sur la terre, il y a des parcelles voisines, des jardins de vignes, des cultures et des palmiers, en touffes ou isolés, arrosés de la même eau ; et Nous rendons les uns supérieurs aux autres par le goût" },
+          { "arabic": "إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِقَوْمٍ يَعْقِلُونَ", "grammar": "Particule + préposition + démonstratif + particule + nom + préposition + nom + verbe", "meaning": "Il y a en cela des signes pour des gens qui raisonnent" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Des sols voisins, une même eau, et pourtant des fruits différents en goût et en couleur : preuve qu'un Créateur choisit et décide, et non le seul effet de la nature.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1712": {
+      "ayahId": 1712,
+      "surahId": 13,
+      "numberInSurah": 5,
+      "translations": {
+        "en": { "text": "And if you are astonished, [O Muhammad] - then astonishing is their saying, \"When we are dust, will we indeed be [brought] into a new creation?\" Those are the ones who have disbelieved in their Lord, and those will have shackles upon their necks, and those are the companions of the Fire; they will abide therein eternally.", "translator": "Sahih International" },
+        "fr": { "text": "Et si tu dois t'étonner, rien de plus étonnant que leurs dires: «Quand nous seront poussière, reviendrons-nous vraiment à une nouvelle création?» Ceux-là sont ceux qui ne croient pas en leur Seigneur. Et ce sont eux qui auront des jougs à leur cou. Et ce sont eux les gens du Feu, où ils demeureront éternellement.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Wenn du dich wunderst, so ist ihre Rede wunderlich: \"Wie? Wenn wir zu Staub geworden sind, dann sollen wir in einer Neuschöpfung sein?\" Diese sind es, die ihrem Herrn den Glauben versagen, und diese sind es, die Fesseln um ihren Hals haben werden; und sie werden die Bewohner des Feuers sein, darin werden sie auf ewig bleiben.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "۞ وَإِنْ تَعْجَبْ فَعَجَبٌ قَوْلُهُمْ أَإِذَا كُنَّا تُرَابًا أَإِنَّا لَفِي خَلْقٍ جَدِيدٍ", "grammar": "Conjonction + particule + verbe + conjonction + nom + nom + pronom + particule interrogative + particule + verbe + nom + particule interrogative + particule + pronom + particule + préposition + nom + adjectif", "meaning": "Si tu dois t'étonner, étonnante est leur parole : « Quand nous serons poussière, serons-nous vraiment recréés à nouveau ? »" },
+          { "arabic": "أُولَٰئِكَ الَّذِينَ كَفَرُوا بِرَبِّهِمْ", "grammar": "Démonstratif + pronom relatif + verbe + préposition + nom + pronom", "meaning": "Ce sont ceux qui ont mécru en leur Seigneur" },
+          { "arabic": "وَأُولَٰئِكَ الْأَغْلَالُ فِي أَعْنَاقِهِمْ", "grammar": "Conjonction + démonstratif + nom + préposition + nom + pronom", "meaning": "ceux-là auront des carcans au cou" },
+          { "arabic": "وَأُولَٰئِكَ أَصْحَابُ النَّارِ", "grammar": "Conjonction + démonstratif + nom + nom", "meaning": "ceux-là sont les gens du Feu" },
+          { "arabic": "هُمْ فِيهَا خَالِدُونَ", "grammar": "Pronom + préposition + pronom + participe actif", "meaning": "où ils demeureront éternellement" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Il est étonnant que ceux qui voient la création initiale nient la recréation, qui est plus facile. Nier la résurrection revient à nier la puissance d'Allah.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1713": {
+      "ayahId": 1713,
+      "surahId": 13,
+      "numberInSurah": 6,
+      "translations": {
+        "en": { "text": "They impatiently urge you to bring about evil before good, while there has already occurred before them similar punishments [to what they demand]. And indeed, your Lord is full of forgiveness for the people despite their wrongdoing, and indeed, your Lord is severe in penalty.", "translator": "Sahih International" },
+        "fr": { "text": "Et ils te demandent de hâter [la venue] du malheur plutôt que celle du bonheur. Certes, il s'est produit avant eux des châtiments exemplaires. Ton Seigneur est Détenteur du pardon pour les gens, malgré leurs méfaits. Et ton Seigneur est assurément dur en punition.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Sie werden dich eher die Strafe als die Wohltat beschleunigen heißen, obwohl vor ihnen beispielgebende Bestrafungen erfolgt sind. Wahrlich, dein Herr ist immer bereit, den Menschen zu vergeben, trotz ihrer Missetaten, und siehe, dein Herr ist streng im Strafen.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَيَسْتَعْجِلُونَكَ بِالسَّيِّئَةِ قَبْلَ الْحَسَنَةِ وَقَدْ خَلَتْ مِنْ قَبْلِهِمُ الْمَثُلَاتُ", "grammar": "Conjonction + verbe forme X + pronom + préposition + nom + adverbe + nom + conjonction + particule + verbe + préposition + adverbe + pronom + nom", "meaning": "Ils te demandent de hâter le malheur plutôt que le bien, alors que des châtiments exemplaires ont eu lieu avant eux" },
+          { "arabic": "وَإِنَّ رَبَّكَ لَذُو مَغْفِرَةٍ لِلنَّاسِ عَلَىٰ ظُلْمِهِمْ", "grammar": "Conjonction + particule + nom + pronom + particule + nom + nom + préposition + nom + préposition + nom + pronom", "meaning": "Ton Seigneur est plein de pardon envers les gens malgré leurs injustices" },
+          { "arabic": "وَإِنَّ رَبَّكَ لَشَدِيدُ الْعِقَابِ", "grammar": "Conjonction + particule + nom + pronom + particule + adjectif + nom", "meaning": "et ton Seigneur est certes dur en punition" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les mécréants réclamaient par défi le châtiment. Allah réunit ici l'espoir et la crainte : Son pardon est immense, mais Sa punition est sévère.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1714": {
+      "ayahId": 1714,
+      "surahId": 13,
+      "numberInSurah": 7,
+      "translations": {
+        "en": { "text": "And those who disbelieved say, \"Why has a sign not been sent down to him from his Lord?\" You are only a warner, and for every people is a guide.", "translator": "Sahih International" },
+        "fr": { "text": "Et ceux qui ont mécru disent: «Pourquoi n'a-t-on pas fait descendre sur celui-ci (Muhammad) un miracle venant de son Seigneur?» Tu n'es qu'un avertisseur, et à chaque peuple un guide.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und diejenigen, die nicht glauben, sagen: \"Warum wurde kein Zeichen von seinem Herrn zu ihm herabgesandt?\" Du bist nur ein Warner. Und für jedes Volk wird ein Führer (eingesetzt)", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَيَقُولُ الَّذِينَ كَفَرُوا لَوْلَا أُنْزِلَ عَلَيْهِ آيَةٌ مِنْ رَبِّهِ", "grammar": "Conjonction + verbe + pronom relatif + verbe + particule + verbe passif forme IV + préposition + pronom + nom + préposition + nom + pronom", "meaning": "Ceux qui ont mécru disent : « Pourquoi ne lui a-t-on pas fait descendre un miracle de la part de son Seigneur ? »" },
+          { "arabic": "إِنَّمَا أَنْتَ مُنْذِرٌ", "grammar": "Particule restrictive + pronom + participe actif forme IV", "meaning": "Tu n'es qu'un avertisseur" },
+          { "arabic": "وَلِكُلِّ قَوْمٍ هَادٍ", "grammar": "Conjonction + préposition + nom + nom + participe actif", "meaning": "et à chaque peuple un guide" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "La mission du Prophète est d'avertir, non de produire les miracles réclamés. Chaque peuple a reçu un guide qui l'appelle à Allah.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1715": {
+      "ayahId": 1715,
+      "surahId": 13,
+      "numberInSurah": 8,
+      "translations": {
+        "en": { "text": "Allah knows what every female carries and what the wombs lose [prematurely] or exceed. And everything with Him is by due measure.", "translator": "Sahih International" },
+        "fr": { "text": "Allah sait ce que porte chaque femelle, et de combien la période de gestation dans la matrice est écourtée ou prolongée. Et toute chose a auprès de Lui sa mesure.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Allah weiß, was jedes weibliche Wesen trägt, und wann der Mutterschoß abnimmt und wann er zunimmt. Und bei Ihm geschehen alle Dinge nach Maß.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "اللَّهُ يَعْلَمُ مَا تَحْمِلُ كُلُّ أُنْثَىٰ وَمَا تَغِيضُ الْأَرْحَامُ وَمَا تَزْدَادُ", "grammar": "Nom propre + verbe + pronom relatif + verbe + nom + nom + conjonction + pronom relatif + verbe + nom + conjonction + pronom relatif + verbe forme VIII", "meaning": "Allah sait ce que porte chaque femelle, et de combien les matrices raccourcissent ou prolongent la gestation" },
+          { "arabic": "وَكُلُّ شَيْءٍ عِنْدَهُ بِمِقْدَارٍ", "grammar": "Conjonction + nom + nom + adverbe + pronom + préposition + nom", "meaning": "et toute chose est auprès de Lui selon une mesure" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "La science d'Allah englobe tout ce qui est dans les matrices : sexe, nombre, durée de grossesse. Le Prophète a cité ceci parmi les cinq clés de l'invisible (Bukhari).",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1716": {
+      "ayahId": 1716,
+      "surahId": 13,
+      "numberInSurah": 9,
+      "translations": {
+        "en": { "text": "[He is] Knower of the unseen and the witnessed, the Grand, the Exalted.", "translator": "Sahih International" },
+        "fr": { "text": "Le Connaisseur de ce qui est caché et de ce qui est apparent, Le Grand, Le Sublime.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "(Er ist) der Kenner des Verborgenen und des Sichtbaren, der Große, der Erhabenste!", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "عَالِمُ الْغَيْبِ وَالشَّهَادَةِ الْكَبِيرُ الْمُتَعَالِ", "grammar": "Participe actif + nom + conjonction + nom + adjectif + participe actif forme VI", "meaning": "Le Connaisseur de l'invisible et du visible, le Grand, le Très-Haut" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Allah connaît ce qui est caché aux créatures comme ce qu'elles voient. Il est le Grand au-dessus de tout et le Très-Haut par Son essence et Ses attributs.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1717": {
+      "ayahId": 1717,
+      "surahId": 13,
+      "numberInSurah": 10,
+      "translations": {
+        "en": { "text": "It is the same [to Him] concerning you whether one conceals [his] speech or one publicizes it and whether one is hidden by night or conspicuous [among others] by day.", "translator": "Sahih International" },
+        "fr": { "text": "Sont égaux pour lui, celui parmi vous qui tient secrète sa parole, et celui qui la divulgue, celui qui se cache la nuit comme celui qui se montre au grand jour.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Diejenigen, die unter euch das Wort verhehlen und die es offen aussprechen, sind (vor Ihm) gleich; so wie die, die sich in der Nacht verbergen und die am Tag offen hervortreten.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "سَوَاءٌ مِنْكُمْ مَنْ أَسَرَّ الْقَوْلَ وَمَنْ جَهَرَ بِهِ وَمَنْ هُوَ مُسْتَخْفٍ بِاللَّيْلِ وَسَارِبٌ بِالنَّهَارِ", "grammar": "Nom + préposition + pronom + pronom relatif + verbe forme IV + nom + conjonction + pronom relatif + verbe + préposition + pronom + conjonction + pronom relatif + pronom + participe actif forme X + préposition + nom + conjonction + participe actif + préposition + nom", "meaning": "Sont égaux pour Lui, parmi vous, celui qui tient secrète sa parole et celui qui la divulgue, celui qui se cache la nuit et celui qui circule au grand jour" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Pour Allah, le secret et le public, l'obscurité et la lumière sont identiques : rien n'échappe à Sa science.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1718": {
+      "ayahId": 1718,
+      "surahId": 13,
+      "numberInSurah": 11,
+      "translations": {
+        "en": { "text": "For each one are successive [angels] before and behind him who protect him by the decree of Allah. Indeed, Allah will not change the condition of a people until they change what is in themselves. And when Allah intends for a people ill, there is no repelling it. And there is not for them besides Him any patron.", "translator": "Sahih International" },
+        "fr": { "text": "Il [l'homme] a par devant lui et derrière lui des Anges qui se relaient et qui veillent sur lui par ordre d'Allah. En vérité, Allah ne modifie point l'état d'un peuple, tant que les [individus qui le composent] ne modifient pas ce qui est en eux-mêmes. Et lorsqu'Allah veut [infliger] un mal à un peuple, nul ne peut le repousser: ils n'ont en dehors de Lui aucun protecteur.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Er (der Gesandte) hat Beschützer vor und hinter sich; sie behüten ihn auf Allahs Geheiß. Gewiß, Allah ändert die Lage eines Volkes nicht, ehe sie (die Leute) nicht selbst das ändern, was in ihren Herzen ist. Und wenn Allah einem Volk etwas Übeles zufügen will, so gibt es dagegen keine Abwehr, und sie haben keinen Helfer außer Ihm.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "لَهُ مُعَقِّبَاتٌ مِنْ بَيْنِ يَدَيْهِ وَمِنْ خَلْفِهِ يَحْفَظُونَهُ مِنْ أَمْرِ اللَّهِ", "grammar": "Préposition + pronom + nom + préposition + adverbe + nom + pronom + conjonction + préposition + adverbe + pronom + verbe + pronom + préposition + nom + nom propre", "meaning": "Il a, devant lui et derrière lui, des anges qui se relaient et le protègent par ordre d'Allah" },
+          { "arabic": "إِنَّ اللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّىٰ يُغَيِّرُوا مَا بِأَنْفُسِهِمْ", "grammar": "Particule + nom propre + particule négative + verbe forme II + pronom relatif + préposition + nom + particule + verbe forme II + pronom relatif + préposition + nom + pronom", "meaning": "Allah ne change pas l'état d'un peuple tant que ceux-ci ne changent pas ce qui est en eux-mêmes" },
+          { "arabic": "وَإِذَا أَرَادَ اللَّهُ بِقَوْمٍ سُوءًا فَلَا مَرَدَّ لَهُ", "grammar": "Conjonction + particule + verbe forme IV + nom propre + préposition + nom + nom + conjonction + particule négative + nom + préposition + pronom", "meaning": "Et quand Allah veut un mal pour un peuple, nul ne peut le repousser" },
+          { "arabic": "وَمَا لَهُمْ مِنْ دُونِهِ مِنْ وَالٍ", "grammar": "Conjonction + particule négative + préposition + pronom + préposition + préposition + pronom + préposition + nom", "meaning": "et ils n'ont en dehors de Lui aucun protecteur" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Des anges se relaient jour et nuit pour protéger l'homme et noter ses actes. Principe fondamental : Allah ne retire Son bienfait à un peuple que lorsqu'il change lui-même en désobéissant, et ne lui rend son état que lorsqu'il se réforme.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1719": {
+      "ayahId": 1719,
+      "surahId": 13,
+      "numberInSurah": 12,
+      "translations": {
+        "en": { "text": "It is He who shows you lightening, [causing] fear and aspiration, and generates the heavy clouds.", "translator": "Sahih International" },
+        "fr": { "text": "C'est lui qui vous fait voir l'éclair [qui vous inspire] crainte et espoir; et Il crée les nuages lourds.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Er ist es, Der euch den Blitz in Furcht und Hoffnung sehen läßt; und Er läßt die schweren Wolken aufsteigen.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "هُوَ الَّذِي يُرِيكُمُ الْبَرْقَ خَوْفًا وَطَمَعًا وَيُنْشِئُ السَّحَابَ الثِّقَالَ", "grammar": "Pronom + pronom relatif + verbe forme IV + pronom + nom + nom + conjonction + nom + conjonction + verbe forme IV + nom + adjectif", "meaning": "C'est Lui qui vous fait voir l'éclair, source de crainte et d'espoir, et qui forme les lourds nuages" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "L'éclair inspire la crainte de la foudre au voyageur et l'espoir de la pluie au cultivateur. Les nuages chargés d'eau sont un signe de la puissance et de la miséricorde d'Allah.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1720": {
+      "ayahId": 1720,
+      "surahId": 13,
+      "numberInSurah": 13,
+      "translations": {
+        "en": { "text": "And the thunder exalts [Allah] with praise of Him - and the angels [as well] from fear of Him - and He sends thunderbolts and strikes therewith whom He wills while they dispute about Allah; and He is severe in assault.", "translator": "Sahih International" },
+        "fr": { "text": "Le tonnerre Le glorifie par Sa louange, et aussi les Anges, sous l'effet de Sa crainte. Et Il lance les foudres dont Il atteint qui Il veut. Or ils disputent au sujet d'Allah alors qu'Il est redoutable en Sa force.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und der Donner lobpreist Seine Herrlichkeit; und (genauso lobpreisen) Ihn die Engel in Ehrfurcht. Und Er sendet die Blitzschläge und trifft damit, wen Er will; doch streiten sie über Allah, während Er streng in der Vergeltung ist.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَيُسَبِّحُ الرَّعْدُ بِحَمْدِهِ وَالْمَلَائِكَةُ مِنْ خِيفَتِهِ وَيُرْسِلُ الصَّوَاعِقَ فَيُصِيبُ بِهَا مَنْ يَشَاءُ وَهُمْ يُجَادِلُونَ فِي اللَّهِ وَهُوَ شَدِيدُ الْمِحَالِ", "grammar": "Conjonction + verbe forme II + nom + préposition + nom + pronom + conjonction + nom + préposition + nom + pronom + conjonction + verbe forme IV + nom + conjonction + verbe forme IV + préposition + pronom + pronom relatif + verbe + conjonction + pronom + verbe forme III + préposition + nom propre + conjonction + pronom + adjectif + nom", "meaning": "Le tonnerre célèbre Sa louange, ainsi que les anges, par crainte de Lui ; Il lance les foudres et en frappe qui Il veut, alors qu'ils disputent au sujet d'Allah, Lui qui est redoutable en Sa force" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Le tonnerre glorifie Allah à sa manière. En l'entendant, Ibn Az-Zubayr disait : « Gloire à Celui que le tonnerre glorifie par Sa louange, ainsi que les anges par crainte de Lui. » La sourate tire son nom (Ar-Ra'd) de ce verset.",
+          "references": ["Ibn Kathir", "At-Tabari", "Tirmidhi"]
+        }
+      }
+    },
+    "1721": {
+      "ayahId": 1721,
+      "surahId": 13,
+      "numberInSurah": 14,
+      "translations": {
+        "en": { "text": "To Him [alone] is the supplication of truth. And those they call upon besides Him do not respond to them with a thing, except as one who stretches his hands toward water [from afar, calling it] to reach his mouth, but it will not reach it [thus]. And the supplication of the disbelievers is not but in error [i.e. futility].", "translator": "Sahih International" },
+        "fr": { "text": "A Lui l'appel de la Vérité! Ceux qu'ils invoquent en dehors de Lui ne leur répondent d'aucune façon; semblables à celui qui étend ses deux mains vers l'eau pour la porter à sa bouche, mais qui ne parvient jamais à l'atteindre. L'invocation des mécréants n'est que vanité.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Ihm gebührt der aufrichtige Anruf; und jene, die sie statt Ihm anrufen, kommen ihnen mit nichts entgegen; (sie sind) wie jener, der seine beiden Hände nach Wasser ausstreckt, damit es seinen Mund erreiche und ihn doch nicht erreicht. Und das Bitten der Ungläubigen ist völlig verfehlt.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "لَهُ دَعْوَةُ الْحَقِّ", "grammar": "Préposition + pronom + nom + nom", "meaning": "À Lui l'appel de la vérité" },
+          { "arabic": "وَالَّذِينَ يَدْعُونَ مِنْ دُونِهِ لَا يَسْتَجِيبُونَ لَهُمْ بِشَيْءٍ إِلَّا كَبَاسِطِ كَفَّيْهِ إِلَى الْمَاءِ لِيَبْلُغَ فَاهُ وَمَا هُوَ بِبَالِغِهِ", "grammar": "Conjonction + pronom relatif + verbe + préposition + préposition + pronom + particule négative + verbe forme X + préposition + pronom + préposition + nom + particule d'exception + préposition + participe actif + nom + pronom + préposition + nom + particule + verbe + nom + pronom + conjonction + particule négative + pronom + préposition + participe actif + pronom", "meaning": "Ceux qu'ils invoquent en dehors de Lui ne leur répondent en rien ; ils sont comme celui qui tend les mains vers l'eau pour qu'elle atteigne sa bouche, sans jamais l'atteindre" },
+          { "arabic": "وَمَا دُعَاءُ الْكَافِرِينَ إِلَّا فِي ضَلَالٍ", "grammar": "Conjonction + particule négative + nom + participe actif + particule d'exception + préposition + nom", "meaning": "L'invocation des mécréants n'est qu'égarement" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "L'invocation véritable, celle qui est exaucée, est adressée à Allah seul (« la ilaha illa Allah »). Invoquer des idoles est aussi vain que tendre la main vers l'eau sans jamais la porter à sa bouche.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1722": {
+      "ayahId": 1722,
+      "surahId": 13,
+      "numberInSurah": 15,
+      "translations": {
+        "en": { "text": "And to Allah prostrates whoever is within the heavens and the earth, willingly or by compulsion, and their shadows [as well] in the mornings and the afternoons.", "translator": "Sahih International" },
+        "fr": { "text": "Et c'est à Allah que se prosternent, bon gré mal gré, tous ceux qui sont dans les cieux et sur la terre, ainsi que leurs ombres, au début et à la fin de la journée.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Wer immer in den Himmeln und auf der Erde ist, wirft sich vor Allah in Anbetung nieder, willig oder widerwillig, und (ebenfalls tun dies) ihre Schatten am Morgen und am Abend.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَلِلَّهِ يَسْجُدُ مَنْ فِي السَّمَاوَاتِ وَالْأَرْضِ طَوْعًا وَكَرْهًا وَظِلَالُهُمْ بِالْغُدُوِّ وَالْآصَالِ ۩", "grammar": "Conjonction + préposition + nom propre + verbe + pronom relatif + préposition + nom + conjonction + nom + nom + conjonction + nom + conjonction + nom + pronom + préposition + nom + conjonction + nom", "meaning": "À Allah se prosternent, de gré ou de force, tous ceux qui sont dans les cieux et sur la terre, ainsi que leurs ombres, le matin et le soir ۩" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Verset de prosternation. Toute créature se soumet à Allah : le croyant volontairement, le mécréant malgré lui par sa dépendance. Même les ombres, en s'allongeant matin et soir, manifestent cette soumission.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1723": {
+      "ayahId": 1723,
+      "surahId": 13,
+      "numberInSurah": 16,
+      "translations": {
+        "en": { "text": "Say, \"Who is Lord of the heavens and earth?\" Say, \"Allah.\" Say, \"Have you then taken besides Him allies not possessing [even] for themselves any benefit or any harm?\" Say, \"Is the blind equivalent to the seeing? Or is darkness equivalent to light? Or have they attributed to Allah partners who created like His creation so that the creation [of each] seemed similar to them?\" Say, \"Allah is the Creator of all things, and He is the One, the Prevailing.\"", "translator": "Sahih International" },
+        "fr": { "text": "Dis: «Qui est le Seigneur des cieux et de la terre?» Dis: «Allah». Dis: «Et prendrez-vous en dehors de Lui, des maîtres qui ne détiennent pour eux-mêmes ni bien ni mal?» Dis: «Sont-ils égaux, l'aveugle et celui qui voit? Ou sont-elles égales, les ténèbres et la lumière? Ou donnent-ils à Allah des associés qui créent comme Sa création au point que les deux créations se soient confondues à eux? Dis: «Allah est le Créateur de toute chose, et c'est Lui l'Unique, le Dominateur suprême».", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Sprich: \"Wer ist der Herr der Himmel und der Erde?\" Sprich: \"Allah.\" Sprich: \"Habt ihr euch Helfer außer Ihm genommen, die sich selbst weder nützen noch schaden können?\" Sprich: \"Können der Blinde und der Sehende gleich sein? Oder kann die Finsternis dem Licht gleich sein? Oder stellen sie Allah Teilhaber zur Seite die eine Schöpfung wie die Seine erschaffen haben, So das (beide) Schöpfungen ihnen gleichartig erscheinen?\" Sprich: \"Allah ist der Schöpfer aller Dinge, und Er ist der Einzige, der Allmächtige.\"", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "قُلْ مَنْ رَبُّ السَّمَاوَاتِ وَالْأَرْضِ قُلِ اللَّهُ", "grammar": "Impératif + interrogatif + nom + nom + conjonction + nom + impératif + nom propre", "meaning": "Dis : « Qui est le Seigneur des cieux et de la terre ? » Dis : « Allah »" },
+          { "arabic": "قُلْ أَفَاتَّخَذْتُمْ مِنْ دُونِهِ أَوْلِيَاءَ لَا يَمْلِكُونَ لِأَنْفُسِهِمْ نَفْعًا وَلَا ضَرًّا", "grammar": "Impératif + particule interrogative + conjonction + verbe forme VIII + préposition + préposition + pronom + nom + particule négative + verbe + préposition + nom + pronom + nom + conjonction + particule négative + nom", "meaning": "Dis : « Prendrez-vous donc, en dehors de Lui, des protecteurs qui ne possèdent pour eux-mêmes ni profit ni dommage ? »" },
+          { "arabic": "قُلْ هَلْ يَسْتَوِي الْأَعْمَىٰ وَالْبَصِيرُ أَمْ هَلْ تَسْتَوِي الظُّلُمَاتُ وَالنُّورُ", "grammar": "Impératif + particule interrogative + verbe forme VIII + nom + conjonction + adjectif + particule + particule interrogative + verbe forme VIII + nom + conjonction + nom", "meaning": "Dis : « L'aveugle et le voyant sont-ils égaux ? Les ténèbres et la lumière sont-elles égales ? »" },
+          { "arabic": "أَمْ جَعَلُوا لِلَّهِ شُرَكَاءَ خَلَقُوا كَخَلْقِهِ فَتَشَابَهَ الْخَلْقُ عَلَيْهِمْ", "grammar": "Particule + verbe + préposition + nom propre + nom + verbe + préposition + nom + pronom + conjonction + verbe forme VI + nom + préposition + pronom", "meaning": "Ou bien ont-ils donné à Allah des associés qui auraient créé comme Lui, si bien que les créations se confondraient pour eux ?" },
+          { "arabic": "قُلِ اللَّهُ خَالِقُ كُلِّ شَيْءٍ وَهُوَ الْوَاحِدُ الْقَهَّارُ", "grammar": "Impératif + nom propre + participe actif + nom + nom + conjonction + pronom + adjectif + adjectif", "meaning": "Dis : « Allah est le Créateur de toute chose, et Il est l'Unique, le Dominateur suprême »" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Argumentation par questions : les polythéistes reconnaissaient Allah comme Seigneur, mais adoraient d'autres que Lui. Leurs idoles n'ont rien créé ; seul le Créateur mérite l'adoration.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1724": {
+      "ayahId": 1724,
+      "surahId": 13,
+      "numberInSurah": 17,
+      "translations": {
+        "en": { "text": "He sends down from the sky, rain, and valleys flow according to their capacity, and the torrent carries a rising foam. And from that [ore] which they heat in the fire, desiring adornments and utensils, is a foam like it. Thus Allah presents [the example of] truth and falsehood. As for the foam, it vanishes, [being] cast off; but as for that which benefits the people, it remains on the earth. Thus does Allah present examples.", "translator": "Sahih International" },
+        "fr": { "text": "Il a fait descendre une eau du ciel à laquelle des vallées servent de lit, selon leur grandeur. Le flot débordé a charrié une écume flottante; et semblable à celle-ci est [l'] écume provenant de ce qu'on porte à fusion, dans le feu pour [fabriquer] des bijoux et des ustensiles. Ainsi Allah représente en parabole la Vérité et le Faux: l'écume [du torrent et du métal fondu] s'en va, au rebut, tandis que [l'eau et les objets] utiles aux Hommes demeurent sur la terre. Ainsi Allah propose des paraboles.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Er sendet Wasser vom Himmel herab, so daß die Täler nach ihrem Maß durchströmt werden, und die Flut trägt Schaum auf der Oberfläche. Und ein ähnlicher Schaum ist in dem, was sie im Feuer aus Verlangen nach Schmuck und Gerät erhitzen. So verdeutlicht Allah Wahrheit und Falschheit. Der Schaum aber, der vergeht wie die Blasen; das aber, was den Menschen nützt, bleibt auf der Erde zurück. Und so prägt Allah die Gleichnisse.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "أَنْزَلَ مِنَ السَّمَاءِ مَاءً فَسَالَتْ أَوْدِيَةٌ بِقَدَرِهَا فَاحْتَمَلَ السَّيْلُ زَبَدًا رَابِيًا", "grammar": "Verbe forme IV + préposition + nom + nom + conjonction + verbe + nom + préposition + nom + pronom + conjonction + verbe forme VIII + nom + nom + adjectif", "meaning": "Il fait descendre du ciel une eau qui fait couler les vallées selon leur capacité ; le torrent charrie une écume flottante" },
+          { "arabic": "وَمِمَّا يُوقِدُونَ عَلَيْهِ فِي النَّارِ ابْتِغَاءَ حِلْيَةٍ أَوْ مَتَاعٍ زَبَدٌ مِثْلُهُ", "grammar": "Conjonction + préposition + pronom relatif + verbe forme IV + préposition + pronom + préposition + nom + nom + nom + conjonction + nom + nom + nom + pronom", "meaning": "et de ce qu'on chauffe au feu pour en faire des bijoux ou des ustensiles monte une écume semblable" },
+          { "arabic": "كَذَٰلِكَ يَضْرِبُ اللَّهُ الْحَقَّ وَالْبَاطِلَ", "grammar": "Préposition + démonstratif + verbe + nom propre + nom + conjonction + nom", "meaning": "Ainsi Allah donne en parabole la vérité et le faux" },
+          { "arabic": "فَأَمَّا الزَّبَدُ فَيَذْهَبُ جُفَاءً", "grammar": "Conjonction + particule + nom + conjonction + verbe + nom", "meaning": "L'écume s'en va, rejetée" },
+          { "arabic": "وَأَمَّا مَا يَنْفَعُ النَّاسَ فَيَمْكُثُ فِي الْأَرْضِ", "grammar": "Conjonction + particule + pronom relatif + verbe forme IV + nom + conjonction + verbe + préposition + nom", "meaning": "tandis que ce qui est utile aux gens demeure sur la terre" },
+          { "arabic": "كَذَٰلِكَ يَضْرِبُ اللَّهُ الْأَمْثَالَ", "grammar": "Préposition + démonstratif + verbe + nom propre + nom", "meaning": "Ainsi Allah propose des paraboles" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Double parabole : l'eau qui fait vivre la terre et le métal précieux représentent la vérité qui dure ; l'écume qui surnage puis disparaît représente le faux, bruyant mais éphémère. La révélation est comparée à la pluie, et les cœurs aux vallées selon leur capacité.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1725": {
+      "ayahId": 1725,
+      "surahId": 13,
+      "numberInSurah": 18,
+      "translations": {
+        "en": { "text": "For those who have responded to their Lord is the best [reward], but those who did not respond to Him - if they had all that is in the earth entirely and the like of it with it, they would [attempt to] ransom themselves thereby. Those will have the worst account, and their refuge is Hell, and wretched is the resting place.", "translator": "Sahih International" },
+        "fr": { "text": "La meilleure [fin] est pour ceux qui répondent à [l'appel] de leur Seigneur. Et quant à ceux qui ne Lui répondent pas, s'ils avaient tout ce qui est sur la terre, et autant encore, ils l'offriraient en rançon. Ceux-là auront le détestable rendement de compte et l'Enfer sera leur refuge. Quel détestable lit de repos!", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Für diejenigen, die auf ihren Herrn hören, ist das Gute vorgesehen; diejenigen aber, die nicht auf Ihn hören - hätten sie auch alles, was auf Erden ist, und noch einmal soviel dazu -, würden sich gerne damit loskaufen. Diese sind es, die eine schlimme Abrechnung haben werden, und ihre Herberge ist Gahannam. Welch ein elender Ruheplatz!", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "لِلَّذِينَ اسْتَجَابُوا لِرَبِّهِمُ الْحُسْنَىٰ", "grammar": "Préposition + pronom relatif + verbe forme X + préposition + nom + pronom + nom", "meaning": "Ceux qui répondent à leur Seigneur auront la plus belle récompense" },
+          { "arabic": "وَالَّذِينَ لَمْ يَسْتَجِيبُوا لَهُ لَوْ أَنَّ لَهُمْ مَا فِي الْأَرْضِ جَمِيعًا وَمِثْلَهُ مَعَهُ لَافْتَدَوْا بِهِ", "grammar": "Conjonction + pronom relatif + particule + verbe forme X + préposition + pronom + particule + particule + préposition + pronom + pronom relatif + préposition + nom + adverbe + conjonction + nom + pronom + adverbe + pronom + verbe forme VIII + préposition + pronom", "meaning": "Quant à ceux qui ne Lui répondent pas, s'ils possédaient tout ce qui est sur la terre et autant encore, ils l'offriraient en rançon" },
+          { "arabic": "أُولَٰئِكَ لَهُمْ سُوءُ الْحِسَابِ وَمَأْوَاهُمْ جَهَنَّمُ", "grammar": "Démonstratif + préposition + pronom + nom + nom + conjonction + nom + pronom + nom propre", "meaning": "Ceux-là auront le pire des comptes, et leur refuge sera l'Enfer" },
+          { "arabic": "وَبِئْسَ الْمِهَادُ", "grammar": "Conjonction + verbe + nom", "meaning": "Quel mauvais lit !" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Contraste entre ceux qui répondent à l'appel d'Allah et ceux qui le refusent. Le « mauvais compte » consiste à être interrogé sur chaque faute sans qu'aucune ne soit pardonnée.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1726": {
+      "ayahId": 1726,
+      "surahId": 13,
+      "numberInSurah": 19,
+      "translations": {
+        "en": { "text": "Then is he who knows that what has been revealed to you from your Lord is the truth like one who is blind? They will only be reminded who are people of understanding -", "translator": "Sahih International" },
+        "fr": { "text": "Celui qui sait que ce qui t'est révélé de la part de ton Seigneur est la vérité, est-il semblable à l'aveugle? Seuls les gens doués d'intelligence réfléchissent bien,", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Ist denn der, der weiß, daß das die Wahrheit ist, was zu dir von deinem Herrn hinabgesandt wurde, einem Blinden gleich? Nur diejenigen, die Verstand haben, lassen sich mahnen.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "۞ أَفَمَنْ يَعْلَمُ أَنَّمَا أُنْزِلَ إِلَيْكَ مِنْ رَبِّكَ الْحَقُّ كَمَنْ هُوَ أَعْمَىٰ", "grammar": "Particule interrogative + conjonction + pronom relatif + verbe + particule + verbe passif forme IV + préposition + pronom + préposition + nom + pronom + nom + préposition + pronom relatif + pronom + adjectif", "meaning": "Celui qui sait que ce qui t'a été révélé par ton Seigneur est la vérité est-il comme celui qui est aveugle ?" },
+          { "arabic": "إِنَّمَا يَتَذَكَّرُ أُولُو الْأَلْبَابِ", "grammar": "Particule restrictive + verbe forme V + nom + nom", "meaning": "Seuls les doués d'intelligence réfléchissent" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Le croyant clairvoyant et le mécréant aveugle de cœur ne sont pas égaux. Les versets suivants décrivent les qualités de ces gens d'intelligence (ulu al-albab).",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1727": {
+      "ayahId": 1727,
+      "surahId": 13,
+      "numberInSurah": 20,
+      "translations": {
+        "en": { "text": "Those who fulfill the covenant of Allah and do not break the contract,", "translator": "Sahih International" },
+        "fr": { "text": "ceux qui remplissent leur engagement envers Allah et ne violent pas le pacte,", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Es sind jene, die ihr Versprechen Allah gegenüber einhalten und den Bund (mit Ihm) nicht brechen", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "الَّذِينَ يُوفُونَ بِعَهْدِ اللَّهِ وَلَا يَنْقُضُونَ الْمِيثَاقَ", "grammar": "Pronom relatif + verbe forme IV + préposition + nom + nom propre + conjonction + particule négative + verbe + nom", "meaning": "Ceux qui remplissent leur engagement envers Allah et ne rompent pas le pacte" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Première qualité : la fidélité au pacte d'Allah, c'est-à-dire l'obéissance à Ses commandements, et le respect des engagements envers les hommes.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1728": {
+      "ayahId": 1728,
+      "surahId": 13,
+      "numberInSurah": 21,
+      "translations": {
+        "en": { "text": "And those who join that which Allah has ordered to be joined and fear their Lord and are afraid of the evil of [their] account,", "translator": "Sahih International" },
+        "fr": { "text": "qui unissent ce qu'Allah a commandé d'unir, redoutent leur Seigneur et craignent une malheureuse reddition de compte,", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "und es sind jene, welche verbinden, was Allah zu verbinden geboten hat, und die ihren Herrn fürchten und sich auf einen schlechten Ausgang der Abrechnung gefaßt machen", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَالَّذِينَ يَصِلُونَ مَا أَمَرَ اللَّهُ بِهِ أَنْ يُوصَلَ وَيَخْشَوْنَ رَبَّهُمْ وَيَخَافُونَ سُوءَ الْحِسَابِ", "grammar": "Conjonction + pronom relatif + verbe + pronom relatif + verbe + nom propre + préposition + pronom + particule + verbe passif + conjonction + verbe + nom + pronom + conjonction + verbe + nom + nom", "meaning": "qui maintiennent les liens qu'Allah a ordonné de maintenir, redoutent leur Seigneur et craignent le mauvais compte" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Maintenir les liens de parenté (silat ar-rahim) et tout ce qu'Allah a ordonné d'unir, tout en vivant dans la crainte révérencielle d'Allah et du Jugement.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1729": {
+      "ayahId": 1729,
+      "surahId": 13,
+      "numberInSurah": 22,
+      "translations": {
+        "en": { "text": "And those who are patient, seeking the countenance of their Lord, and establish prayer and spend from what We have provided for them secretly and publicly and prevent evil with good - those will have the good consequence of [this] home -", "translator": "Sahih International" },
+        "fr": { "text": "et qui endurent dans la recherche de l'agrément d'Allah, accomplissent la Salât et dépensent (dans le bien), en secret et en public, de ce que Nous leur avons attribué, et repoussent le mal par le bien. A ceux-là, la bonne demeure finale,", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "und es sind jene, die im Verlangen nach dem Wohlgefallen ihres Herrn geduldig bleiben und das Gebet verrichten und von dem, was Wir ihnen gegeben haben, im Verborgenen und öffentlich spenden und das Böse durch das Gute abwehren - diese sind es, denen der Lohn der Wohnstatt zuteil wird", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَالَّذِينَ صَبَرُوا ابْتِغَاءَ وَجْهِ رَبِّهِمْ وَأَقَامُوا الصَّلَاةَ وَأَنْفَقُوا مِمَّا رَزَقْنَاهُمْ سِرًّا وَعَلَانِيَةً وَيَدْرَءُونَ بِالْحَسَنَةِ السَّيِّئَةَ أُولَٰئِكَ لَهُمْ عُقْبَى الدَّارِ", "grammar": "Conjonction + pronom relatif + verbe + nom + nom + nom + pronom + conjonction + verbe forme IV + nom + conjonction + verbe forme IV + préposition + pronom relatif + verbe + pronom + adverbe + conjonction + adverbe + conjonction + verbe + préposition + nom + nom + démonstratif + préposition + pronom + nom + nom", "meaning": "qui patientent en recherchant la Face de leur Seigneur, accomplissent la prière, dépensent en secret et en public de ce que Nous leur avons attribué, et repoussent le mal par le bien : à ceux-là la bonne demeure finale" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Patience sincère pour Allah, prière, aumône discrète et publique, et répondre au mal par le bien : ces qualités mènent à la meilleure fin. Le Prophète a dit : « Fais suivre la mauvaise action d'une bonne, elle l'effacera » (Tirmidhi).",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1730": {
+      "ayahId": 1730,
+      "surahId": 13,
+      "numberInSurah": 23,
+      "translations": {
+        "en": { "text": "Gardens of perpetual residence; they will enter them with whoever were righteous among their fathers, their spouses and their descendants. And the angels will enter upon them from every gate, [saying],", "translator": "Sahih International" },
+        "fr": { "text": "les jardins d'Eden, où ils entreront, ainsi que tous ceux de leurs ascendants, conjoints et descendants, qui ont été de bons croyants. De chaque porte, les Anges entreront auprès d'eux:", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "die Gärten von Eden. Dort werden sie eingehen und die von ihren Eltern und ihren Frauen und ihren Nachkommen, die rechtschaffen sind. Und die Engel werden zu ihnen durch jegliches Tor treten.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "جَنَّاتُ عَدْنٍ يَدْخُلُونَهَا وَمَنْ صَلَحَ مِنْ آبَائِهِمْ وَأَزْوَاجِهِمْ وَذُرِّيَّاتِهِمْ", "grammar": "Nom + nom + verbe + pronom + conjonction + pronom relatif + verbe + préposition + nom + pronom + conjonction + nom + pronom + conjonction + nom + pronom", "meaning": "les jardins d'Éden, où ils entreront avec ceux de leurs ascendants, de leurs épouses et de leurs descendants qui ont été vertueux" },
+          { "arabic": "وَالْمَلَائِكَةُ يَدْخُلُونَ عَلَيْهِمْ مِنْ كُلِّ بَابٍ", "grammar": "Conjonction + nom + verbe + préposition + pronom + préposition + nom + nom", "meaning": "et les anges entreront auprès d'eux par chaque porte" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Allah réunit au Paradis les croyants avec leurs proches vertueux, pour parfaire leur joie, même si ceux-ci avaient un degré inférieur, à condition qu'ils aient eu la foi.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1731": {
+      "ayahId": 1731,
+      "surahId": 13,
+      "numberInSurah": 24,
+      "translations": {
+        "en": { "text": "\"Peace be upon you for what you patiently endured. And excellent is the final home.\"", "translator": "Sahih International" },
+        "fr": { "text": "- «Paix sur vous, pour ce que vous avez enduré!» - Comme est bonne votre demeure finale!»", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "\"Friede sei mit euch, da ihr geduldig waret; seht, wie herrlich der Lohn der Wohnstatt ist!\"", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "سَلَامٌ عَلَيْكُمْ بِمَا صَبَرْتُمْ", "grammar": "Nom + préposition + pronom + préposition + pronom relatif + verbe", "meaning": "« Paix sur vous, pour ce que vous avez enduré" },
+          { "arabic": "فَنِعْمَ عُقْبَى الدَّارِ", "grammar": "Conjonction + verbe + nom + nom", "meaning": "Quelle excellente demeure finale ! »" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les anges accueillent les élus par la salutation de paix, en récompense de leur patience dans l'obéissance, face aux épreuves et contre les péchés.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1732": {
+      "ayahId": 1732,
+      "surahId": 13,
+      "numberInSurah": 25,
+      "translations": {
+        "en": { "text": "But those who break the covenant of Allah after contracting it and sever that which Allah has ordered to be joined and spread corruption on earth - for them is the curse, and they will have the worst home.", "translator": "Sahih International" },
+        "fr": { "text": "[Mais] ceux qui violent leur pacte avec Allah après l'avoir engagé, et rompent ce qu'Allah a commandé d'unir et commettent le désordre sur terre, auront la malédiction et la mauvaise demeure.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Diejenigen aber, die den Bund Allahs brechen, nachdem (sie) ihn geschlossen haben, und zerreißen, was Allah zu verbinden geboten hat, und Unheil auf Erden stiften auf ihnen lastet der Fluch, und sie haben eine schlimme Wohnstatt.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَالَّذِينَ يَنْقُضُونَ عَهْدَ اللَّهِ مِنْ بَعْدِ مِيثَاقِهِ وَيَقْطَعُونَ مَا أَمَرَ اللَّهُ بِهِ أَنْ يُوصَلَ وَيُفْسِدُونَ فِي الْأَرْضِ", "grammar": "Conjonction + pronom relatif + verbe + nom + nom propre + préposition + adverbe + nom + pronom + conjonction + verbe + pronom relatif + verbe + nom propre + préposition + pronom + particule + verbe passif + conjonction + verbe forme IV + préposition + nom", "meaning": "Quant à ceux qui rompent le pacte d'Allah après l'avoir conclu, tranchent les liens qu'Allah a ordonné de maintenir et sèment le désordre sur terre" },
+          { "arabic": "أُولَٰئِكَ لَهُمُ اللَّعْنَةُ وَلَهُمْ سُوءُ الدَّارِ", "grammar": "Démonstratif + préposition + pronom + nom + conjonction + préposition + pronom + nom + nom", "meaning": "ceux-là auront la malédiction et la mauvaise demeure" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Description inverse : la rupture des engagements, des liens de parenté et la corruption sur terre mènent à l'éloignement de la miséricorde d'Allah.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1733": {
+      "ayahId": 1733,
+      "surahId": 13,
+      "numberInSurah": 26,
+      "translations": {
+        "en": { "text": "Allah extends provision for whom He wills and restricts [it]. And they rejoice in the worldly life, while the worldly life is not, compared to the Hereafter, except [brief] enjoyment.", "translator": "Sahih International" },
+        "fr": { "text": "Allah étend largement Ses dons ou [les] restreint à qui Il veut. Ils se réjouissent de la vie sur terre, mais la vie d'ici-bas ne paraîtra que comme une jouissance éphémère en comparaison de l'au-delà.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Allah erweitert und beschränkt die Mittel zum Unterhalt, wem Er will. Sie freuen sich des irdischen Lebens, doch das diesseitige Leben ist im Vergleich mit dem jenseitigen nur ein vergängliches Gut.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "اللَّهُ يَبْسُطُ الرِّزْقَ لِمَنْ يَشَاءُ وَيَقْدِرُ", "grammar": "Nom propre + verbe + nom + préposition + pronom relatif + verbe + conjonction + verbe", "meaning": "Allah étend la subsistance à qui Il veut, ou la restreint" },
+          { "arabic": "وَفَرِحُوا بِالْحَيَاةِ الدُّنْيَا وَمَا الْحَيَاةُ الدُّنْيَا فِي الْآخِرَةِ إِلَّا مَتَاعٌ", "grammar": "Conjonction + verbe + préposition + nom + adjectif + conjonction + particule négative + nom + adjectif + préposition + nom + particule d'exception + nom", "meaning": "Ils se réjouissent de la vie d'ici-bas, alors que la vie d'ici-bas, comparée à l'au-delà, n'est qu'une jouissance éphémère" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "La richesse n'est pas un signe de l'agrément d'Allah. Le Prophète a dit : « Ce monde, comparé à l'au-delà, est comme ce que rapporte un doigt plongé dans la mer » (Muslim).",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1734": {
+      "ayahId": 1734,
+      "surahId": 13,
+      "numberInSurah": 27,
+      "translations": {
+        "en": { "text": "And those who disbelieved say, \"Why has a sign not been sent down to him from his Lord?\" Say, [O Muhammad], \"Indeed, Allah leaves astray whom He wills and guides to Himself whoever turns back [to Him] -", "translator": "Sahih International" },
+        "fr": { "text": "Ceux qui ont mécru disent: «Pourquoi n'a-t-on pas descendu sur lui (Muhammad) un miracle venant de son Seigneur?» Dis: «En vérité, Allah égare qui Il veut; et Il guide vers Lui celui qui se repent,", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und jene, die ungläubig sind, sagen: \"Warum ist ihm von seinem Herrn kein Zeichen herabgesandt worden?\" Sprich: \"Allah läßt zugrunde gehen, wen Er will, und leitet die zu Sich, welche sich bekehren.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَيَقُولُ الَّذِينَ كَفَرُوا لَوْلَا أُنْزِلَ عَلَيْهِ آيَةٌ مِنْ رَبِّهِ", "grammar": "Conjonction + verbe + pronom relatif + verbe + particule + verbe passif forme IV + préposition + pronom + nom + préposition + nom + pronom", "meaning": "Ceux qui ont mécru disent : « Pourquoi ne lui a-t-on pas fait descendre un miracle de son Seigneur ? »" },
+          { "arabic": "قُلْ إِنَّ اللَّهَ يُضِلُّ مَنْ يَشَاءُ وَيَهْدِي إِلَيْهِ مَنْ أَنَابَ", "grammar": "Impératif + particule + nom propre + verbe forme IV + pronom relatif + verbe + conjonction + verbe + préposition + pronom + pronom relatif + verbe forme IV", "meaning": "Dis : « Allah égare qui Il veut, et guide vers Lui celui qui se repent" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les miracles ne suffisent pas à guider : c'est Allah qui guide celui qui revient sincèrement vers Lui, et laisse s'égarer celui qui s'obstine.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1735": {
+      "ayahId": 1735,
+      "surahId": 13,
+      "numberInSurah": 28,
+      "translations": {
+        "en": { "text": "Those who have believed and whose hearts are assured by the remembrance of Allah. Unquestionably, by the remembrance of Allah hearts are assured.\"", "translator": "Sahih International" },
+        "fr": { "text": "ceux qui ont cru, et dont les cœurs se tranquillisent à l'évocation d'Allah». Certes, c'est par l'évocation d'Allah que les cœurs se tranquillisent.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Es sind jene, die glauben und deren Herzen Trost finden im Gedenken an Allah. Wahrlich, im Gedenken Allahs werden die Herzen ruhig.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُمْ بِذِكْرِ اللَّهِ", "grammar": "Pronom relatif + verbe forme IV + conjonction + verbe + nom + pronom + préposition + nom + nom propre", "meaning": "ceux qui croient et dont les cœurs se tranquillisent par l'évocation d'Allah »" },
+          { "arabic": "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", "grammar": "Particule + préposition + nom + nom propre + verbe + nom", "meaning": "N'est-ce point par l'évocation d'Allah que les cœurs se tranquillisent ?" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Le dhikr (rappel d'Allah, dont la lecture du Coran) apaise les cœurs et dissipe l'inquiétude. La vraie sérénité ne se trouve qu'en Allah.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1736": {
+      "ayahId": 1736,
+      "surahId": 13,
+      "numberInSurah": 29,
+      "translations": {
+        "en": { "text": "Those who have believed and done righteous deeds - a good state is theirs and a good return.", "translator": "Sahih International" },
+        "fr": { "text": "Ceux qui croient et font de bonnes œuvres, auront le plus grand bien et aussi le plus bon retour.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Denen, die da glauben und gute Werke tun, wird Glück und eine treffliche Heimstatt zuteil sein.\"", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ طُوبَىٰ لَهُمْ وَحُسْنُ مَآبٍ", "grammar": "Pronom relatif + verbe forme IV + conjonction + verbe + nom + nom + préposition + pronom + conjonction + nom + nom", "meaning": "Ceux qui croient et font de bonnes œuvres : à eux la félicité et un beau lieu de retour" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "« Tuba » signifie la joie et le bonheur ; selon un hadith, c'est aussi un arbre immense du Paradis dont les habits des élus sont tirés (Ahmad).",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1737": {
+      "ayahId": 1737,
+      "surahId": 13,
+      "numberInSurah": 30,
+      "translations": {
+        "en": { "text": "Thus have We sent you to a community before which [other] communities have passed on so you might recite to them that which We revealed to you, while they disbelieve in the Most Merciful. Say, \"He is my Lord; there is no deity except Him. Upon Him I rely, and to Him is my return.\"", "translator": "Sahih International" },
+        "fr": { "text": "Ainsi Nous t'envoyons dans une communauté - que d'autres communautés ont précédée - pour que tu leur récites ce que Nous te révélons [le Coran], cependant qu'ils ne croient pas au Tout Miséricordieux. Dis: «C'est Lui mon Seigneur. Pas d'autre divinité à part Lui. En Lui je place ma confiance. Et à Lui je me repens».", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und so haben Wir dich zu einem Volk gesandt, vor dem bereits andere Völker dahingegangen sind, auf daß du ihnen verkünden mögest, was Wir dir offenbarten; und doch glauben sie nicht an den Allerbarmer. Sprich: \"Er ist mein Herr; kein Gott ist da außer Ihm. In Ihn setze ich mein Vertrauen und zu Ihm werde ich heimkehren.\"", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "كَذَٰلِكَ أَرْسَلْنَاكَ فِي أُمَّةٍ قَدْ خَلَتْ مِنْ قَبْلِهَا أُمَمٌ لِتَتْلُوَ عَلَيْهِمُ الَّذِي أَوْحَيْنَا إِلَيْكَ وَهُمْ يَكْفُرُونَ بِالرَّحْمَٰنِ", "grammar": "Préposition + démonstratif + verbe forme IV + pronom + préposition + nom + particule + verbe + préposition + adverbe + pronom + nom + particule + verbe + préposition + pronom + pronom relatif + verbe forme IV + préposition + pronom + conjonction + pronom + verbe + préposition + nom", "meaning": "Ainsi t'avons-Nous envoyé dans une communauté que d'autres ont précédée, pour que tu leur récites ce que Nous t'avons révélé, alors qu'ils renient le Tout Miséricordieux" },
+          { "arabic": "قُلْ هُوَ رَبِّي لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ مَتَابِ", "grammar": "Impératif + pronom + nom + pronom + particule négative + nom + particule d'exception + pronom + préposition + pronom + verbe forme V + conjonction + préposition + pronom + nom", "meaning": "Dis : « Il est mon Seigneur ; il n'y a de divinité que Lui ; en Lui je place ma confiance et vers Lui est mon retour »" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les Quraysh refusaient le nom « Ar-Rahman ». Le Prophète affirme son unicité, sa confiance en Allah et son repentir vers Lui.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1738": {
+      "ayahId": 1738,
+      "surahId": 13,
+      "numberInSurah": 31,
+      "translations": {
+        "en": { "text": "And if there was any qur'an by which the mountains would be removed or the earth would be broken apart or the dead would be made to speak, [it would be this Qur'an], but to Allah belongs the affair entirely. Then have those who believed not accepted that had Allah willed, He would have guided the people, all of them? And those who disbelieve do not cease to be struck, for what they have done, by calamity - or it will descend near their home - until there comes the promise of Allah. Indeed, Allah does not fail in [His] promise.", "translator": "Sahih International" },
+        "fr": { "text": "S'il y avait un Coran à mettre les montagnes en marche, à fendre la terre ou à faire parler les morts (ce serait celui-ci). C'est plutôt à Allah le commandement tout entier. Les croyants ne savent-ils pas que, si Allah voulait, Il aurait dirigé tous les hommes vers le droit chemin. Cependant, ceux qui ne croient pas ne manqueront pas, pour prix de ce qu'ils font, d'être frappés par un cataclysme, ou [qu'un cataclysme] s'abattra près de leurs demeures jusqu'à ce que vienne la promesse d'Allah. Car Allah, ne manque pas à Sa promesse.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und gäbe es auch einen Quran, durch den Berge versetzt oder die Erde gespalten oder durch den zu den Toten gesprochen werden könnte (, würden sie doch nicht an ihn glauben) Nein! Die Sache ruht völlig bei Allah. Haben denn die Gläubigen nicht den Versuch (, daran zu zweifeln,) aufgegeben, daß, wenn Allah gewollt hätte, Er sicher der ganzen Menschheit hätte den Weg weisen können? Und die Katastrophe wird nicht aufhören, die Ungläubigen um dessentwillen zu treffen, was sie gewirkt haben, oder sich nahe bei ihren Wohnstätten niederzulassen, bis Allahs Verheißung sich erfüllt hat. Wahrlich, Allah verfehlt den Termin nicht.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَلَوْ أَنَّ قُرْآنًا سُيِّرَتْ بِهِ الْجِبَالُ أَوْ قُطِّعَتْ بِهِ الْأَرْضُ أَوْ كُلِّمَ بِهِ الْمَوْتَىٰ", "grammar": "Conjonction + particule + particule + nom + verbe passif forme II + préposition + pronom + nom + conjonction + verbe passif forme II + préposition + pronom + nom + conjonction + verbe passif forme II + préposition + pronom + nom", "meaning": "Si un Coran pouvait mettre en marche les montagnes, fendre la terre ou faire parler les morts, ce serait celui-ci" },
+          { "arabic": "بَلْ لِلَّهِ الْأَمْرُ جَمِيعًا", "grammar": "Particule + préposition + nom propre + nom + adverbe", "meaning": "Mais à Allah appartient le commandement tout entier" },
+          { "arabic": "أَفَلَمْ يَيْأَسِ الَّذِينَ آمَنُوا أَنْ لَوْ يَشَاءُ اللَّهُ لَهَدَى النَّاسَ جَمِيعًا", "grammar": "Particule interrogative + conjonction + particule + verbe + pronom relatif + verbe forme IV + particule + particule + verbe + nom propre + particule + verbe + nom + adverbe", "meaning": "Les croyants ne savent-ils pas que si Allah voulait, Il guiderait tous les hommes ?" },
+          { "arabic": "وَلَا يَزَالُ الَّذِينَ كَفَرُوا تُصِيبُهُمْ بِمَا صَنَعُوا قَارِعَةٌ أَوْ تَحُلُّ قَرِيبًا مِنْ دَارِهِمْ حَتَّىٰ يَأْتِيَ وَعْدُ اللَّهِ", "grammar": "Conjonction + particule négative + verbe + pronom relatif + verbe + verbe + pronom + préposition + pronom relatif + verbe + nom + conjonction + verbe + adverbe + préposition + nom + pronom + particule + verbe + nom + nom propre", "meaning": "Les mécréants ne cesseront d'être frappés d'un malheur pour ce qu'ils ont fait, ou il s'abattra près de leurs demeures, jusqu'à ce que vienne la promesse d'Allah" },
+          { "arabic": "إِنَّ اللَّهَ لَا يُخْلِفُ الْمِيعَادَ", "grammar": "Particule + nom propre + particule négative + verbe forme IV + nom", "meaning": "Allah ne manque pas à Sa promesse" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les Quraysh réclamaient que le Coran déplace les montagnes de La Mecque. Même de tels prodiges ne les feraient pas croire. Les croyants doivent cesser d'espérer leur conversion par des miracles : la guidance appartient à Allah.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1739": {
+      "ayahId": 1739,
+      "surahId": 13,
+      "numberInSurah": 32,
+      "translations": {
+        "en": { "text": "And already were [other] messengers ridiculed before you, and I extended the time of those who disbelieved; then I seized them, and how [terrible] was My penalty.", "translator": "Sahih International" },
+        "fr": { "text": "On s'est certes moqué des messagers avant toi. Alors, J'ai donné un répit aux mécréants. Ensuite, Je les ai saisis. Et quel fut Mon châtiment!", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und gewiß sind schon vor dir Gesandte verspottet worden, doch Ich gewährte denen eine Frist, die ungläubig waren. Dann erfaßte Ich sie, und wie war Meine Strafe!", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَلَقَدِ اسْتُهْزِئَ بِرُسُلٍ مِنْ قَبْلِكَ فَأَمْلَيْتُ لِلَّذِينَ كَفَرُوا ثُمَّ أَخَذْتُهُمْ", "grammar": "Conjonction + particule + particule + verbe passif forme X + préposition + nom + préposition + adverbe + pronom + conjonction + verbe forme IV + préposition + pronom relatif + verbe + particule + verbe + pronom", "meaning": "On s'est moqué des messagers avant toi ; J'ai accordé un répit aux mécréants, puis Je les ai saisis" },
+          { "arabic": "فَكَيْفَ كَانَ عِقَابِ", "grammar": "Conjonction + interrogatif + verbe + nom + pronom", "meaning": "Et quel fut Mon châtiment !" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Consolation du Prophète : les moqueries contre les messagers ne sont pas nouvelles. Allah accorde un délai aux injustes, puis les saisit sans qu'ils puissent échapper.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1740": {
+      "ayahId": 1740,
+      "surahId": 13,
+      "numberInSurah": 33,
+      "translations": {
+        "en": { "text": "Then is He who is a maintainer of every soul, [knowing] what it has earned, [like any other]? But to Allah they have attributed partners. Say, \"Name them. Or do you inform Him of that which He knows not upon the earth or of what is apparent of speech?\" Rather, their [own] plan has been made attractive to those who disbelieve, and they have been averted from the way. And whomever Allah leaves astray - there will be for him no guide.", "translator": "Sahih International" },
+        "fr": { "text": "Est-ce que Celui qui observe ce que chaque âme acquiert [est semblable aux associés?...] Et pourtant ils donnent des associés à Allah. Dis [leur:] «Nommez-les. Ou essayez-vous de Lui apprendre ce qu'Il ne connaît pas sur la terre? Ou avez-vous été simplement séduits par de faux noms?» En fait, on a embelli aux mécréants leur stratagème et on les a empêchés de prendre le droit chemin. Et quiconque Allah laisse égarer, n'a plus personne pour le guider.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Ist denn Der, Der über alles, was sie begehen, wacht (, den angeblichen Göttern gleich)? Dennoch stellen sie Allah Götter zur Seite. Sprich: \"Nennt sie!\" Wollt ihr Ihm etwas verkünden, was Er auf Erden nicht kennt? Oder ist es nur leere Rede? Nein, aber der böse Plan der Ungläubigen ist ihnen schön vorgegaukelt worden, und sie sind vom (rechten) Weg abgehalten worden. Und derjenige, den Allah zum Irrenden erklärt, soll keinen finden, der ihn rechtleitet.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "أَفَمَنْ هُوَ قَائِمٌ عَلَىٰ كُلِّ نَفْسٍ بِمَا كَسَبَتْ", "grammar": "Particule interrogative + conjonction + pronom relatif + pronom + participe actif + préposition + nom + nom + préposition + pronom relatif + verbe", "meaning": "Celui qui veille sur chaque âme et sur ce qu'elle acquiert est-il comparable aux idoles ?" },
+          { "arabic": "وَجَعَلُوا لِلَّهِ شُرَكَاءَ قُلْ سَمُّوهُمْ", "grammar": "Conjonction + verbe + préposition + nom propre + nom + impératif forme II + pronom", "meaning": "Ils ont pourtant donné des associés à Allah. Dis : « Nommez-les donc !" },
+          { "arabic": "أَمْ تُنَبِّئُونَهُ بِمَا لَا يَعْلَمُ فِي الْأَرْضِ أَمْ بِظَاهِرٍ مِنَ الْقَوْلِ", "grammar": "Particule + verbe forme II + pronom + préposition + pronom relatif + particule négative + verbe + préposition + nom + particule + préposition + nom + préposition + nom", "meaning": "Lui apprendrez-vous ce qu'Il ne connaît pas sur la terre ? Ou n'est-ce qu'une façon de parler ? »" },
+          { "arabic": "بَلْ زُيِّنَ لِلَّذِينَ كَفَرُوا مَكْرُهُمْ وَصُدُّوا عَنِ السَّبِيلِ", "grammar": "Particule + verbe passif forme II + préposition + pronom relatif + verbe + nom + pronom + conjonction + verbe passif + préposition + nom", "meaning": "Mais leur ruse a été embellie aux mécréants, et ils ont été détournés du chemin" },
+          { "arabic": "وَمَنْ يُضْلِلِ اللَّهُ فَمَا لَهُ مِنْ هَادٍ", "grammar": "Conjonction + pronom relatif + verbe forme IV + nom propre + conjonction + particule négative + préposition + pronom + préposition + participe actif", "meaning": "Et quiconque Allah égare n'a aucun guide" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Défi aux polythéistes : leurs divinités ne sont que des noms vides. Allah, qui surveille chaque âme, ne connaît aucun associé sur terre ; s'il en existait, Il le saurait.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1741": {
+      "ayahId": 1741,
+      "surahId": 13,
+      "numberInSurah": 34,
+      "translations": {
+        "en": { "text": "For them will be punishment in the life of [this] world, and the punishment of the Hereafter is more severe. And they will not have from Allah any protector.", "translator": "Sahih International" },
+        "fr": { "text": "Un châtiment les atteindra dans la vie présente. Le châtiment de l'au-delà sera cependant plus écrasant et ils n'auront nul protecteur contre Allah.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Für sie ist eine Strafe im Diesseits bestimmt; und die Strafe des Jenseits ist gewiß (noch) härter, und sie werden keinen Beschützer vor Allah haben.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "لَهُمْ عَذَابٌ فِي الْحَيَاةِ الدُّنْيَا", "grammar": "Préposition + pronom + nom + préposition + nom + adjectif", "meaning": "Ils subiront un châtiment dans la vie d'ici-bas" },
+          { "arabic": "وَلَعَذَابُ الْآخِرَةِ أَشَقُّ", "grammar": "Conjonction + particule + nom + nom + élatif", "meaning": "mais le châtiment de l'au-delà sera plus pénible encore" },
+          { "arabic": "وَمَا لَهُمْ مِنَ اللَّهِ مِنْ وَاقٍ", "grammar": "Conjonction + particule négative + préposition + pronom + préposition + nom propre + préposition + participe actif", "meaning": "et ils n'auront aucun protecteur contre Allah" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Le châtiment des mécréants commence ici-bas (défaites, épreuves) et culmine dans l'au-delà, où nul ne pourra les protéger.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1742": {
+      "ayahId": 1742,
+      "surahId": 13,
+      "numberInSurah": 35,
+      "translations": {
+        "en": { "text": "The example of Paradise, which the righteous have been promised, is [that] beneath it rivers flow. Its fruit is lasting, and its shade. That is the consequence for the righteous, and the consequence for the disbelievers is the Fire.", "translator": "Sahih International" },
+        "fr": { "text": "Tel est le paradis qui a été promis aux pieux: sous lequel coulent les ruisseaux; ses fruits sont perpétuels, ainsi que son ombrage. Voilà la fin de ceux qui pratiquent la piété, tandis que la fin des mécréants sera le Feu.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "(Dies ist) die Beschreibung des Paradieses, das den Gottesfürchtigen versprochen worden ist: Bäche durchfließen es; seine Früchte wie sein Schatten sind immerwährend. Das ist der Lohn derer, die gottesfürchtig sind; und der Lohn der Ungläubigen ist das Feuer.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "۞ مَثَلُ الْجَنَّةِ الَّتِي وُعِدَ الْمُتَّقُونَ", "grammar": "Nom + nom + pronom relatif + verbe passif + participe actif forme VIII", "meaning": "Voici la description du Paradis promis aux pieux" },
+          { "arabic": "تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ", "grammar": "Verbe + préposition + adverbe + pronom + nom", "meaning": "sous lequel coulent les ruisseaux" },
+          { "arabic": "أُكُلُهَا دَائِمٌ وَظِلُّهَا", "grammar": "Nom + pronom + adjectif + conjonction + nom + pronom", "meaning": "ses fruits sont perpétuels, ainsi que son ombrage" },
+          { "arabic": "تِلْكَ عُقْبَى الَّذِينَ اتَّقَوْا", "grammar": "Démonstratif + nom + pronom relatif + verbe forme VIII", "meaning": "Telle est la fin de ceux qui ont craint Allah" },
+          { "arabic": "وَعُقْبَى الْكَافِرِينَ النَّارُ", "grammar": "Conjonction + nom + participe actif + nom", "meaning": "et la fin des mécréants est le Feu" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les délices du Paradis ne s'interrompent jamais, contrairement à ceux de ce monde. Le contraste entre les deux destinées incite à choisir la piété.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1743": {
+      "ayahId": 1743,
+      "surahId": 13,
+      "numberInSurah": 36,
+      "translations": {
+        "en": { "text": "And [the believers among] those to whom We have given the [previous] Scripture rejoice at what has been revealed to you, [O Muhammad], but among the [opposing] factions are those who deny part of it. Say, \"I have only been commanded to worship Allah and not associate [anything] with Him. To Him I invite, and to Him is my return.\"", "translator": "Sahih International" },
+        "fr": { "text": "Et ceux à qui Nous avons déjà donné le Livre se réjouissent de ce qu'on a fait descendre vers toi. Tandis que certaines factions en rejettent une partie. Dis: «Il m'a seulement été commandé d'adorer Allah et de ne rien Lui associer. C'est à Lui que j'appelle [les gens], Et c'est vers Lui que sera mon retour».", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und die, denen Wir die Schrift gegeben haben, freuen sich über das, was zu dir hinabgesandt wurde. Und unter den Gruppen sind einige, die einen Teil davon leugnen. Sprich: \"Mir wurde befohlen, Allah zu dienen, und nicht, Ihm Götter zur Seite zu stellen. Zu Ihm rufe ich und zu Ihm werde ich heimkehren.\"", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَالَّذِينَ آتَيْنَاهُمُ الْكِتَابَ يَفْرَحُونَ بِمَا أُنْزِلَ إِلَيْكَ", "grammar": "Conjonction + pronom relatif + verbe forme IV + pronom + nom + verbe + préposition + pronom relatif + verbe passif forme IV + préposition + pronom", "meaning": "Ceux à qui Nous avons donné le Livre se réjouissent de ce qui t'a été révélé" },
+          { "arabic": "وَمِنَ الْأَحْزَابِ مَنْ يُنْكِرُ بَعْضَهُ", "grammar": "Conjonction + préposition + nom + pronom relatif + verbe forme IV + nom + pronom", "meaning": "mais parmi les factions, certains en rejettent une partie" },
+          { "arabic": "قُلْ إِنَّمَا أُمِرْتُ أَنْ أَعْبُدَ اللَّهَ وَلَا أُشْرِكَ بِهِ", "grammar": "Impératif + particule restrictive + verbe passif + particule + verbe + nom propre + conjonction + particule négative + verbe forme IV + préposition + pronom", "meaning": "Dis : « Il m'a seulement été ordonné d'adorer Allah et de ne rien Lui associer" },
+          { "arabic": "إِلَيْهِ أَدْعُو وَإِلَيْهِ مَآبِ", "grammar": "Préposition + pronom + verbe + conjonction + préposition + pronom + nom", "meaning": "C'est à Lui que j'appelle, et vers Lui est mon retour »" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les croyants parmi les gens du Livre, comme 'Abdullah ibn Salam, se réjouissaient du Coran qui confirmait leurs Écritures, tandis que d'autres en rejetaient une partie.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1744": {
+      "ayahId": 1744,
+      "surahId": 13,
+      "numberInSurah": 37,
+      "translations": {
+        "en": { "text": "And thus We have revealed it as an Arabic legislation. And if you should follow their inclinations after what has come to you of knowledge, you would not have against Allah any ally or any protector.", "translator": "Sahih International" },
+        "fr": { "text": "Ainsi l'avons-Nous fait descendre (le Coran) [sous forme] de loi en arabe. Et si tu suis leurs passions après ce que tu as reçu comme savoir, il n'y aura pour toi, contre Allah, ni allié ni protecteur.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und so haben Wir ihn (den Quran) hinabgesandt als eine Entscheidung in arabischer Sprache. Und wenn du ihren persönlichen Neigungen folgst, obwohl zu dir das Wissen gekommen war, so sollst du keinen Beschützer oder Retter vor Allah haben.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَكَذَٰلِكَ أَنْزَلْنَاهُ حُكْمًا عَرَبِيًّا", "grammar": "Conjonction + préposition + démonstratif + verbe forme IV + pronom + nom + adjectif", "meaning": "Ainsi l'avons-Nous fait descendre, une loi en langue arabe" },
+          { "arabic": "وَلَئِنِ اتَّبَعْتَ أَهْوَاءَهُمْ بَعْدَمَا جَاءَكَ مِنَ الْعِلْمِ مَا لَكَ مِنَ اللَّهِ مِنْ وَلِيٍّ وَلَا وَاقٍ", "grammar": "Conjonction + particule + verbe forme VIII + nom + pronom + adverbe + pronom relatif + verbe + pronom + préposition + nom + particule négative + préposition + pronom + préposition + nom propre + préposition + nom + conjonction + particule négative + participe actif", "meaning": "Et si tu suivais leurs passions après la science qui t'est parvenue, tu n'aurais contre Allah ni allié ni protecteur" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Le Coran est un jugement clair en arabe. L'avertissement adressé au Prophète vise sa communauté : suivre les passions après la science mène à la perte.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1745": {
+      "ayahId": 1745,
+      "surahId": 13,
+      "numberInSurah": 38,
+      "translations": {
+        "en": { "text": "And We have already sent messengers before you and assigned to them wives and descendants. And it was not for a messenger to come with a sign except by permission of Allah. For every term is a decree.", "translator": "Sahih International" },
+        "fr": { "text": "Et Nous avons certes envoyé avant toi des messagers, et leur avons donné des épouses et des descendants. Et il n'appartient pas à un Messager d'apporter un miracle, si ce n'est qu'avec la permission d'Allah. Chaque échéance a son terme prescrit.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Wahrlich, schon vor dir entsandten Wir Gesandte und gaben ihnen Frauen und Kinder. Und es ist für einen Gesandten nicht möglich, ein Zeichen zu bringen, es sei denn auf Allahs Geheiß. Alles geschieht zu einem vorbestimmten Termin.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَلَقَدْ أَرْسَلْنَا رُسُلًا مِنْ قَبْلِكَ وَجَعَلْنَا لَهُمْ أَزْوَاجًا وَذُرِّيَّةً", "grammar": "Conjonction + particule + particule + verbe forme IV + nom + préposition + adverbe + pronom + conjonction + verbe + préposition + pronom + nom + conjonction + nom", "meaning": "Nous avons envoyé avant toi des messagers et leur avons donné des épouses et une descendance" },
+          { "arabic": "وَمَا كَانَ لِرَسُولٍ أَنْ يَأْتِيَ بِآيَةٍ إِلَّا بِإِذْنِ اللَّهِ", "grammar": "Conjonction + particule négative + verbe + préposition + nom + particule + verbe + préposition + nom + particule d'exception + préposition + nom + nom propre", "meaning": "Il n'appartient à aucun messager d'apporter un miracle sans la permission d'Allah" },
+          { "arabic": "لِكُلِّ أَجَلٍ كِتَابٌ", "grammar": "Préposition + nom + nom + nom", "meaning": "À chaque terme, une prescription" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Réponse à ceux qui reprochaient au Prophète d'avoir des épouses : les messagers précédents étaient aussi des hommes mariés. Les miracles ne viennent que par la permission d'Allah, au moment fixé.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1746": {
+      "ayahId": 1746,
+      "surahId": 13,
+      "numberInSurah": 39,
+      "translations": {
+        "en": { "text": "Allah eliminates what He wills or confirms, and with Him is the Mother of the Book.", "translator": "Sahih International" },
+        "fr": { "text": "Allah efface ou confirme ce qu'Il veut et l'Ecriture primordiale est auprès de Lui.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Allah löscht aus und läßt bestehen, was Er will, und bei Ihm ist die Urschrift des Buches.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "يَمْحُو اللَّهُ مَا يَشَاءُ وَيُثْبِتُ", "grammar": "Verbe + nom propre + pronom relatif + verbe + conjonction + verbe forme IV", "meaning": "Allah efface ou confirme ce qu'Il veut" },
+          { "arabic": "وَعِنْدَهُ أُمُّ الْكِتَابِ", "grammar": "Conjonction + adverbe + pronom + nom + nom", "meaning": "et auprès de Lui est la Mère du Livre" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Allah abroge certaines prescriptions et en maintient d'autres. La « Mère du Livre » est la Table préservée (al-Lawh al-Mahfuz), où tout est inscrit et qui ne change pas.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1747": {
+      "ayahId": 1747,
+      "surahId": 13,
+      "numberInSurah": 40,
+      "translations": {
+        "en": { "text": "And whether We show you part of what We promise them or take you in death, upon you is only the [duty of] notification, and upon Us is the account.", "translator": "Sahih International" },
+        "fr": { "text": "Que Nous te fassions voir une partie de ce dont Nous les menaçons, ou que Nous te fassions mourir (avant cela), ton devoir est seulement la communication du message, et le règlement de compte sera à Nous.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und ob Wir dich einen Teil von dem sehen lassen, was Wir ihnen androhen, oder ob Wir dich sterben lassen - dir obliegt nur die Verkündigung und Uns die Abrechnung.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَإِنْ مَا نُرِيَنَّكَ بَعْضَ الَّذِي نَعِدُهُمْ أَوْ نَتَوَفَّيَنَّكَ فَإِنَّمَا عَلَيْكَ الْبَلَاغُ وَعَلَيْنَا الْحِسَابُ", "grammar": "Conjonction + particule + particule + verbe forme IV + pronom + nom + pronom relatif + verbe + pronom + conjonction + verbe forme V + pronom + conjonction + particule restrictive + préposition + pronom + nom + conjonction + préposition + pronom + nom", "meaning": "Que Nous te fassions voir une partie de ce dont Nous les menaçons, ou que Nous te rappelions à Nous, ta mission n'est que de transmettre, et c'est à Nous de demander des comptes" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "La responsabilité du Prophète se limite à transmettre le message ; le jugement et la rétribution appartiennent à Allah, qu'il en voie la réalisation de son vivant ou non.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1748": {
+      "ayahId": 1748,
+      "surahId": 13,
+      "numberInSurah": 41,
+      "translations": {
+        "en": { "text": "Have they not seen that We set upon the land, reducing it from its borders? And Allah decides; there is no adjuster of His decision. And He is swift in account.", "translator": "Sahih International" },
+        "fr": { "text": "Ne voient-ils pas que Nous frappons la terre et que Nous la réduisons de tous côtés? C'est Allah qui juge et personne ne peut s'opposer à Son jugement, et Il est prompt à régler les comptes.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Sehen sie denn nicht, daß Wir vom Land Besitz ergreifen und es von allen Seiten in seiner Größe schmälern? Und Allah richtet; da ist keiner, der Seine Entscheidung widerrufen kann. Und Er ist schnell im Abrechnen.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "أَوَلَمْ يَرَوْا أَنَّا نَأْتِي الْأَرْضَ نَنْقُصُهَا مِنْ أَطْرَافِهَا", "grammar": "Particule interrogative + conjonction + particule + verbe + particule + pronom + verbe + nom + verbe + pronom + préposition + nom + pronom", "meaning": "Ne voient-ils pas que Nous venons à la terre et la réduisons par ses extrémités ?" },
+          { "arabic": "وَاللَّهُ يَحْكُمُ لَا مُعَقِّبَ لِحُكْمِهِ", "grammar": "Conjonction + nom propre + verbe + particule négative + participe actif forme II + préposition + nom + pronom", "meaning": "Allah juge, et nul ne peut réviser Son jugement" },
+          { "arabic": "وَهُوَ سَرِيعُ الْحِسَابِ", "grammar": "Conjonction + pronom + adjectif + nom", "meaning": "et Il est prompt à régler les comptes" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Selon Ibn 'Abbas, il s'agit des territoires conquis par l'Islam au détriment des mécréants ; selon d'autres, de la mort des savants et de la ruine des peuples. Le jugement d'Allah est sans appel.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1749": {
+      "ayahId": 1749,
+      "surahId": 13,
+      "numberInSurah": 42,
+      "translations": {
+        "en": { "text": "And those before them had plotted, but to Allah belongs the plan entirely. He knows what every soul earns, and the disbelievers will know for whom is the final home.", "translator": "Sahih International" },
+        "fr": { "text": "Certes ceux d'avant eux ont manigancé (contre leur Messager); le stratagème tout entier appartient à Allah. Il sait ce que chaque âme acquiert. Et les mécréants sauront bientôt à qui appartient la bonne demeure finale.", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Diejenigen, die vor ihnen waren, haben auch Pläne geschmiedet, doch alles Planen ist Allahs Sache. Er weiß, was ein jeder begeht; und die Ungläubigen werden erfahren, wem die endgültige Wohnstatt zuteil wird.", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَقَدْ مَكَرَ الَّذِينَ مِنْ قَبْلِهِمْ فَلِلَّهِ الْمَكْرُ جَمِيعًا", "grammar": "Conjonction + particule + verbe + pronom relatif + préposition + adverbe + pronom + conjonction + préposition + nom propre + nom + adverbe", "meaning": "Ceux d'avant eux ont aussi comploté, mais tout le stratagème appartient à Allah" },
+          { "arabic": "يَعْلَمُ مَا تَكْسِبُ كُلُّ نَفْسٍ", "grammar": "Verbe + pronom relatif + verbe + nom + nom", "meaning": "Il sait ce que chaque âme acquiert" },
+          { "arabic": "وَسَيَعْلَمُ الْكُفَّارُ لِمَنْ عُقْبَى الدَّارِ", "grammar": "Conjonction + particule + verbe + nom + préposition + interrogatif + nom + nom", "meaning": "et les mécréants sauront bientôt à qui revient la demeure finale" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Les complots des ennemis des prophètes ont toujours échoué, car Allah connaît tout et retourne leurs ruses contre eux.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    },
+    "1750": {
+      "ayahId": 1750,
+      "surahId": 13,
+      "numberInSurah": 43,
+      "translations": {
+        "en": { "text": "And those who have disbelieved say, \"You are not a messenger.\" Say, [O Muhammad], \"Sufficient is Allah as Witness between me and you, and [the witness of] whoever has knowledge of the Scripture.\"", "translator": "Sahih International" },
+        "fr": { "text": "Et ceux qui ne croient pas disent: «Tu n'es pas un Messager». Dis: «Allah suffit, comme témoin entre vous et moi, et ceux qui ont la connaissance du Livre (sont aussi témoins)».", "translator": "Muhammad Hamidullah" },
+        "de": { "text": "Und die Ungläubigen sagen: \"Du bist nicht entsandt worden.\" Sprich: \"Allah genügt als Zeuge gegen mich und euch und auch gegen diejenigen, die die Kenntnis der Schrift haben.\"", "translator": "Abu Rida Muhammad ibn Ahmad" }
+      },
+      "wordMeanings": {
+        "fr": [
+          { "arabic": "وَيَقُولُ الَّذِينَ كَفَرُوا لَسْتَ مُرْسَلًا", "grammar": "Conjonction + verbe + pronom relatif + verbe + verbe + participe passif forme IV", "meaning": "Ceux qui ont mécru disent : « Tu n'es pas un envoyé »" },
+          { "arabic": "قُلْ كَفَىٰ بِاللَّهِ شَهِيدًا بَيْنِي وَبَيْنَكُمْ وَمَنْ عِنْدَهُ عِلْمُ الْكِتَابِ", "grammar": "Impératif + verbe + préposition + nom propre + nom + adverbe + pronom + conjonction + adverbe + pronom + conjonction + pronom relatif + adverbe + pronom + nom + nom", "meaning": "Dis : « Allah suffit comme témoin entre moi et vous, ainsi que celui qui détient la science du Livre »" }
+        ]
+      },
+      "tafsir": {
+        "fr": {
+          "text": "Allah atteste la véracité de Son messager par les miracles et le Coran. Ceux qui ont la science des Écritures, comme 'Abdullah ibn Salam, en témoignent aussi.",
+          "references": ["Ibn Kathir", "At-Tabari"]
+        }
+      }
+    }
+  }
+}

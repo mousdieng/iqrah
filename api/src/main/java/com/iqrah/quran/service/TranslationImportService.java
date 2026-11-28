@@ -33,27 +33,31 @@ public class TranslationImportService {
     @Transactional
     public void importTranslationsIfMissing() throws Exception {
 
-        if (translationRepository.count() > 0) {
-            System.out.println("Translations already imported. Skipping...");
-            return;
-        }
-
         List<AyahTranslation> translationBatch = new ArrayList<>();
         List<WordMeaning> wordMeaningBatch = new ArrayList<>();
         List<Tafsir> tafsirBatch = new ArrayList<>();
 
         // translations/index.json lists the surahs; each one lives in translations/surah-NNN.json
         JsonNode index = readJson(TRANSLATIONS_DIR + "index.json");
+        // Only surahs not in the database yet: adding a surah file imports it on the next start
+        List<Integer> imported = new ArrayList<>();
         for (JsonNode surah : index.get("surahs")) {
+            if (translationRepository.existsByAyahId(surah.get("startAyahId").asInt())) continue;
             String file = String.format("%ssurah-%03d.json", TRANSLATIONS_DIR, surah.get("id").asInt());
             collectSurah(readJson(file).get("ayahs"), translationBatch, wordMeaningBatch, tafsirBatch);
+            imported.add(surah.get("id").asInt());
+        }
+
+        if (imported.isEmpty()) {
+            System.out.println("Translations up to date. Skipping...");
+            return;
         }
 
         translationRepository.saveAll(translationBatch);
         wordMeaningRepository.saveAll(wordMeaningBatch);
         tafsirRepository.saveAll(tafsirBatch);
 
-        System.out.println("Translation import finished. Translations: " + translationRepository.count() +
+        System.out.println("Translation import finished (surahs " + imported + "). Translations: " + translationRepository.count() +
                 ", Word meanings: " + wordMeaningRepository.count() +
                 ", Tafsirs: " + tafsirRepository.count());
     }

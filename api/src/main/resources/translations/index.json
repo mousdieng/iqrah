@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "createdAt": "2026-11-23",
-  "totalAyahs": 1596,
+  "totalAyahs": 1750,
   "languages": [
     "en",
     "fr",
@@ -78,6 +78,18 @@
       "name": "Hud",
       "verses": 123,
       "startAyahId": 1474
+    },
+    {
+      "id": 12,
+      "name": "Yusuf",
+      "verses": 111,
+      "startAyahId": 1597
+    },
+    {
+      "id": 13,
+      "name": "Ar-Ra'd",
+      "verses": 43,
+      "startAyahId": 1708
     }
   ]
 }
