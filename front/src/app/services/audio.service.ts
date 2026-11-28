@@ -10,14 +10,15 @@ export class AudioService {
   private audio: HTMLAudioElement;
   private wakeLock: WakeLockSentinel | null = null;
 
-  // State management
+  // State management (reciter, speed and volume are remembered between visits)
+  private readonly saved = AudioService.loadSettings();
   private playerStateSubject = new BehaviorSubject<PlayerState>({
     isPlaying: false,
-    currentReciter: 'minshawi',
+    currentReciter: this.saved.reciter ?? 'minshawi',
     currentTafsir: undefined,
     audioType: 'recitation',
-    volume: 1,
-    playbackRate: 1,
+    volume: this.saved.volume ?? 1,
+    playbackRate: this.saved.playbackRate ?? 1,
     autoPlay: false,
     repeatMode: RepeatMode.NONE,
     playlist: [],
@@ -33,6 +34,7 @@ export class AudioService {
 
   constructor() {
     this.audio = new Audio();
+    this.audio.preload = 'auto';
     this.setupAudioListeners();
     this.setupWakeLockListeners();
   }
@@ -44,8 +46,10 @@ export class AudioService {
       // Don't release wake lock here - repeat service might play next ayah
     });
 
-    this.audio.addEventListener('error', (error) => {
-      console.error('Audio error:', error);
+    this.audio.addEventListener('error', () => {
+      // Switching ayahs aborts the previous load: not a real failure
+      const code = this.audio.error?.code;
+      if (!this.audio.getAttribute('src') || code === MediaError.MEDIA_ERR_ABORTED) return;
       this.audioError$.next('Failed to load audio');
       this.updateState({ isPlaying: false });
     });
@@ -83,7 +87,6 @@ export class AudioService {
     if ('wakeLock' in navigator) {
       try {
         this.wakeLock = await navigator.wakeLock.request('screen');
-        console.log('Wake lock acquired');
       } catch (err) {
         console.warn('Wake lock request failed:', err);
       }
@@ -98,7 +101,6 @@ export class AudioService {
       try {
         await this.wakeLock.release();
         this.wakeLock = null;
-        console.log('Wake lock released');
       } catch (err) {
         console.warn('Wake lock release failed:', err);
       }
@@ -148,6 +150,8 @@ export class AudioService {
           this.requestWakeLock();
         })
         .catch(error => {
+          // AbortError: play() interrupted by loading the next ayah, expected when skipping
+          if (error?.name === 'AbortError') return;
           console.error('Play error:', error);
           this.audioError$.next('Failed to play audio');
         });
@@ -190,6 +194,7 @@ export class AudioService {
   setVolume(volume: number): void {
     this.audio.volume = Math.max(0, Math.min(1, volume));
     this.updateState({ volume: this.audio.volume });
+    this.saveSettings();
   }
 
   /**
@@ -198,6 +203,7 @@ export class AudioService {
   setPlaybackRate(rate: number): void {
     this.audio.playbackRate = Math.max(0.5, Math.min(2, rate));
     this.updateState({ playbackRate: this.audio.playbackRate });
+    this.saveSettings();
   }
 
   /**
@@ -205,6 +211,7 @@ export class AudioService {
    */
   setReciter(reciter: string): void {
     this.updateState({ currentReciter: reciter });
+    this.saveSettings();
   }
 
   /**
@@ -296,6 +303,58 @@ export class AudioService {
       return (this.audio.currentTime / this.audio.duration) * 100;
     }
     return 0;
+  }
+
+  /** True when the loaded ayah has played to its end */
+  isEnded(): boolean {
+    return this.audio.ended;
+  }
+
+  /** Jump to a time in seconds within the current ayah */
+  seekSeconds(seconds: number): void {
+    if (this.audio.duration) {
+      this.audio.currentTime = Math.max(0, Math.min(this.audio.duration, seconds));
+    }
+  }
+
+  /** Seeks now, or as soon as the newly loaded ayah knows its duration */
+  seekWhenReady(seconds: number): void {
+    if (seconds <= 0) return;
+    if (this.audio.readyState >= 1 && this.audio.duration) {
+      this.seekSeconds(seconds);
+    } else {
+      this.audio.addEventListener('loadedmetadata', () => this.seekSeconds(seconds), { once: true });
+    }
+  }
+
+  /** Loads only the metadata of an ayah's audio to learn its length (seconds) */
+  probeDuration(ayah: Ayah, reciter?: string): Promise<number> {
+    return new Promise(resolve => {
+      const probe = new Audio();
+      probe.preload = 'metadata';
+      probe.addEventListener('loadedmetadata', () => { resolve(probe.duration); probe.src = ''; }, { once: true });
+      probe.addEventListener('error', () => resolve(NaN), { once: true });
+      probe.src = this.getAudioUrl(ayah, reciter);
+    });
+  }
+
+  private static readonly SETTINGS_KEY = 'iqrah_audio_settings';
+
+  private static loadSettings(): { reciter?: string; volume?: number; playbackRate?: number } {
+    try {
+      return JSON.parse(localStorage.getItem(AudioService.SETTINGS_KEY) || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  private saveSettings(): void {
+    const { currentReciter, volume, playbackRate } = this.playerStateSubject.value;
+    try {
+      localStorage.setItem(AudioService.SETTINGS_KEY, JSON.stringify({ reciter: currentReciter, volume, playbackRate }));
+    } catch {
+      // storage unavailable: settings simply aren't remembered
+    }
   }
 
   /**

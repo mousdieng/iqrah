@@ -145,7 +145,9 @@ export enum RepeatMode {
   PAGE = 'PAGE',
   JUZ = 'JUZ',
   RANGE = 'RANGE',
-  SELECTED = 'SELECTED'
+  SELECTED = 'SELECTED',
+  /** Plain listening: each ayah once, from a starting ayah to the end of the surah, turning pages */
+  CONTINUOUS = 'CONTINUOUS'
 }
 
 export interface RepeatState {
@@ -161,6 +163,8 @@ export interface RepeatState {
   ayahRange?: { from: number; to: number };
   pauseDuration: number;
   currentAyah?: Ayah;
+  /** Session still running but paused by the user (isActive stays true) */
+  paused?: boolean;
 }
 
 // Player state

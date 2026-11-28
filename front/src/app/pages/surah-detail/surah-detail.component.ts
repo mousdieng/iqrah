@@ -15,7 +15,6 @@ import { StorageService } from '../../services/storage.service';
 import { TranslationService } from '../../services/translation.service';
 import { ReadingHistoryService } from '../../services/reading-history.service';
 import { SurahDTO, Ayah, RepeatConfig, RepeatMode, RepeatStyle, PlayerState, AyahTranslation } from '../../models';
-import { RepeatControlsComponent } from '../../components/repeat-controls/repeat-controls.component';
 import { AudioPlayerComponent } from "../../components/audio-player/audio-player.component";
 import { combineLatest, take, Subject, takeUntil } from 'rxjs';
 
@@ -48,15 +47,14 @@ const STUDY_SETTINGS_KEY = 'studyViewSettings';
     MenuModule,
     DialogModule,
     TextareaModule,
-    AudioPlayerComponent,
-    RepeatControlsComponent
+    AudioPlayerComponent
   ],
   templateUrl: './surah-detail.component.html',
   styleUrls: ['./surah-detail.component.css', './surah-detail.views.css']
 })
 export class SurahDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  @ViewChild('repeatControls') repeatControls!: RepeatControlsComponent;
+  @ViewChild(AudioPlayerComponent) private audioPlayer?: AudioPlayerComponent;
 
   surah: SurahDTO | null = null;
   surahId: number = 0;
@@ -178,9 +176,13 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
 
     // Subscribe to player state to track currently playing ayah
     this.audioService.playerState$.pipe(takeUntil(this.destroy$)).subscribe(state => {
+      const previousId = this.currentlyPlayingAyahId;
       this.playerState = state;
       this.currentlyPlayingAyahId = state.currentAyah?.id ?? null;
       this.cdr.detectChanges();
+      if (this.currentlyPlayingAyahId && this.currentlyPlayingAyahId !== previousId) {
+        this.scrollToPlayingAyah(this.currentlyPlayingAyahId);
+      }
     });
 
     // Load bookmarks
@@ -191,6 +193,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.repeatService.stop();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -260,9 +263,13 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
         this.readingHistory.record(this.surahId, pageNumber);
         this.scrollToFocusedAyah();
 
-        // Hand new ayahs to RepeatService if it is waiting for them
-        if (this.repeatService.getState().mode === RepeatMode.SURAH) {
-          this.repeatService.updatePageAyahs(surahAyahs);
+        // Listening/repeat that turns pages on its own: hand it the new page's ayahs
+        if (this.repeatService.isAwaitingPage()) {
+          if (surahAyahs.length) {
+            this.repeatService.updatePageAyahs(this.currentAyahs);
+          } else {
+            this.repeatService.stop();
+          }
         }
 
         this.cdr.detectChanges();
@@ -274,7 +281,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
         this.loadingPage  = false;
 
         // Page failed to load during repeat → stop gracefully
-        if (this.repeatService.getState().mode === RepeatMode.SURAH) {
+        if (this.repeatService.isAwaitingPage()) {
           this.repeatService.stop();
         }
 
@@ -289,8 +296,8 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
       this.currentPage++;
       this.loadPage(this.currentPage);
     } else {
-      // End of surah reached — stop repeat if running
-      if (this.repeatService.getState().mode === RepeatMode.SURAH) {
+      // End of surah reached — stop the listening/repeat session that asked for the page
+      if (this.repeatService.isAwaitingPage()) {
         this.repeatService.stop();
       }
     }
@@ -542,9 +549,23 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
     this.playAyah(ayah);
   }
 
+  /** Plays the tapped ayah with the player's "Ce verset" settings (times, pause), then stops */
   playAyah(ayah: Ayah): void {
-    this.audioService.loadAyah(ayah);
-    this.audioService.play();
+    this.audioPlayer?.playVerse(ayah);
+  }
+
+  /** Keeps the verse being recited visible above the player bar */
+  private scrollToPlayingAyah(id: number): void {
+    requestAnimationFrame(() => {
+      const el = document.querySelector(`[data-ayah-id="${id}"]`) as HTMLElement | null;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const playerHeight = (document.querySelector('app-audio-player .player') as HTMLElement | null)?.offsetHeight ?? 0;
+      const visibleBottom = window.innerHeight - playerHeight;
+      if (rect.top < 80 || rect.bottom > visibleBottom) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
   }
 
   isAyahPlaying(ayahId: number): boolean {
@@ -569,14 +590,9 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
 
     this.contextMenuItems = [
       {
-        label: 'Écouter',
+        label: 'Écouter / répéter',
         icon: 'pi pi-play',
         command: () => this.playAyah(ayah)
-      },
-      {
-        label: 'Répéter cette ayah',
-        icon: 'pi pi-sync',
-        command: () => this.repeatSingleAyah(ayah)
       },
       { separator: true },
       {
@@ -599,14 +615,7 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   }
 
   repeatSingleAyah(ayah: Ayah): void {
-    const config: RepeatConfig = {
-      count: 3,
-      pauseDuration: 2,
-      audioType: 'recitation',
-      reciter: 'minshawi',
-      repeatStyle: RepeatStyle.PER_AYAH
-    };
-    this.repeatService.repeatAyah(ayah, config);
+    this.audioPlayer?.playVerse(ayah);
   }
 
   // ─── Bookmarks ─────────────────────────────────────────────────────────────

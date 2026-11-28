@@ -41,6 +41,82 @@ export class RepeatService {
     });
   }
 
+  /** Modes that move to the next page on their own when the page is finished */
+  private turnsPages(mode: RepeatMode): boolean {
+    return mode === RepeatMode.SURAH || mode === RepeatMode.JUZ || mode === RepeatMode.CONTINUOUS;
+  }
+
+  /**
+   * Plain listening: play each ayah once, starting at `startIndex` of the page,
+   * then continue page after page until the end of the surah.
+   */
+  playContinuous(pageAyahs: Ayah[], startIndex: number, config: Omit<RepeatConfig, 'count' | 'repeatStyle'>): void {
+    if (!pageAyahs.length) return;
+    this.cancelPendingNext();
+    this.currentAyahs = [...pageAyahs];
+    this.currentConfig = { ...config, count: 1, repeatStyle: RepeatStyle.PER_AYAH };
+    this.startRepeat(RepeatMode.CONTINUOUS, this.currentConfig, undefined, Math.max(0, Math.min(startIndex, pageAyahs.length - 1)));
+  }
+
+  /** Ayahs of the running session (the page's ayahs for page-turning modes) */
+  getSessionAyahs(): Ayah[] {
+    return this.currentAyahs;
+  }
+
+  /** Modes whose whole length is known up front (no page turns): the player can show one timeline for them */
+  hasFixedLength(mode: RepeatMode): boolean {
+    return mode === RepeatMode.AYAH || mode === RepeatMode.PAGE || mode === RepeatMode.SELECTED || mode === RepeatMode.RANGE;
+  }
+
+  /**
+   * Position in the session as a "play slot": every single playback of an ayah is one slot.
+   * PER_AYAH: a1 a1 a1 a2 a2 a2 …   WHOLE: a1 a2 a3 a1 a2 a3 …
+   */
+  currentSlot(state: RepeatState = this.repeatStateSubject.value): number {
+    return state.repeatStyle === RepeatStyle.PER_AYAH
+      ? state.currentAyahIndex * state.totalIterations + state.currentAyahRepetition
+      : state.currentIteration * this.currentAyahs.length + state.currentAyahIndex;
+  }
+
+  /** The ayah played in a given slot */
+  slotAyah(slot: number, state: RepeatState = this.repeatStateSubject.value): Ayah | undefined {
+    const n = this.currentAyahs.length;
+    if (!n) return undefined;
+    return state.repeatStyle === RepeatStyle.PER_AYAH
+      ? this.currentAyahs[Math.floor(slot / state.totalIterations)]
+      : this.currentAyahs[slot % n];
+  }
+
+  /** Jumps to a play slot of the session, `seconds` into that ayah */
+  jumpToSlot(slot: number, seconds: number): void {
+    const state = this.repeatStateSubject.value;
+    if (!state.isActive) return;
+    const n = this.currentAyahs.length;
+    const total = n * state.totalIterations;
+    slot = Math.max(0, Math.min(total - 1, slot));
+
+    if (slot === this.currentSlot(state) && !this.waitingForNext && !this.audioService.isEnded()) {
+      this.audioService.seekWhenReady(seconds);
+      if (state.paused) this.resume();
+      return;
+    }
+
+    this.cancelPendingNext();
+    this.waitingForNext = false;
+    this.audioService.stop();
+    const position = state.repeatStyle === RepeatStyle.PER_AYAH
+      ? { currentAyahIndex: Math.floor(slot / state.totalIterations), currentAyahRepetition: slot % state.totalIterations }
+      : { currentIteration: Math.floor(slot / n), currentAyahIndex: slot % n };
+    this.updateState(position);
+    this.playCurrentAyah();
+    this.audioService.seekWhenReady(seconds);
+  }
+
+  /** True while a page change requested by the engine is waiting for the reader to load the new page */
+  isAwaitingPage(): boolean {
+    return this.awaitingPageLoad;
+  }
+
   /**
    * Start repeating a single Ayah
    */
@@ -141,32 +217,29 @@ export class RepeatService {
   /**
    * Start the repeat process
    */
-  private startRepeat(mode: RepeatMode, config: RepeatConfig, targetId?: number): void {
+  private startRepeat(mode: RepeatMode, config: RepeatConfig, targetId?: number, startIndex = 0): void {
     if (this.currentAyahs.length === 0) {
       console.warn('No ayahs to repeat');
       return;
     }
 
-    console.log('Starting repeat:', {
-      mode,
-      style: config.repeatStyle,
-      count: config.count,
-      ayahsCount: this.currentAyahs.length
-    });
+    this.cancelPendingNext();
+    this.awaitingPageLoad = false;
 
     // Update state
     this.updateState({
       mode,
       repeatStyle: config.repeatStyle,
       isActive: true,
+      paused: false,
       currentIteration: 0,
       totalIterations: config.count,
       currentAyahRepetition: 0,
-      currentAyahIndex: 0,
+      currentAyahIndex: startIndex,
       totalAyahs: this.currentAyahs.length,
       pauseDuration: config.pauseDuration,
       targetId,
-      currentAyah: this.currentAyahs[0]
+      currentAyah: this.currentAyahs[startIndex]
     });
 
     // Configure audio service
@@ -194,14 +267,7 @@ export class RepeatService {
     }
 
     const ayah = this.currentAyahs[state.currentAyahIndex];
-    this.updateState({ currentAyah: ayah });
-
-    console.log('Playing ayah:', {
-      index: state.currentAyahIndex,
-      ayahNum: ayah.numberInSurah,
-      iteration: state.currentIteration,
-      ayahRepetition: state.currentAyahRepetition
-    });
+    this.updateState({ currentAyah: ayah, paused: false });
 
     // Load ayah with appropriate audio type
     if (this.currentConfig?.audioType === 'recitation') {
@@ -219,15 +285,17 @@ export class RepeatService {
   private handleAudioEnded(): void {
     const state = this.repeatStateSubject.value;
 
-    if (!state.isActive) {
+    if (!state.isActive || state.paused) {
       return;
     }
 
     // If there's a pause duration, wait before continuing
     if (state.pauseDuration > 0) {
+      this.waitingForNext = true;
       this.pauseSubscription = interval(state.pauseDuration * 1000)
         .pipe(take(1))
         .subscribe(() => {
+          this.waitingForNext = false;
           this.continueRepeat();
         });
     } else {
@@ -235,20 +303,19 @@ export class RepeatService {
     }
   }
 
+  /** True between the end of an ayah and the next one (pause between ayahs) */
+  private waitingForNext = false;
+
+  private cancelPendingNext(): void {
+    this.pauseSubscription?.unsubscribe();
+    this.pauseSubscription = undefined;
+  }
+
   /**
    * Continue with the next ayah or iteration
    */
   private continueRepeat(): void {
     const state = this.repeatStateSubject.value;
-
-    console.log('Continue repeat:', {
-      mode: state.mode,
-      style: state.repeatStyle,
-      currentAyahIndex: state.currentAyahIndex,
-      currentAyahRepetition: state.currentAyahRepetition,
-      currentIteration: state.currentIteration,
-      totalIterations: state.totalIterations
-    });
 
     if (state.repeatStyle === RepeatStyle.PER_AYAH) {
       this.continuePerAyahRepeat(state);
@@ -280,8 +347,8 @@ export class RepeatService {
         currentAyahRepetition: 0
       });
       this.playCurrentAyah();
-    } else if (state.mode === RepeatMode.SURAH || state.mode === RepeatMode.JUZ) {
-      // Surah/Juz mode: navigate to next page
+    } else if (this.turnsPages(state.mode)) {
+      // Surah/Juz/continuous: navigate to next page
       this.awaitingPageLoad = true;
       this.updateState({
         currentAyahIndex: 0,
@@ -308,7 +375,7 @@ export class RepeatService {
     }
 
     // Reached end of ayahs list
-    if (state.mode === RepeatMode.SURAH || state.mode === RepeatMode.JUZ) {
+    if (this.turnsPages(state.mode)) {
       // Surah/Juz mode: repeat this page X times, then move to next page
       const nextIteration = state.currentIteration + 1;
 
@@ -346,40 +413,41 @@ export class RepeatService {
     }
   }
 
-  /**
-   * Pause the repeat
-   */
+  /** Pause the session; it keeps its place and can be resumed */
   pause(): void {
+    const state = this.repeatStateSubject.value;
+    if (!state.isActive) return;
     this.audioService.pause();
-    this.updateState({ isActive: false });
+    // A pending "next ayah" timer is cancelled; resume() continues from there
+    if (this.waitingForNext) this.cancelPendingNext();
+    this.updateState({ paused: true });
   }
 
-  /**
-   * Resume the repeat
-   */
+  /** Resume a paused session */
   resume(): void {
     const state = this.repeatStateSubject.value;
-    if (state.mode !== RepeatMode.NONE) {
-      this.updateState({ isActive: true });
+    if (!state.isActive) return;
+    this.updateState({ paused: false });
+    if (this.waitingForNext || this.audioService.isEnded()) {
+      this.waitingForNext = false;
+      this.continueRepeat();
+    } else {
       this.audioService.play();
     }
   }
 
-  /**
-   * Stop the repeat
-   */
+  /** Stop the session completely */
   stop(): void {
     this.audioService.stop();
     this.audioService.setAutoPlay(false);
-
-    if (this.pauseSubscription) {
-      this.pauseSubscription.unsubscribe();
-    }
+    this.cancelPendingNext();
+    this.waitingForNext = false;
 
     this.updateState({
       mode: RepeatMode.NONE,
       repeatStyle: RepeatStyle.WHOLE,
       isActive: false,
+      paused: false,
       currentIteration: 0,
       currentAyahRepetition: 0,
       currentAyahIndex: 0,
@@ -392,34 +460,37 @@ export class RepeatService {
     this.awaitingPageLoad = false;
   }
 
-  /**
-   * Skip to next ayah
-   */
+  /** Next ayah; at the end of the page, page-turning modes move to the next page */
   skipToNext(): void {
     const state = this.repeatStateSubject.value;
+    if (!state.isActive) return;
+    this.cancelPendingNext();
+    this.waitingForNext = false;
+
     if (state.currentAyahIndex < this.currentAyahs.length - 1) {
       this.audioService.stop();
-      this.updateState({
-        currentAyahIndex: state.currentAyahIndex + 1,
-        currentAyahRepetition: 0
-      });
+      this.updateState({ currentAyahIndex: state.currentAyahIndex + 1, currentAyahRepetition: 0 });
       this.playCurrentAyah();
+    } else if (this.turnsPages(state.mode)) {
+      this.audioService.stop();
+      this.awaitingPageLoad = true;
+      this.updateState({ currentAyahIndex: 0, currentAyahRepetition: 0, currentIteration: 0 });
+      this.pageNavigationSubject.next('next');
     }
   }
 
-  /**
-   * Skip to previous ayah
-   */
+  /** Previous ayah; on the first ayah, starts it again */
   skipToPrevious(): void {
     const state = this.repeatStateSubject.value;
+    if (!state.isActive) return;
+    this.cancelPendingNext();
+    this.waitingForNext = false;
+    this.audioService.stop();
+
     if (state.currentAyahIndex > 0) {
-      this.audioService.stop();
-      this.updateState({
-        currentAyahIndex: state.currentAyahIndex - 1,
-        currentAyahRepetition: 0
-      });
-      this.playCurrentAyah();
+      this.updateState({ currentAyahIndex: state.currentAyahIndex - 1, currentAyahRepetition: 0 });
     }
+    this.playCurrentAyah();
   }
 
   /**

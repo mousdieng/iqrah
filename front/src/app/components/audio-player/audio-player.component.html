@@ -1,320 +1,180 @@
-@if (playerState) {
-<div class="fixed bottom-0 left-0 right-0 z-40" style="font-family: inherit;">
+<div class="player" role="region" aria-label="Lecteur audio">
 
-  <!-- ①  Active repeat banner ─────────────────────────────────────────────── -->
-  @if (repeatState && repeatState.isActive) {
-    <div class="text-white px-4 py-2 border-b border-white/10" style="background: var(--color-primary);">
-      <div class="max-w-screen-xl mx-auto flex items-center justify-between gap-4">
-
-        <div class="flex items-center gap-3 min-w-0">
-          <i class="pi pi-sync animate-spin shrink-0 text-sm" style="color: var(--color-accent);"></i>
-          <span class="text-sm font-semibold shrink-0">{{ getCurrentRepeatModeLabel() }}</span>
-
-          <!-- Progress info based on style -->
-          @if (repeatState.repeatStyle === RepeatStyle.PER_AYAH) {
-            <span class="text-xs text-white/80 shrink-0 tabular-nums">
-              Ayah {{ repeatState.currentAyahIndex + 1 }}/{{ repeatState.totalAyahs }}
-              · Rép. {{ repeatState.currentAyahRepetition + 1 }}/{{ repeatState.totalIterations }}
-            </span>
-          } @else {
-            <span class="text-xs text-white/80 shrink-0 tabular-nums">
-              Ayah {{ repeatState.currentAyahIndex + 1 }}/{{ repeatState.totalAyahs }}
-              · Tour {{ repeatState.currentIteration + 1 }}/{{ repeatState.totalIterations }}
-            </span>
-          }
-
-          @if (repeatState.currentAyah) {
-            <span class="text-sm truncate text-white/70 hidden md:inline" dir="rtl"
-              style="font-family: 'UthmanicHafs', 'Scheherazade New', serif; font-size: 0.9rem;">
-              {{ repeatState.currentAyah.text.substring(0, 45) }}…
-            </span>
-          }
-        </div>
-
-        <div class="flex items-center gap-3 shrink-0">
-          <!-- inline progress pill -->
-          <div class="hidden sm:block w-28 bg-white/20 rounded-full h-1">
-            <div class="h-1 rounded-full transition-all duration-300" style="background: var(--color-accent);"
-              [style.width.%]="repeatProgress">
-            </div>
-          </div>
-          <button pButton icon="pi pi-times" [rounded]="true" size="small"
-            severity="danger" (click)="stopRepeat()">
-          </button>
-        </div>
-
-      </div>
-    </div>
-  }
-
-  <!-- ②  Settings panel (slides up above main bar) ─────────────────────────── -->
-  @if (showSettings) {
-    <div class="border-t" style="background: var(--color-surface); border-color: var(--color-accent-alpha);">
-
-      <div class="max-w-screen-xl mx-auto px-4 py-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5 divide-y md:divide-y-0 md:divide-x divide-white/10">
-
-          <!-- Source audio ──────────────────────── -->
-          <div class="space-y-3 pb-4 md:pb-0 md:pr-8">
-            <p class="text-xs font-semibold uppercase tracking-widest flex items-center gap-2" style="color: var(--color-accent);">
-              <i class="pi pi-headphones"></i> Source audio
-            </p>
-
-            <div class="flex gap-5">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="audioOptsSettings" value="recitation"
-                  [(ngModel)]="audioOptions"
-                  (ngModelChange)="onAudioOptionChange($event)"
-                  class="cursor-pointer" style="accent-color: var(--color-accent);">
-                <span class="text-sm" style="color: var(--color-text-secondary);">Récitation</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="audioOptsSettings" value="tafsir"
-                  [(ngModel)]="audioOptions"
-                  (ngModelChange)="onAudioOptionChange($event)"
-                  class="cursor-pointer" style="accent-color: var(--color-accent);">
-                <span class="text-sm" style="color: var(--color-text-secondary);">Tafsir</span>
-              </label>
-            </div>
-
-            @if (audioOptions === 'recitation') {
-              <p-select [options]="reciterOptions" [(ngModel)]="selectedReciter"
-                optionLabel="label" optionValue="value"
-                (ngModelChange)="onReciterChange($event)"
-                class="text-white"
-                placeholder="Choisir un récitateur"
-                styleClass="w-full">
-              </p-select>
+  <!-- Options panel: reciter, speed, repeat -->
+  @if (panelOpen()) {
+    <div class="panel" role="dialog" aria-label="Options audio">
+      <div class="panel-inner">
+        <section class="panel-section">
+          <h3 class="panel-title"><i class="pi pi-microphone" aria-hidden="true"></i> Récitateur</h3>
+          <select class="input" [value]="player().currentReciter" (change)="setReciter($event)" aria-label="Récitateur">
+            @for (r of reciters(); track r.value) {
+              <option [value]="r.value" [selected]="r.value === player().currentReciter">{{ r.label }}</option>
             }
-            @if (audioOptions === 'tafsir') {
-              <p-select [options]="tafsirOptions" [(ngModel)]="selectedTafsir"
-                optionLabel="label" optionValue="value"
-                (ngModelChange)="onTafsirChange($event)"
-                placeholder="Choisir un tafsir"
-                class="text-white"
-                styleClass="w-full">
-              </p-select>
+          </select>
+
+          <h3 class="panel-title spaced"><i class="pi pi-forward" aria-hidden="true"></i> Vitesse</h3>
+          <div class="segmented" role="group" aria-label="Vitesse de lecture">
+            @for (s of speeds; track s) {
+              <button type="button" [class.active]="player().playbackRate === s" [attr.aria-pressed]="player().playbackRate === s"
+                      (click)="setSpeed(s)">{{ s }}×</button>
+            }
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h3 class="panel-title"><i class="pi pi-sync" aria-hidden="true"></i> Répéter pour mémoriser</h3>
+
+          <div class="segmented wrap" role="group" aria-label="Que répéter">
+            @for (t of repeatTargets; track t.value) {
+              <button type="button" [class.active]="repeatSettings().target === t.value" [attr.aria-pressed]="repeatSettings().target === t.value"
+                      (click)="updateRepeat({ target: t.value })">{{ t.label }}</button>
             }
           </div>
 
-          <!-- Répétition ────────────────────────── -->
-          <div class="space-y-3 pt-4 pb-4 md:pt-0 md:pb-0 md:px-8">
-            <p class="text-xs font-semibold uppercase tracking-widest flex items-center gap-2" style="color: var(--color-accent);">
-              <i class="pi pi-sync"></i> Répétition
-            </p>
+          @if (repeatSettings().target === 'ayah') {
+            <div class="repeat-row">
+              <label class="repeat-label" for="repeat-ayah">Verset à répéter</label>
+              <select id="repeat-ayah" class="input verse-select" (change)="pickAyah($event)">
+                @for (a of pageVerses(); track a.id) {
+                  <option [value]="a.id" [selected]="a.id === repeatAyah()?.id">Verset {{ a.numberInSurah }}</option>
+                }
+              </select>
+            </div>
+          }
 
-            <p-select [options]="repeatModeOptions" [(ngModel)]="selectedRepeatMode"
-              optionLabel="label" optionValue="value"
-              (ngModelChange)="onRepeatModeChange($event)"
-              class="text-white"
-              placeholder="Mode de répétition"
-              styleClass="w-full">
-            </p-select>
+          <div class="repeat-row">
+            <span class="repeat-label">Nombre de fois</span>
+            <div class="stepper">
+              <button type="button" class="icon-button" (click)="changeCount(-1)" [disabled]="repeatSettings().count <= 1" aria-label="Moins">
+                <i class="pi pi-minus" aria-hidden="true"></i>
+              </button>
+              <span class="stepper-value" aria-live="polite">{{ repeatSettings().count }}</span>
+              <button type="button" class="icon-button" (click)="changeCount(1)" aria-label="Plus">
+                <i class="pi pi-plus" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
 
-            @if (selectedRepeatMode !== RepeatMode.NONE) {
-              <!-- Repeat Style selector (only for multi-ayah modes) -->
-              @if (showRepeatStyleSelector) {
-                <div class="space-y-2">
-                  <span class="block text-xs" style="color: var(--color-text-muted);">Style de répétition</span>
-                  <div class="flex gap-4">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="repeatStyle" [value]="RepeatStyle.WHOLE"
-                        [(ngModel)]="selectedRepeatStyle"
-                        class="cursor-pointer" style="accent-color: var(--color-accent);">
-                      <span class="text-sm" style="color: var(--color-text-secondary);">Tout répéter</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name="repeatStyle" [value]="RepeatStyle.PER_AYAH"
-                        [(ngModel)]="selectedRepeatStyle"
-                        class="cursor-pointer" style="accent-color: var(--color-accent);">
-                      <span class="text-sm" style="color: var(--color-text-secondary);">Par Ayah</span>
-                    </label>
-                  </div>
-                  <p class="text-xs" style="color: var(--color-text-muted);">
-                    @if (selectedRepeatStyle === RepeatStyle.WHOLE) {
-                      Jouer toutes les ayahs, puis répéter l'ensemble
-                    } @else {
-                      Répéter chaque ayah X fois avant de passer à la suivante
-                    }
-                  </p>
-                </div>
+          <div class="repeat-row">
+            <span class="repeat-label">Pause entre les versets</span>
+            <div class="segmented" role="group" aria-label="Pause entre les versets">
+              @for (p of pauses; track p) {
+                <button type="button" [class.active]="repeatSettings().pause === p" [attr.aria-pressed]="repeatSettings().pause === p"
+                        (click)="updateRepeat({ pause: p })">{{ p === 0 ? 'Aucune' : p + ' s' }}</button>
               }
+            </div>
+          </div>
 
-              <div class="flex gap-3">
-                <label class="flex-1">
-                  <span class="block text-xs mb-1" style="color: var(--color-text-muted);">× Répétitions</span>
-                  <input type="number" [(ngModel)]="repeatCount" min="1" max="99"
-                    class="w-full rounded-lg px-3 py-2 text-sm text-center focus:outline-none focus:ring-1"
-                    style="background: var(--color-surface); border: 1px solid var(--color-card-border); color: var(--color-text-primary);">
-                </label>
-                <label class="flex-1">
-                  <span class="block text-xs mb-1" style="color: var(--color-text-muted);">Pause (s)</span>
-                  <input type="number" [(ngModel)]="pauseDuration" min="0" max="30"
-                    class="w-full rounded-lg px-3 py-2 text-sm text-center focus:outline-none focus:ring-1"
-                    style="background: var(--color-surface); border: 1px solid var(--color-card-border); color: var(--color-text-primary);">
-                </label>
+          @if (repeatSettings().target !== 'ayah') {
+            <div class="repeat-row">
+              <span class="repeat-label">Ordre</span>
+              <div class="segmented" role="group" aria-label="Ordre de répétition">
+                <button type="button" [class.active]="repeatSettings().style === RepeatStyle.PER_AYAH"
+                        (click)="updateRepeat({ style: RepeatStyle.PER_AYAH })" title="Répéter chaque verset avant de passer au suivant">Verset par verset</button>
+                <button type="button" [class.active]="repeatSettings().style === RepeatStyle.WHOLE"
+                        (click)="updateRepeat({ style: RepeatStyle.WHOLE })" title="Lire tout, puis recommencer">Le tout</button>
               </div>
+            </div>
+          }
 
-              @if ((selectedRepeatMode === RepeatMode.RANGE || selectedRepeatMode === RepeatMode.SELECTED) && selectedAyahs.length === 0) {
-                <div class="flex items-center gap-2 text-amber-400 text-xs">
-                  <i class="pi pi-hand-pointer"></i>
-                  <span>Touchez les ayahs sur la page pour les sélectionner</span>
-                </div>
-              }
+          <button type="button" class="btn btn-primary repeat-start" (click)="startRepeat()">
+            <i class="pi pi-sync" aria-hidden="true"></i>
+            @if (repeatSettings().target === 'selection' && !selectionCount()) {
+              Choisir les versets
+            } @else {
+              Lancer la répétition
             }
-          </div>
-
-          <!-- Lecture ───────────────────────────── -->
-          <div class="space-y-3 pt-4 md:pt-0 md:pl-8">
-            <p class="text-xs font-semibold uppercase tracking-widest flex items-center gap-2" style="color: var(--color-accent);">
-              <i class="pi pi-bolt"></i> Lecture
-            </p>
-
-            <label>
-              <span class="block text-xs mb-1" style="color: var(--color-text-muted);">Vitesse de lecture</span>
-              <p-select
-                [options]="playbackRates"
-                [(ngModel)]="selectedPlaybackRate"
-                optionLabel="label"
-                optionValue="value"
-                (ngModelChange)="onPlaybackRateChange($event)"
-                styleClass="w-full">
-              </p-select>
-            </label>
-
-            <label class="sm:hidden">
-              <span class="block text-xs mb-1" style="color: var(--color-text-muted);">Volume — {{ volume | number:'1.0-0' }}%</span>
-              <input type="range"
-                [value]="volume" min="0" max="100" step="1"
-                (input)="onVolumeInput($event)"
-                class="w-full progress-bar"
-                [style.--progress]="volume + '%'">
-            </label>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  }
-
-  <!-- ②b  Selection confirmation strip ───────────────────────────────────────── -->
-  @if (isInSelectionMode && !(repeatState?.isActive)) {
-    <div class="border-t px-4 py-2"
-      style="background: var(--color-surface); border-color: var(--color-accent-alpha);">
-      <div class="max-w-screen-xl mx-auto flex items-center justify-between gap-4">
-
-        <div class="flex items-center gap-3">
-          <i class="pi pi-check-square text-sm" style="color: var(--color-accent);"></i>
-          @if (selectedAyahs.length === 0) {
-            <span class="text-sm" style="color: var(--color-text-muted);">
-              Touchez les numéros d'ayah sur la page pour les sélectionner
-            </span>
-          } @else {
-            <span class="text-sm" style="color: var(--color-text-primary);">
-              <span class="font-semibold" style="color: var(--color-accent);">{{ selectedAyahs.length }}</span>
-              ayah{{ selectedAyahs.length > 1 ? 's' : '' }} sélectionnée{{ selectedAyahs.length > 1 ? 's' : '' }}
-            </span>
-          }
-        </div>
-
-        <div class="flex items-center gap-2">
-          @if (selectedAyahs.length > 0) {
-            <button pButton
-              icon="pi pi-play"
-              label="Lancer la sélection"
-              severity="success"
-              size="small"
-              (click)="startRepeat()">
-            </button>
-          }
-          <button pButton
-            icon="pi pi-times"
-            label="Annuler"
-            [text]="true"
-            size="small"
-            style="color: rgba(255,255,255,0.6);"
-            (click)="cancelSelection()">
           </button>
-        </div>
-
+        </section>
       </div>
     </div>
   }
 
-  <!-- ③  Main player bar ──────────────────────────────────────────────────── -->
-  <div class="border-t-2" style="background: var(--color-surface); border-color: var(--color-accent);">
-
-    <div class="max-w-screen-xl mx-auto px-4 py-3 flex items-center gap-4">
-
-      <!-- Current ayah info (desktop only) -->
-      <div class="hidden lg:flex flex-col justify-center min-w-0 shrink-0" style="width: 10rem;">
-        @if (playerState.currentAyah) {
-          <span class="text-xs tabular-nums" style="color: var(--color-text-muted);">
-            S.{{ playerState.currentAyah.surahId }} · Ay.{{ playerState.currentAyah.numberInSurah }}
-          </span>
-          <span class="text-sm truncate"
-            style="font-family: 'UthmanicHafs', 'Scheherazade New', serif; color: var(--color-text-secondary);" dir="rtl">
-            {{ playerState.currentAyah.text.substring(0, 25) }}
-          </span>
+  <!-- Choosing verses for "Sélection" -->
+  @if (choosingSelection() && !isActive()) {
+    <div class="strip">
+      <span>
+        <i class="pi pi-check-square" aria-hidden="true"></i>
+        @if (selectionCount()) {
+          <strong>{{ selectionCount() }}</strong> verset{{ selectionCount() > 1 ? 's' : '' }} sélectionné{{ selectionCount() > 1 ? 's' : '' }}
         } @else {
-          <span class="text-xs italic" style="color: var(--color-text-muted);">Aucune ayah</span>
+          Touchez les versets à répéter
+        }
+      </span>
+      <span class="strip-actions">
+        @if (selectionCount()) {
+          <button type="button" class="btn btn-primary btn-sm" (click)="startRepeat()">Lancer</button>
+        }
+        <button type="button" class="btn btn-ghost btn-sm" (click)="cancelSelection()">Annuler</button>
+      </span>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="strip strip-error" role="status"><i class="pi pi-exclamation-circle" aria-hidden="true"></i> {{ error() }}</div>
+  }
+
+  <!-- Main bar -->
+  <div class="bar">
+    <div class="transport">
+      <button type="button" class="icon-button" (click)="previous()" [disabled]="!isActive()"
+              aria-label="Verset précédent" title="Verset précédent (←)">
+        <i class="pi pi-step-backward" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="play" (click)="togglePlay()"
+              [attr.aria-label]="isPlaying() ? 'Pause' : 'Écouter'" [title]="(isPlaying() ? 'Pause' : 'Écouter') + ' (Espace)'">
+        <i class="pi" [class.pi-pause]="isPlaying()" [class.pi-play]="!isPlaying()" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="icon-button" (click)="next()" [disabled]="!isActive()"
+              aria-label="Verset suivant" title="Verset suivant (→)">
+        <i class="pi pi-step-forward" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="now">
+      <div class="now-top">
+        @if (currentLabel(); as c) {
+          <span class="now-name">{{ c.name }}</span>
+          <span class="chip">{{ c.ref }}</span>
+        } @else {
+          <span class="now-hint">Touchez un verset ou ▶ pour écouter</span>
+        }
+        @if (sessionLabel()) {
+          <span class="now-session">{{ sessionLabel() }}</span>
         }
       </div>
-
-      <!-- Transport controls -->
-      <div class="flex items-center gap-2 shrink-0">
-        <button pButton icon="pi pi-step-backward"
-          [rounded]="true" [text]="true" size="small"
-          [style.color]="'var(--color-text-primary)'"
-          (click)="skipPrevious()"
-          [disabled]="!playerState.currentAyah">
-        </button>
-
-        <!-- ★ SMART MAIN BUTTON (Lancer / Pause / Reprendre) -->
-        <button pButton
-          [icon]="mainButtonIcon"
-          [label]="mainButtonLabel"
-          [rounded]="true"
-          [disabled]="mainButtonDisabled"
-          (click)="onMainButtonClick()"
-          style="min-width: 6rem;">
-        </button>
-
-        <button pButton icon="pi pi-step-forward"
-          [rounded]="true" [text]="true" size="small"
-          [style.color]="'var(--color-text-primary)'"
-          (click)="skipNext()"
-          [disabled]="!playerState.currentAyah">
-        </button>
+      <div class="seek">
+        <span class="time">{{ elapsed() }}</span>
+        <input type="range" min="0" max="100" step="0.1" class="seek-range"
+               [value]="position()" [style.--p]="position() + '%'"
+               (change)="onSeek($event)" [disabled]="!currentAyah()"
+               [attr.aria-label]="timeline() ? 'Position dans la répétition' : 'Position dans le verset'">
+        <span class="time">{{ total() }}</span>
       </div>
+    </div>
 
-      <!-- Spacer to push volume/settings to the right -->
-      <div class="flex-1"></div>
+    <div class="extras">
+      <button type="button" class="speed" (click)="cycleSpeed()" title="Vitesse de lecture" aria-label="Vitesse de lecture">
+        {{ player().playbackRate }}×
+      </button>
 
-      <!-- Volume (hidden on small screens — shown in settings panel) -->
-      <div class="hidden sm:flex items-center gap-2 shrink-0">
-        <i class="pi pi-volume-up text-xs" style="color: var(--color-text-muted);"></i>
-        <input type="range"
-          [value]="volume"
-          min="0" max="100" step="1"
-          (input)="onVolumeInput($event)"
-          class="progress-bar"
-          [style.--progress]="volume + '%'"
-          style="width: 5rem;">
-      </div>
+      <label class="volume" title="Volume">
+        <i class="pi" [class.pi-volume-up]="player().volume > 0" [class.pi-volume-off]="player().volume === 0" aria-hidden="true"></i>
+        <input type="range" min="0" max="100" step="1" class="seek-range volume-range"
+               [value]="player().volume * 100" [style.--p]="player().volume * 100 + '%'"
+               (input)="onVolume($event)" aria-label="Volume">
+      </label>
 
-      <!-- Settings toggle -->
-      <div class="flex items-center gap-1 shrink-0">
-        <button pButton
-          [icon]="showSettings ? 'pi pi-times' : 'pi pi-sliders-h'"
-          [rounded]="true" [text]="true" size="small"
-          [style.color]="showSettings ? 'var(--color-accent)' : 'var(--color-text-muted)'"
-          (click)="toggleSettings()">
+      @if (isActive()) {
+        <button type="button" class="icon-button" (click)="stop()" aria-label="Arrêter" title="Arrêter">
+          <i class="pi pi-stop" aria-hidden="true"></i>
         </button>
-      </div>
+      }
 
+      <button type="button" class="icon-button" [class.on]="panelOpen()" (click)="panelOpen.set(!panelOpen())"
+              [attr.aria-expanded]="panelOpen()" aria-label="Options audio" title="Récitateur, vitesse, répétition">
+        <i class="pi" [class.pi-sliders-h]="!panelOpen()" [class.pi-times]="panelOpen()" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
-
 </div>
-}
