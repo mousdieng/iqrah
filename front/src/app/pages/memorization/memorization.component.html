@@ -1,8 +1,126 @@
 <div class="page">
   <header class="page-header">
     <h1 class="page-title">Mémoriser</h1>
-    <p class="page-subtitle">Révisez vos versets au bon moment, retrouvez vos signets et testez votre mémoire.</p>
+    <p class="page-subtitle">Apprenez un peu chaque jour, révisez au bon moment et suivez vos progrès.</p>
   </header>
+
+  <!-- Today: goal, streak, reviews -->
+  <section class="today">
+    <div class="card goal-card">
+      <div class="goal-ring" [style.--goal]="goalPercent()" [class.reached]="goalReached()"
+           role="img" [attr.aria-label]="memorize.today().learned + ' sur ' + memorize.goal() + ' nouveaux versets aujourd\'hui'">
+        <span class="goal-value">{{ memorize.today().learned }}<small>/{{ memorize.goal() }}</small></span>
+      </div>
+      <div class="goal-text">
+        <h2>Aujourd'hui</h2>
+        <p>
+          @if (goalReached()) {
+            Objectif atteint, bravo !
+          } @else {
+            {{ memorize.goal() - memorize.today().learned }} nouveau{{ memorize.goal() - memorize.today().learned > 1 ? 'x' : '' }} verset{{ memorize.goal() - memorize.today().learned > 1 ? 's' : '' }} pour atteindre l'objectif.
+          }
+        </p>
+        <div class="goal-edit">
+          <span>Objectif</span>
+          <div class="stepper">
+            <button type="button" class="icon-button" (click)="changeGoal(-1)" [disabled]="memorize.goal() <= 1" aria-label="Réduire l'objectif">
+              <i class="pi pi-minus" aria-hidden="true"></i>
+            </button>
+            <span class="stepper-value">{{ memorize.goal() }}</span>
+            <button type="button" class="icon-button" (click)="changeGoal(1)" [disabled]="memorize.goal() >= 50" aria-label="Augmenter l'objectif">
+              <i class="pi pi-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+          <span>versets / jour</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card stats-card">
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-icon streak"><i class="pi pi-bolt" aria-hidden="true"></i></span>
+          <span><strong>{{ memorize.streak() }}</strong> jour{{ memorize.streak() > 1 ? 's' : '' }} d'affilée</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon"><i class="pi pi-refresh" aria-hidden="true"></i></span>
+          <span><strong>{{ memorize.today().reviewed }}</strong> révisé{{ memorize.today().reviewed > 1 ? 's' : '' }} aujourd'hui</span>
+        </div>
+      </div>
+
+      <div class="week" aria-label="Activité des 7 derniers jours">
+        @for (d of memorize.week(); track d.key) {
+          <div class="week-day" [title]="d.learned + ' appris, ' + d.reviewed + ' révisés'">
+            <div class="week-bar">
+              <span class="bar-reviewed" [style.height.%]="(d.reviewed / weekMax()) * 100"></span>
+              <span class="bar-learned" [style.height.%]="(d.learned / weekMax()) * 100"></span>
+            </div>
+            <span class="week-label">{{ d.label }}</span>
+          </div>
+        }
+      </div>
+      <div class="legend"><span class="dot learned"></span> appris <span class="dot reviewed"></span> révisés</div>
+
+      <a class="btn btn-primary review-btn" routerLink="/memorize/review"
+         [class.disabled]="!memorize.due().length" [attr.aria-disabled]="!memorize.due().length">
+        <i class="pi pi-play" aria-hidden="true"></i>
+        @if (memorize.due().length) {
+          Réviser {{ memorize.due().length }} verset{{ memorize.due().length > 1 ? 's' : '' }}
+        } @else {
+          Aucune révision due
+        }
+      </a>
+    </div>
+  </section>
+
+  <!-- Next verses to learn -->
+  <section class="card learn">
+    <header class="learn-head">
+      <div>
+        <h2>À apprendre</h2>
+        @if (currentSurahInfo(); as info) {
+          <p class="learn-sub">{{ info.memorized }} / {{ info.surah.numberOfAyahs }} versets de {{ info.surah.englishName }} mémorisés</p>
+          <div class="progress learn-progress"><span [style.width.%]="info.percent"></span></div>
+        }
+      </div>
+      <label class="learn-surah">
+        Sourate
+        <select class="input input-sm" (change)="onFocusSurah($event)" aria-label="Sourate à apprendre">
+          @for (s of catalog.surahs(); track s.number) {
+            <option [value]="s.number" [selected]="s.number === memorize.currentSurah()">{{ s.number }}. {{ s.englishName }}</option>
+          }
+        </select>
+      </label>
+    </header>
+
+    @if (nextRows().length) {
+      <ul class="learn-list">
+        @for (row of nextRows(); track row.ayahId) {
+          <li class="learn-row">
+            <span class="chip">{{ row.surahId }}:{{ row.numberInSurah }}</span>
+            @if (texts().get(row.ayahId); as ayah) {
+              <p class="learn-arabic" lang="ar" dir="rtl">{{ displayText(ayah) }}</p>
+            } @else {
+              <p class="learn-arabic placeholder" aria-hidden="true"></p>
+            }
+            <button type="button" class="btn btn-ghost btn-sm" (click)="markLearned(row)" title="Marquer comme mémorisé">
+              <i class="pi pi-check" aria-hidden="true"></i> Je le connais
+            </button>
+          </li>
+        }
+      </ul>
+      <div class="learn-actions">
+        <button type="button" class="btn btn-primary" (click)="learnInReader()">
+          <i class="pi pi-eye-slash" aria-hidden="true"></i> Apprendre dans le lecteur
+        </button>
+        @if (nextRows().length > 1) {
+          <button type="button" class="btn btn-secondary" (click)="markAllLearned()">Tout marquer appris</button>
+        }
+      </div>
+    } @else {
+      <p class="learn-done"><i class="pi pi-check-circle" aria-hidden="true"></i> Cette sourate est entièrement mémorisée. Choisissez-en une autre.</p>
+    }
+  </section>
 
   <!-- Quiz -->
   <a class="card card-link quiz-card" routerLink="/memorize/quiz">
@@ -11,7 +129,7 @@
       <strong>Testez-vous avec un quiz</strong>
       <span>Complétez les mots manquants, remettez les versets dans l'ordre…</span>
     </span>
-    <span class="btn btn-primary btn-sm">Commencer <i class="pi pi-arrow-right" aria-hidden="true"></i></span>
+    <span class="btn btn-secondary btn-sm">Commencer <i class="pi pi-arrow-right" aria-hidden="true"></i></span>
   </a>
 
   <!-- Tabs -->
@@ -28,7 +146,35 @@
     }
   </div>
 
-  @if (!rows().length) {
+  @if (tab() === 'surahs') {
+    @if (memorize.surahProgress().length) {
+      <ul class="surah-progress" role="tabpanel">
+        @for (s of memorize.surahProgress(); track s.surahId) {
+          <li>
+            <a class="surah-row" [routerLink]="['/surah', s.surahId]" [queryParams]="{ memo: 1 }">
+              <span class="surah-num">{{ s.surahId }}</span>
+              <span class="surah-names">
+                <strong>{{ s.name }}</strong>
+                <span class="surah-ar" lang="ar">{{ s.arabic }}</span>
+              </span>
+              <span class="surah-bar">
+                <span class="progress"><span [style.width.%]="s.percent" [class.full]="s.percent === 100"></span></span>
+                <span class="surah-count">{{ s.memorized }} / {{ s.total }}</span>
+              </span>
+              <span class="surah-percent" [class.full]="s.percent === 100">{{ s.percent }}%</span>
+            </a>
+          </li>
+        }
+      </ul>
+    } @else {
+      @let empty = emptyFor('surahs');
+      <div class="card empty-state">
+        <span class="empty-icon"><i [class]="empty.icon" aria-hidden="true"></i></span>
+        <h3>{{ empty.title }}</h3>
+        <p>{{ empty.text }}</p>
+      </div>
+    }
+  } @else if (!rows().length) {
     @let empty = emptyFor(tab());
     <div class="card empty-state">
       <span class="empty-icon"><i [class]="empty.icon" aria-hidden="true"></i></span>
@@ -37,6 +183,13 @@
       <a routerLink="/surahs" class="btn btn-secondary">Aller aux sourates</a>
     </div>
   } @else {
+    @if (tab() === 'due') {
+      <div class="due-banner">
+        <span>{{ rows().length }} verset{{ rows().length > 1 ? 's' : '' }} à réviser : récitez-les de mémoire et notez chaque récitation.</span>
+        <a routerLink="/memorize/review" class="btn btn-primary btn-sm"><i class="pi pi-play" aria-hidden="true"></i> Commencer</a>
+      </div>
+    }
+
     <ul class="ayah-list" role="tabpanel">
       @for (row of visibleRows(); track row.ayahId) {
         <li class="ayah-row">
@@ -44,6 +197,9 @@
             <span class="ayah-ref-name">{{ row.surahName || 'Verset ' + row.ayahId }}</span>
             @if (row.numberInSurah) {
               <span class="chip">{{ row.surahId }}:{{ row.numberInSurah }}</span>
+            }
+            @if (row.due) {
+              <span class="ayah-due">{{ row.due }}</span>
             }
           </div>
 
@@ -66,11 +222,6 @@
               </a>
             }
             @switch (tab()) {
-              @case ('due') {
-                <button type="button" class="btn btn-primary btn-sm" (click)="markReviewed(row)">
-                  <i class="pi pi-check" aria-hidden="true"></i> C'est revu
-                </button>
-              }
               @case ('memorized') {
                 <button type="button" class="btn btn-ghost btn-sm" (click)="unmarkMemorized(row)">Retirer</button>
               }

@@ -14,63 +14,26 @@
   margin-top: 0.6rem;
 }
 
-/* Progress per surah */
-.surah-progress-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-card-bg);
-  overflow: hidden;
-}
-
-.surah-progress-list li + li {
-  border-top: 1px solid var(--color-card-border);
-}
-
-.surah-progress-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.85rem 1.1rem;
-  color: inherit;
-}
-
-.surah-progress-row:hover {
-  background: var(--color-surface-hover);
-  color: inherit;
-}
-
-.sp-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  min-width: 0;
-}
-
-.sp-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.sp-name {
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-.sp-count {
-  font-size: 0.85rem;
+.stat-foot {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
   color: var(--color-text-muted);
 }
 
-.sp-percent {
-  width: 3.25rem;
-  text-align: right;
-  font-weight: 700;
-  color: var(--color-primary);
+.streak-icon {
+  margin-right: 0.35rem;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+}
+
+.muted-link .stat-foot {
+  color: var(--color-success);
+}
+
+.quiz-average {
+  margin: 0 0 0.6rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
 }
 
 /* Recent quizzes */

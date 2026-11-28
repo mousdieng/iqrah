@@ -1,0 +1,104 @@
+<div class="page review">
+  <header class="review-head">
+    <a routerLink="/memorize" class="back"><i class="pi pi-arrow-left" aria-hidden="true"></i> Mémoriser</a>
+    @if (total() && !done()) {
+      <span class="review-count">{{ index() + 1 }} / {{ total() }}</span>
+    }
+  </header>
+
+  <div class="progress" aria-hidden="true"><span [style.width.%]="done() ? 100 : percent()"></span></div>
+
+  @if (!total()) {
+    <div class="card empty-state">
+      <span class="empty-icon"><i class="pi pi-check" aria-hidden="true"></i></span>
+      <h3>Rien à réviser pour l'instant</h3>
+      <p>Les versets mémorisés reviennent ici le jour où il faut les revoir.</p>
+      <a routerLink="/memorize" class="btn btn-secondary">Retour à Mémoriser</a>
+    </div>
+  } @else if (done()) {
+    <div class="card summary">
+      <span class="summary-icon"><i class="pi pi-check-circle" aria-hidden="true"></i></span>
+      <h2>Révision terminée</h2>
+      <p>{{ total() }} verset{{ total() > 1 ? 's' : '' }} révisé{{ total() > 1 ? 's' : '' }}. Chacun reviendra au bon moment.</p>
+      <div class="summary-stats">
+        <span class="stat hard"><strong>{{ results().hard }}</strong> difficile{{ results().hard > 1 ? 's' : '' }}</span>
+        <span class="stat good"><strong>{{ results().good }}</strong> bien</span>
+        <span class="stat easy"><strong>{{ results().easy }}</strong> facile{{ results().easy > 1 ? 's' : '' }}</span>
+      </div>
+      <div class="summary-actions">
+        @if (memorize.due().length) {
+          <button type="button" class="btn btn-secondary" (click)="restart()">
+            Continuer ({{ memorize.due().length }} à réviser)
+          </button>
+        }
+        <a routerLink="/memorize" class="btn btn-primary">Terminer</a>
+      </div>
+    </div>
+  } @else {
+    @let c = card();
+    <article class="card review-card">
+      @if (label(); as l) {
+        <div class="review-ref">
+          <span class="review-surah">{{ l.name }} <span class="review-surah-ar" lang="ar">{{ l.arabic }}</span></span>
+          <span class="chip">{{ l.ref }}</span>
+        </div>
+      }
+
+      @if (c?.previous; as prev) {
+        <p class="cue" lang="ar" dir="rtl" title="Verset précédent">
+          {{ displayText(prev) }} <span class="num">﴿{{ arabicNumber(prev.numberInSurah) }}﴾</span>
+        </p>
+      } @else if (c?.ayah?.numberInSurah === 1) {
+        <p class="cue-start">Début de la sourate</p>
+      }
+
+      @if (c?.ayah; as ayah) {
+        <p class="verse" lang="ar" dir="rtl" [class.is-revealed]="revealed()">
+          @for (w of words(); track $index) {
+            <span class="w" [class.masked]="w.hidden" [class.hint]="w.hint">{{ w.text }}</span>{{ ' ' }}
+          }
+          <span class="num">﴿{{ arabicNumber(ayah.numberInSurah) }}﴾</span>
+        </p>
+      } @else {
+        <p class="verse loading-line" aria-hidden="true"></p>
+      }
+
+      @if (!revealed()) {
+        <p class="prompt">Récitez ce verset de mémoire, puis vérifiez.</p>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost btn-sm" (click)="showHint()" [disabled]="hint() === 2" title="Raccourci : H">
+            <i class="pi pi-lightbulb" aria-hidden="true"></i>
+            {{ hint() === 0 ? 'Premier mot' : 'Premières lettres' }}
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" (click)="listen()" title="Raccourci : L">
+            <i class="pi pi-volume-up" aria-hidden="true"></i> Écouter
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" (click)="skip()" [disabled]="total() - index() < 2">
+            Plus tard
+          </button>
+          <button type="button" class="btn btn-primary reveal" (click)="reveal()" title="Raccourci : Espace">
+            <i class="pi pi-eye" aria-hidden="true"></i> Vérifier
+          </button>
+        </div>
+      } @else {
+        <p class="prompt">Comment s'est passée la récitation ?</p>
+        <div class="ratings">
+          <button type="button" class="rating hard" (click)="rate('hard')" title="Raccourci : 1">
+            <strong>Difficile</strong><span>revoir {{ intervals().hard }}</span>
+          </button>
+          <button type="button" class="rating good" (click)="rate('good')" title="Raccourci : 2 ou Espace">
+            <strong>Bien</strong><span>revoir {{ intervals().good === 'demain' ? 'demain' : 'dans ' + intervals().good }}</span>
+          </button>
+          <button type="button" class="rating easy" (click)="rate('easy')" title="Raccourci : 3">
+            <strong>Facile</strong><span>revoir dans {{ intervals().easy }}</span>
+          </button>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm listen-again" (click)="listen()">
+          <i class="pi pi-volume-up" aria-hidden="true"></i> Écouter
+        </button>
+      }
+    </article>
+
+    <p class="keys">Raccourcis : <kbd>Espace</kbd> vérifier · <kbd>H</kbd> indice · <kbd>L</kbd> écouter · <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> noter</p>
+  }
+</div>

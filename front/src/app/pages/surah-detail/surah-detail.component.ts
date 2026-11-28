@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, HostBinding, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, HostBinding, HostListener, inject } from '@angular/core';
+import { MemorizeService } from '../../services/memorize.service';
+import { SurahCatalogService } from '../../services/surah-catalog.service';
+import { ayahWords, firstLetterHint, isMark } from '../../shared/quran-text';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -33,6 +36,10 @@ interface PageBlock {
 
 const VIEW_MODE_KEY = 'surahViewMode';
 const TEXT_SCALE_KEY = 'iqrah_text_scale';
+const MEMO_READER_KEY = 'iqrah_memo_reader';
+
+/** Hide-text mode: hidden words as blank bars, or only their first letter */
+type MemoStyle = 'hide' | 'letters';
 const TEXT_SCALE_MIN = 0.8;
 const TEXT_SCALE_MAX = 2;
 const TEXT_SCALE_STEP = 0.1;
@@ -59,6 +66,21 @@ const STUDY_SETTINGS_KEY = 'studyViewSettings';
 export class SurahDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   @ViewChild(AudioPlayerComponent) private audioPlayer?: AudioPlayerComponent;
+  readonly memorize = inject(MemorizeService);
+  private catalog = inject(SurahCatalogService);
+
+  // ─── Hide-text (memorization) mode ─────────────────────────────────────────
+  memoMode = false;
+  memoStyle: MemoStyle = 'hide';
+  /** Words revealed so far per ayah (Infinity = whole ayah) */
+  private revealedWords = new Map<number, number>();
+  private wordsCache = new Map<number, { text: string; words: string[] }>();
+
+  // Marking many verses at once
+  bulkOpen = false;
+  bulkFrom = 1;
+  bulkTo = 1;
+  bulkMessage = '';
 
   /** Reading text size (Arabic, translations, tafsir), 1 = default; drives --text-scale in the CSS */
   textScale = SurahDetailComponent.loadTextScale();
@@ -153,6 +175,9 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
         this.surahId = +params['id'];
         this.savedPageFromUrl = queryParams['page'] ? +queryParams['page'] : null;
         this.focusAyahId = queryParams['ayah'] ? +queryParams['ayah'] : null;
+        const memo = this.loadMemoSettings();
+        this.memoStyle = memo.style;
+        this.memoMode = queryParams['memo'] === '1' ? true : memo.on;
         const urlMode = queryParams['mode'];
         const storedMode = localStorage.getItem(VIEW_MODE_KEY);
         this.viewMode = this.isViewMode(urlMode) ? urlMode
@@ -532,17 +557,137 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
 
   /** Uses the ayah itself (the surah endpoint does not return its ayahs, so they can't be looked up there) */
   onToggleMemorized(ayah: Ayah): void {
-    const progress = this.storageService.getAyahProgress(ayah.id);
-    if (progress?.memorized) {
-      this.storageService.updateProgress({ ayahId: ayah.id, surahId: ayah.surahId, memorized: false });
+    if (this.memorize.isMemorized(ayah.id)) {
+      this.memorize.unmarkMemorized([ayah.id]);
     } else {
-      this.storageService.markAsMemorized(ayah.id, ayah.surahId);
+      this.memorize.markMemorized([{ ayahId: ayah.id, surahId: ayah.surahId }]);
     }
   }
 
   isAyahMemorized(ayahId: number): boolean {
-    const progress = this.storageService.getAyahProgress(ayahId);
-    return progress?.memorized || false;
+    return this.memorize.isMemorized(ayahId);
+  }
+
+  /** Verses of this surah marked as memorized */
+  get surahMemorizedCount(): number {
+    const first = this.catalog.firstAyahId(this.surahId);
+    if (!first || !this.surah) return 0;
+    const last = first + this.surah.numberOfAyahs - 1;
+    let count = 0;
+    for (const id of this.memorize.memorizedIds()) if (id >= first && id <= last) count++;
+    return count;
+  }
+
+  // ─── Hide-text mode ────────────────────────────────────────────────────────
+
+  toggleMemoMode(): void {
+    this.memoMode = !this.memoMode;
+    this.revealedWords.clear();
+    this.bulkOpen = false;
+    this.saveMemoSettings();
+  }
+
+  setMemoStyle(style: MemoStyle): void {
+    this.memoStyle = style;
+    this.saveMemoSettings();
+  }
+
+  /** Words of the ayah, each hidden, shown as its first letter, or revealed */
+  memoWords(ayah: Ayah): { text: string; hidden: boolean; hint: boolean }[] {
+    let cached = this.wordsCache.get(ayah.id);
+    if (!cached || cached.text !== ayah.text) {
+      cached = { text: ayah.text, words: ayahWords(ayah.text) };
+      this.wordsCache.set(ayah.id, cached);
+    }
+    const shown = this.revealedWords.get(ayah.id) ?? 0;
+    let wordIndex = 0;
+    return cached.words.map(word => {
+      if (isMark(word)) return { text: word, hidden: false, hint: false };
+      const visible = wordIndex++ < shown;
+      if (visible) return { text: word, hidden: false, hint: false };
+      return this.memoStyle === 'letters'
+        ? { text: firstLetterHint(word), hidden: false, hint: true }
+        : { text: word, hidden: true, hint: false };
+    });
+  }
+
+  isAyahRevealed(ayahId: number): boolean {
+    return (this.revealedWords.get(ayahId) ?? 0) === Infinity;
+  }
+
+  /** Tap: one more word; once the whole verse is shown, hides it again */
+  private revealNextWord(ayah: Ayah): void {
+    const total = this.memoWords(ayah).filter(w => w.hidden || w.hint).length;
+    const shown = this.revealedWords.get(ayah.id) ?? 0;
+    if (shown === Infinity || total === 0) {
+      this.revealedWords.delete(ayah.id);
+    } else {
+      this.revealedWords.set(ayah.id, total <= 1 ? Infinity : shown + 1);
+    }
+  }
+
+  onAyahDblClick(ayah: Ayah): void {
+    if (!this.memoMode || this.isSelectionMode) return;
+    this.revealedWords.set(ayah.id, Infinity);
+  }
+
+  revealAll(): void {
+    for (const a of this.pageAyahs) this.revealedWords.set(a.id, Infinity);
+  }
+
+  hideAll(): void {
+    this.revealedWords.clear();
+  }
+
+  private loadMemoSettings(): { on: boolean; style: MemoStyle } {
+    try {
+      const s = JSON.parse(localStorage.getItem(MEMO_READER_KEY) || '{}');
+      return { on: !!s.on, style: s.style === 'letters' ? 'letters' : 'hide' };
+    } catch {
+      return { on: false, style: 'hide' };
+    }
+  }
+
+  private saveMemoSettings(): void {
+    localStorage.setItem(MEMO_READER_KEY, JSON.stringify({ on: this.memoMode, style: this.memoStyle }));
+  }
+
+  // ─── Mark many verses ──────────────────────────────────────────────────────
+
+  openBulk(): void {
+    this.bulkOpen = !this.bulkOpen;
+    this.bulkMessage = '';
+    if (this.bulkOpen) this.bulkThisPage();
+  }
+
+  bulkThisPage(): void {
+    if (!this.currentAyahs.length) return;
+    this.bulkFrom = this.currentAyahs[0].numberInSurah;
+    this.bulkTo = this.currentAyahs[this.currentAyahs.length - 1].numberInSurah;
+  }
+
+  bulkWholeSurah(): void {
+    this.bulkFrom = 1;
+    this.bulkTo = this.surah?.numberOfAyahs ?? 1;
+  }
+
+  /** Marks (or unmarks) verses bulkFrom..bulkTo of this surah */
+  applyBulk(memorized: boolean): void {
+    const first = this.catalog.firstAyahId(this.surahId);
+    const total = this.surah?.numberOfAyahs ?? 0;
+    if (!first || !total) return;
+    const from = Math.max(1, Math.min(total, Math.round(Math.min(this.bulkFrom, this.bulkTo))));
+    const to = Math.max(1, Math.min(total, Math.round(Math.max(this.bulkFrom, this.bulkTo))));
+    const items = [];
+    for (let n = from; n <= to; n++) items.push({ ayahId: first + n - 1, surahId: this.surahId });
+    const range = from === to ? `Verset ${from}` : `Versets ${from} à ${to}`;
+    if (memorized) {
+      const added = this.memorize.markMemorized(items);
+      this.bulkMessage = added ? `${range} : ${added} marqué${added > 1 ? 's' : ''} comme mémorisé${added > 1 ? 's' : ''}.` : `${range} : déjà mémorisé${items.length > 1 ? 's' : ''}.`;
+    } else {
+      this.memorize.unmarkMemorized(items.map(i => i.ayahId));
+      this.bulkMessage = `${range} : retiré${items.length > 1 ? 's' : ''} des mémorisés.`;
+    }
   }
 
   navigateToSurah(direction: 'prev' | 'next'): void {
@@ -588,6 +733,12 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   onAyahClick(ayah: Ayah, event: MouseEvent): void {
     if (this.isSelectionMode) {
       this.toggleAyahSelection(ayah.id);
+      return;
+    }
+
+    // Hide-text mode: a tap reveals the next word instead of playing
+    if (this.memoMode) {
+      this.revealNextWord(ayah);
       return;
     }
 

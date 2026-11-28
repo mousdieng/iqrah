@@ -58,9 +58,55 @@
           </button>
         </div>
 
+        <button type="button" class="memo-toggle" [class.on]="memoMode" (click)="toggleMemoMode()"
+                [attr.aria-pressed]="memoMode" title="Masquer le texte pour réciter de mémoire">
+          <i class="pi" [class.pi-eye-slash]="!memoMode" [class.pi-eye]="memoMode" aria-hidden="true"></i>
+          <span class="memo-toggle-label">Réciter</span>
+        </button>
+
         <ng-container *ngTemplateOutlet="pager"></ng-container>
       </div>
     </div>
+
+    @if (memoMode) {
+      <div class="memo-bar">
+        <div class="memo-row">
+          <div class="segmented" role="group" aria-label="Affichage des mots cachés">
+            <button type="button" [class.active]="memoStyle === 'hide'" (click)="setMemoStyle('hide')">Masquer</button>
+            <button type="button" [class.active]="memoStyle === 'letters'" (click)="setMemoStyle('letters')">Premières lettres</button>
+          </div>
+          <div class="memo-actions">
+            <button type="button" class="btn btn-ghost btn-sm" (click)="revealAll()"><i class="pi pi-eye" aria-hidden="true"></i> Tout révéler</button>
+            <button type="button" class="btn btn-ghost btn-sm" (click)="hideAll()"><i class="pi pi-eye-slash" aria-hidden="true"></i> Tout masquer</button>
+          </div>
+        </div>
+        <div class="memo-row">
+          <p class="memo-hint">Touchez un verset pour révéler le mot suivant, double-touchez pour tout le verset.</p>
+          <div class="memo-progress">
+            <span><strong>{{ surahMemorizedCount }}</strong> / {{ surah.numberOfAyahs }} mémorisés</span>
+            <button type="button" class="btn btn-secondary btn-sm" [class.active]="bulkOpen" (click)="openBulk()">
+              <i class="pi pi-check-square" aria-hidden="true"></i> Marquer…
+            </button>
+          </div>
+        </div>
+
+        @if (bulkOpen) {
+          <div class="bulk">
+            <div class="bulk-range">
+              <label>Du verset <input type="number" class="input input-sm" [(ngModel)]="bulkFrom" min="1" [max]="surah.numberOfAyahs"></label>
+              <label>au verset <input type="number" class="input input-sm" [(ngModel)]="bulkTo" min="1" [max]="surah.numberOfAyahs"></label>
+              <button type="button" class="chip-button" (click)="bulkThisPage()">Cette page</button>
+              <button type="button" class="chip-button" (click)="bulkWholeSurah()">Toute la sourate</button>
+            </div>
+            <div class="bulk-actions">
+              <button type="button" class="btn btn-primary btn-sm" (click)="applyBulk(true)"><i class="pi pi-check" aria-hidden="true"></i> Marquer mémorisés</button>
+              <button type="button" class="btn btn-ghost btn-sm" (click)="applyBulk(false)">Retirer</button>
+              @if (bulkMessage) { <span class="bulk-message" role="status">{{ bulkMessage }}</span> }
+            </div>
+          </div>
+        }
+      </div>
+    }
 
     @if (viewMode === 'study') {
       <div class="study-options">
@@ -133,9 +179,16 @@
                     [class.playing-active]="isAyahPlaying(ayah.id)"
                     [class.bookmarked]="isAyahBookmarked(ayah.id)"
                     [class.has-note]="hasNote(ayah.id)"
+                    [class.memo]="memoMode"
+                    [class.is-memorized]="memoMode && isAyahMemorized(ayah.id)"
                     (click)="onAyahClick(ayah, $event)"
+                    (dblclick)="onAyahDblClick(ayah)"
                     (contextmenu)="onAyahContextMenu(ayah, $event)">
-                    <span class="ayah-text">{{ ayah.text }}</span>
+                    @if (memoMode) {
+                      <span class="ayah-text">@for (w of memoWords(ayah); track $index) {<span class="w" [class.masked]="w.hidden" [class.hint]="w.hint">{{ w.text }}</span>{{ ' ' }}}</span>
+                    } @else {
+                      <span class="ayah-text">{{ ayah.text }}</span>
+                    }
                     @if (ayah.sajda) {
                       <span class="sajda-mark" title="Prosternation">۩</span>
                     }
@@ -207,8 +260,14 @@
 
             <p class="study-arabic" dir="rtl"
                [class.selectable]="isSelectionMode"
-               (click)="onAyahClick(ayah, $event)">
-              {{ ayah.text }}
+               [class.memo]="memoMode"
+               (click)="onAyahClick(ayah, $event)"
+               (dblclick)="onAyahDblClick(ayah)">
+              @if (memoMode) {
+                @for (w of memoWords(ayah); track $index) {<span class="w" [class.masked]="w.hidden" [class.hint]="w.hint">{{ w.text }}</span>{{ ' ' }}}
+              } @else {
+                {{ ayah.text }}
+              }
               <span class="ayah-end">&#xFD3F;{{ convertToArabicNumber(ayah.numberInSurah) }}&#xFD3E;</span>
             </p>
 

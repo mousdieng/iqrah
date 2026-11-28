@@ -713,3 +713,166 @@
   .pager-label > span:first-child { display: none; }
   .pager-input { width: 3.2rem; }
 }
+
+/* ─── Hide-text mode (Réciter) ───────────────────────────────────────────── */
+
+.memo-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.4rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.memo-toggle:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.memo-toggle.on {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.memo-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card-bg, var(--color-surface));
+}
+
+.memo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.memo-actions,
+.memo-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.memo-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.memo-progress span {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.memo-progress strong {
+  color: var(--color-success);
+}
+
+.bulk {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--color-card-border);
+}
+
+.bulk-range,
+.bulk-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.bulk-range label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.bulk-range input {
+  width: 4.5rem;
+}
+
+.chip-button {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--color-card-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.chip-button:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.bulk-message {
+  font-size: 0.8rem;
+  color: var(--color-success);
+}
+
+/* Words of a verse in hide-text mode */
+.w {
+  border-radius: 0.3em;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+.w.masked {
+  color: transparent;
+  /* A band through the middle of the line, not the font's whole (very tall) box */
+  --mask: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  background: linear-gradient(transparent 30%, var(--mask) 30%, var(--mask) 74%, transparent 74%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  user-select: none;
+}
+
+.w.hint {
+  color: var(--color-primary);
+}
+
+.ayah-wrapper.memo,
+.study-arabic.memo {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Memorized verses: a small check after the verse number while reciting */
+.ayah-wrapper.is-memorized .ayah-end::after {
+  content: '✓';
+  margin-inline-start: 0.15em;
+  font-family: system-ui, sans-serif;
+  font-size: 0.45em;
+  vertical-align: super;
+  color: var(--color-success);
+}
+
+@media (max-width: 640px) {
+  .memo-toggle-label { display: none; }
+  .memo-toggle { padding: 0 0.6rem; height: 2.1rem; }
+  .memo-bar { padding: 0.6rem 0.75rem; }
+}

@@ -36,7 +36,7 @@
               <label class="repeat-label" for="repeat-ayah">Verset à répéter</label>
               <select id="repeat-ayah" class="input verse-select" (change)="pickAyah($event)">
                 @for (a of pageVerses(); track a.id) {
-                  <option [value]="a.id" [selected]="a.id === repeatAyah()?.id">Verset {{ a.numberInSurah }}</option>
+                  <option [value]="a.id" [selected]="a.id === repeatAyah().id">Verset {{ a.numberInSurah }}</option>
                 }
               </select>
             </div>

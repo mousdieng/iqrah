@@ -1,57 +1,51 @@
 <div class="page">
   <header class="page-header">
     <h1 class="page-title">Progrès</h1>
-    <p class="page-subtitle">Votre avancée dans la mémorisation du Coran.</p>
+    <p class="page-subtitle">Votre avancée dans la mémorisation du Coran, jour après jour.</p>
   </header>
 
   <div class="stats">
     <div class="card stat">
       <div class="stat-value">{{ memorized() }}</div>
       <div class="stat-label">versets mémorisés sur 6 236</div>
+      <div class="progress stat-bar"><span [style.width.%]="percent()"></span></div>
+      <div class="stat-foot">{{ percent() | number:'1.1-1' }} % du Coran</div>
     </div>
     <div class="card stat">
-      <div class="stat-value">{{ percent() | number:'1.1-1' }} %</div>
-      <div class="stat-label">du Coran</div>
-      <div class="progress stat-bar"><span [style.width.%]="percent()"></span></div>
+      <div class="stat-value"><i class="pi pi-bolt streak-icon" aria-hidden="true"></i>{{ memorize.streak() }}</div>
+      <div class="stat-label">jour{{ memorize.streak() > 1 ? 's' : '' }} d'affilée</div>
+      <div class="stat-foot">record : {{ memorize.bestStreak() }}</div>
     </div>
-    <a class="card card-link stat" routerLink="/memorize">
-      <div class="stat-value">{{ due() }}</div>
+    <a class="card card-link stat" routerLink="/memorize/review" [class.muted-link]="!memorize.due().length">
+      <div class="stat-value">{{ memorize.due().length }}</div>
       <div class="stat-label">à réviser aujourd'hui</div>
+      <div class="stat-foot">{{ memorize.due().length ? 'Commencer la révision →' : 'Tout est à jour' }}</div>
     </a>
     <div class="card stat">
-      <div class="stat-value">{{ completedSurahs() }}</div>
-      <div class="stat-label">sourate{{ completedSurahs() > 1 ? 's' : '' }} complète{{ completedSurahs() > 1 ? 's' : '' }} · {{ totalReviews() }} révisions</div>
+      <div class="stat-value">{{ totalReviews() }}</div>
+      <div class="stat-label">révisions au total</div>
+      <div class="stat-foot">{{ memorize.today().reviewed }} aujourd'hui</div>
     </div>
   </div>
 
   <section class="section">
-    <h2 class="section-title">Par sourate</h2>
-    @if (bySurah().length) {
-      <ul class="surah-progress-list">
-        @for (s of bySurah(); track s.surahId) {
-          <li>
-            <a class="surah-progress-row" [routerLink]="['/surah', s.surahId]">
-              <span class="number-badge">{{ s.surahId }}</span>
-              <span class="sp-main">
-                <span class="sp-head">
-                  <span class="sp-name">{{ s.name }}</span>
-                  <span class="sp-count">{{ s.done }} / {{ s.total }}</span>
-                </span>
-                <span class="progress"><span [style.width.%]="s.percent"></span></span>
-              </span>
-              <span class="sp-percent">{{ s.percent }} %</span>
-            </a>
-          </li>
-        }
-      </ul>
-    } @else {
-      <div class="card empty-state">
-        <span class="empty-icon"><i class="pi pi-chart-line" aria-hidden="true"></i></span>
-        <h3>Votre progression apparaîtra ici</h3>
-        <p>Pendant la lecture, marquez les versets que vous connaissez par cœur : chaque sourate commencée s'affichera avec sa barre de progression.</p>
-        <a routerLink="/surahs" class="btn btn-primary">Commencer à lire</a>
-      </div>
-    }
+    <h2 class="section-title">Activité</h2>
+    <app-activity-calendar />
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Carte du Coran</h2>
+    <app-quran-map />
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Santé des révisions</h2>
+    <app-review-health />
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Étapes et projection</h2>
+    <app-milestones />
   </section>
 
   <section class="section">
@@ -62,6 +56,9 @@
     @if (quizzes() === null) {
       <div class="loading-state"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Chargement…</div>
     } @else if (quizzes()!.length) {
+      @if (quizAverage() !== null) {
+        <p class="quiz-average">Score moyen : <strong>{{ quizAverage() }} %</strong> sur les {{ quizzes()!.length }} derniers quiz</p>
+      }
       <ul class="quiz-list card">
         @for (q of quizzes(); track q.id) {
           <li class="quiz-row">
@@ -78,5 +75,9 @@
         Aucun quiz terminé pour l'instant. Un quiz court permet de vérifier ce que vous avez retenu.
       </div>
     }
+  </section>
+
+  <section class="section">
+    <app-backup />
   </section>
 </div>

@@ -35,6 +35,11 @@ export class SurahCatalogService {
     });
   }
 
+  /** Global id of the first ayah of a surah (null until the catalog is loaded) */
+  firstAyahId(surahNumber: number): number | null {
+    return this.firstAyahIds()[surahNumber] || null;
+  }
+
   get(surahNumber: number): SurahDTO | undefined {
     return this.surahs()[surahNumber - 1];
   }

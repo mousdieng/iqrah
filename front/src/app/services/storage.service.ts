@@ -80,7 +80,17 @@ export class StorageService {
    * Update progress for an ayah
    */
   updateProgress(progress: Partial<UserProgress> & { ayahId: number }): void {
+    this.updateMany([progress]);
+  }
+
+  /** Several updates saved at once (one write, one notification) */
+  updateMany(updates: (Partial<UserProgress> & { ayahId: number })[]): void {
     const currentProgress = this.progressSubject.value;
+    for (const progress of updates) this.applyUpdate(currentProgress, progress);
+    this.saveProgress(currentProgress);
+  }
+
+  private applyUpdate(currentProgress: UserProgress[], progress: Partial<UserProgress> & { ayahId: number }): void {
     const existingIndex = currentProgress.findIndex(p => p.ayahId === progress.ayahId);
 
     if (existingIndex >= 0) {
@@ -100,12 +110,15 @@ export class StorageService {
         lastReviewDate: new Date(),
         reviewCount: progress.reviewCount || 0,
         difficulty: progress.difficulty || 'MEDIUM',
-        notes: progress.notes
+        notes: progress.notes,
+        ease: progress.ease,
+        intervalDays: progress.intervalDays,
+        nextReviewDate: progress.nextReviewDate,
+        memorizedAt: progress.memorizedAt,
+        lapses: progress.lapses
       };
       currentProgress.push(newProgress);
     }
-
-    this.saveProgress(currentProgress);
   }
 
   /**
@@ -113,11 +126,16 @@ export class StorageService {
    */
   markAsMemorized(ayahId: number, surahId: number): void {
     const existing = this.getAyahProgress(ayahId);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
     this.updateProgress({
       ayahId,
       surahId,
       memorized: true,
-      reviewCount: (existing?.reviewCount || 0) + 1
+      reviewCount: existing?.reviewCount || 0,
+      memorizedAt: existing?.memorizedAt ?? new Date().toISOString(),
+      intervalDays: 1,
+      nextReviewDate: tomorrow.toISOString()
     });
   }
 
@@ -132,17 +150,17 @@ export class StorageService {
    * Get ayahs due for review (based on spaced repetition)
    */
   getAyahsDueForReview(): UserProgress[] {
-    const now = new Date();
-    return this.progressSubject.value.filter(p => {
-      if (!p.lastReviewDate) return true;
+    const now = Date.now();
+    return this.progressSubject.value.filter(p => this.dueDate(p).getTime() <= now);
+  }
 
-      const lastReview = new Date(p.lastReviewDate);
-      const daysSinceReview = Math.floor((now.getTime() - lastReview.getTime()) / (1000 * 60 * 60 * 24));
-
-      // Simple spaced repetition algorithm
-      const reviewInterval = this.getReviewInterval(p.reviewCount, p.difficulty);
-      return daysSinceReview >= reviewInterval;
-    });
+  /** When a verse should be reviewed next: its scheduled date, or the older interval rule for older entries */
+  dueDate(p: UserProgress): Date {
+    if (p.nextReviewDate) return new Date(p.nextReviewDate);
+    if (!p.lastReviewDate) return new Date(0);
+    const due = new Date(p.lastReviewDate);
+    due.setDate(due.getDate() + this.getReviewInterval(p.reviewCount, p.difficulty));
+    return due;
   }
 
   /**

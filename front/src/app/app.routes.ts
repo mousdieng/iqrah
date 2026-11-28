@@ -5,6 +5,7 @@ import { SurahDetailComponent } from './pages/surah-detail/surah-detail.componen
 import { MemorizationComponent } from './pages/memorization/memorization.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { QuizSessionComponent } from './pages/quiz-session/quiz-session.component';
+import { ReviewSessionComponent } from './pages/review-session/review-session.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 /**
@@ -18,6 +19,7 @@ export const routes: Routes = [
   { path: 'surah/:id', component: SurahDetailComponent, title: 'Lecture · Iqrah' },
 
   { path: 'memorize', component: MemorizationComponent, title: 'Mémoriser · Iqrah' },
+  { path: 'memorize/review', component: ReviewSessionComponent, title: 'Révision · Iqrah' },
   { path: 'memorize/quiz', component: QuizComponent, title: 'Quiz · Iqrah' },
   { path: 'memorize/quiz/session', component: QuizSessionComponent, title: 'Quiz · Iqrah' },
 

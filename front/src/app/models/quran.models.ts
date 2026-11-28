@@ -99,6 +99,16 @@ export interface UserProgress {
   reviewCount: number;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   notes?: string;
+  /** Spaced review: growth factor of the interval (starts at 2.5) */
+  ease?: number;
+  /** Spaced review: days until the next review */
+  intervalDays?: number;
+  /** Spaced review: when the verse is due again (ISO date) */
+  nextReviewDate?: string;
+  /** When the verse was first marked as memorized (ISO date) */
+  memorizedAt?: string;
+  /** Times the verse was rated "Difficile" in a review */
+  lapses?: number;
 }
 
 export interface FavoriteAya {

@@ -1,0 +1,265 @@
+.review {
+  max-width: 760px;
+}
+
+.review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--color-primary);
+}
+
+.review-count {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+.progress {
+  margin-bottom: 1.25rem;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.review-ref {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.review-surah {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.review-surah-ar {
+  margin-left: 0.4rem;
+  font-family: var(--font-quran);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.cue {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-hover);
+  font-family: var(--font-quran);
+  font-size: 1.25rem;
+  line-height: 2;
+  color: var(--color-text-muted);
+}
+
+.cue-start {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.verse {
+  margin: 0;
+  font-family: var(--font-quran);
+  font-size: 2rem;
+  line-height: 2.4;
+  text-align: justify;
+  text-align-last: right;
+  color: var(--color-ayah-text);
+}
+
+.w {
+  border-radius: 0.3em;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+/* Hidden word: keeps its shape as a soft bar so the verse length stays visible */
+.w.masked {
+  color: transparent;
+  /* A band through the middle of the line, not the font's whole (very tall) box */
+  --mask: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  background: linear-gradient(transparent 30%, var(--mask) 30%, var(--mask) 74%, transparent 74%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  user-select: none;
+}
+
+.w.hint {
+  color: var(--color-primary);
+}
+
+.num {
+  font-family: var(--font-quran);
+  color: var(--color-ayah-number);
+  white-space: nowrap;
+}
+
+.loading-line {
+  height: 5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-hover);
+}
+
+.prompt {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.reveal {
+  min-width: 9rem;
+}
+
+.ratings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-card-border);
+  background: var(--color-surface);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.rating:active {
+  transform: scale(0.98);
+}
+
+.rating strong {
+  font-size: 0.95rem;
+}
+
+.rating span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.rating.hard strong { color: var(--color-error); }
+.rating.good strong { color: var(--color-primary); }
+.rating.easy strong { color: var(--color-success); }
+
+.rating.hard:hover { border-color: var(--color-error); }
+.rating.good:hover { border-color: var(--color-primary); }
+.rating.easy:hover { border-color: var(--color-success); }
+
+.listen-again {
+  align-self: center;
+}
+
+.keys {
+  margin-top: 0.9rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+kbd {
+  display: inline-block;
+  padding: 0 0.35rem;
+  border: 1px solid var(--color-card-border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--color-surface);
+  font-family: inherit;
+  font-size: 0.7rem;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.summary h2 {
+  margin: 0;
+}
+
+.summary p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.summary-icon {
+  font-size: 2.25rem;
+  color: var(--color-success);
+}
+
+.summary-stats {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.stat {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--color-surface-hover);
+  font-size: 0.85rem;
+}
+
+.stat.hard strong { color: var(--color-error); }
+.stat.good strong { color: var(--color-primary); }
+.stat.easy strong { color: var(--color-success); }
+
+.summary-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .review-card {
+    padding: 1rem;
+  }
+
+  .verse {
+    font-size: 1.6rem;
+  }
+
+  .ratings {
+    gap: 0.4rem;
+  }
+}
