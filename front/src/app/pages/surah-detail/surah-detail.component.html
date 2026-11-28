@@ -42,7 +42,24 @@
         </button>
       </div>
 
-      <ng-container *ngTemplateOutlet="pager"></ng-container>
+      <div class="toolbar-end">
+        <div class="text-size" role="group" aria-label="Taille du texte">
+          <button type="button" (click)="changeTextScale(-1)" [disabled]="textScale <= textScaleMin"
+                  aria-label="Réduire le texte" title="Réduire le texte (−)">
+            <span class="ts-small" aria-hidden="true">A</span>
+          </button>
+          <button type="button" class="ts-value" (click)="resetTextScale()" [disabled]="textScale === 1"
+                  title="Taille normale" [attr.aria-label]="'Taille du texte ' + textScalePercent + ' %, revenir à 100 %'">
+            {{ textScalePercent }}%
+          </button>
+          <button type="button" (click)="changeTextScale(1)" [disabled]="textScale >= textScaleMax"
+                  aria-label="Agrandir le texte" title="Agrandir le texte (+)">
+            <span class="ts-large" aria-hidden="true">A</span>
+          </button>
+        </div>
+
+        <ng-container *ngTemplateOutlet="pager"></ng-container>
+      </div>
     </div>
 
     @if (viewMode === 'study') {

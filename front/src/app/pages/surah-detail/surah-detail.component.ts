@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, HostBinding, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -32,6 +32,10 @@ interface PageBlock {
 }
 
 const VIEW_MODE_KEY = 'surahViewMode';
+const TEXT_SCALE_KEY = 'iqrah_text_scale';
+const TEXT_SCALE_MIN = 0.8;
+const TEXT_SCALE_MAX = 2;
+const TEXT_SCALE_STEP = 0.1;
 const STUDY_SETTINGS_KEY = 'studyViewSettings';
 
 @Component({
@@ -55,6 +59,12 @@ const STUDY_SETTINGS_KEY = 'studyViewSettings';
 export class SurahDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   @ViewChild(AudioPlayerComponent) private audioPlayer?: AudioPlayerComponent;
+
+  /** Reading text size (Arabic, translations, tafsir), 1 = default; drives --text-scale in the CSS */
+  textScale = SurahDetailComponent.loadTextScale();
+  @HostBinding('style.--text-scale') get textScaleVar(): number { return this.textScale; }
+  readonly textScaleMin = TEXT_SCALE_MIN;
+  readonly textScaleMax = TEXT_SCALE_MAX;
 
   surah: SurahDTO | null = null;
   surahId: number = 0;
@@ -358,6 +368,42 @@ export class SurahDetailComponent implements OnInit, OnDestroy {
   /** Ayah 1 of every surah except Al-Fatiha (where it is the ayah itself) and At-Tawbah (none) */
   private startsWithBasmala(ayah: Ayah): boolean {
     return ayah.numberInSurah === 1 && ayah.surahId !== 1 && ayah.surahId !== 9;
+  }
+
+  // ─── Text size ─────────────────────────────────────────────────────────────
+
+  private static loadTextScale(): number {
+    const stored = parseFloat(localStorage.getItem(TEXT_SCALE_KEY) ?? '');
+    return isFinite(stored) ? Math.min(TEXT_SCALE_MAX, Math.max(TEXT_SCALE_MIN, stored)) : 1;
+  }
+
+  changeTextScale(direction: 1 | -1): void {
+    this.setTextScale(this.textScale + direction * TEXT_SCALE_STEP);
+  }
+
+  resetTextScale(): void {
+    this.setTextScale(1);
+  }
+
+  private setTextScale(value: number): void {
+    const next = Math.round(Math.min(TEXT_SCALE_MAX, Math.max(TEXT_SCALE_MIN, value)) * 10) / 10;
+    if (next === this.textScale) return;
+    this.textScale = next;
+    localStorage.setItem(TEXT_SCALE_KEY, String(next));
+    this.cdr.markForCheck();
+  }
+
+  get textScalePercent(): number {
+    return Math.round(this.textScale * 100);
+  }
+
+  /** "+" / "-" enlarge or reduce the text (not while typing) */
+  @HostListener('document:keydown', ['$event'])
+  onTextSizeKey(event: KeyboardEvent): void {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if ((event.target as HTMLElement | null)?.closest('input, textarea, select, [contenteditable="true"]')) return;
+    if (event.key === '+' || event.key === '=') { event.preventDefault(); this.changeTextScale(1); }
+    else if (event.key === '-' || event.key === '_') { event.preventDefault(); this.changeTextScale(-1); }
   }
 
   // ─── View mode ─────────────────────────────────────────────────────────────

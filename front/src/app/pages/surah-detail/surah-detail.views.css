@@ -270,7 +270,7 @@
 
 .mushaf-basmala {
   font-family: 'Amiri Quran', 'Scheherazade New', serif;
-  font-size: 1.85rem;
+  font-size: calc(1.85rem * var(--text-scale, 1));
   line-height: 2;
   text-align: center;
   color: var(--color-bismillah);
@@ -279,7 +279,7 @@
 
 .mushaf-text {
   font-family: 'Amiri Quran', 'Scheherazade New', serif;
-  font-size: 1.85rem;
+  font-size: calc(1.85rem * var(--text-scale, 1));
   line-height: 2.35;
   text-align: justify;
   text-align-last: center;
@@ -348,8 +348,8 @@
 @media (max-width: 768px) {
   .mushaf-sheet { padding: 0.75rem 0.5rem 0.5rem; }
   .mushaf-frame { padding: 1rem 0.85rem; min-height: auto; }
-  .mushaf-text { font-size: 1.45rem; line-height: 2.2; }
-  .mushaf-basmala { font-size: 1.45rem; }
+  .mushaf-text { font-size: calc(1.45rem * var(--text-scale, 1)); line-height: 2.2; }
+  .mushaf-basmala { font-size: calc(1.45rem * var(--text-scale, 1)); }
   .surah-banner { gap: 0.5rem; padding: 0.35rem 0.6rem; }
   .surah-banner-name { font-size: 1.25rem; }
   .surah-banner-side { font-size: 0.75rem; }
@@ -385,7 +385,7 @@
 
 .study-basmala {
   font-family: 'Amiri Quran', 'Scheherazade New', serif;
-  font-size: 1.9rem;
+  font-size: calc(1.9rem * var(--text-scale, 1));
   text-align: center;
   color: var(--color-bismillah);
 }
@@ -468,7 +468,7 @@
 
 .study-arabic {
   font-family: 'Amiri Quran', 'Scheherazade New', serif;
-  font-size: 1.85rem;
+  font-size: calc(1.85rem * var(--text-scale, 1));
   line-height: 2.2;
   text-align: right;
   color: var(--color-ayah-text);
@@ -531,13 +531,13 @@
 }
 
 .translation-body {
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--text-scale, 1));
   line-height: 1.65;
   color: var(--color-text-secondary);
 }
 
 .translation-row.primary .translation-body {
-  font-size: 1.05rem;
+  font-size: calc(1.05rem * var(--text-scale, 1));
   color: var(--color-text-primary);
 }
 
@@ -579,14 +579,14 @@
 
 .word-arabic {
   font-family: 'Amiri Quran', 'Scheherazade New', serif;
-  font-size: 1.25rem;
+  font-size: calc(1.25rem * var(--text-scale, 1));
   line-height: 1.9;
   color: var(--color-primary-dark);
   text-align: right;
 }
 
 .word-meaning {
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--text-scale, 1));
   line-height: 1.5;
   color: var(--color-text-primary);
 }
@@ -598,7 +598,7 @@
 }
 
 .tafsir-body {
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--text-scale, 1));
   line-height: 1.7;
   color: var(--color-text-primary);
 }
@@ -628,7 +628,7 @@
 
 @media (max-width: 768px) {
   .study-card { padding: 0.85rem; }
-  .study-arabic { font-size: 1.5rem; }
+  .study-arabic { font-size: calc(1.5rem * var(--text-scale, 1)); }
   .word-row {
     grid-template-columns: 1fr;
     gap: 0.2rem;
@@ -639,4 +639,77 @@
 
 .icon-btn.memorized {
   color: var(--color-success);
+}
+
+/* ─── Text size control (A− 100% A+) ─────────────────────────────────────── */
+
+.toolbar-end {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.text-size {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-hover);
+}
+
+.text-size button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  height: 2rem;
+  padding: 0 0.4rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-primary);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.text-size button:hover:not(:disabled) {
+  background: var(--color-surface);
+  color: var(--color-primary);
+}
+
+.text-size button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.text-size .ts-value:disabled {
+  opacity: 1;
+  color: var(--color-text-muted);
+}
+
+.ts-small { font-size: 0.8rem; font-weight: 700; }
+.ts-large { font-size: 1.15rem; font-weight: 700; }
+
+.ts-value {
+  min-width: 3.2rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  /* Size control and pager share one line */
+  .toolbar-end {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .text-size button { min-width: 1.9rem; padding: 0 0.3rem; }
+  .ts-value { min-width: 2.8rem !important; }
+  .pager-label > span:first-child { display: none; }
+  .pager-input { width: 3.2rem; }
 }
