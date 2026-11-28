@@ -149,7 +149,12 @@ export class AudioPlayerComponent implements OnDestroy {
 
   // ─── Settings ──────────────────────────────────────────────────────────────
   readonly panelOpen = signal(false);
-  readonly reciters = signal<{ value: string; label: string }[]>([]);
+  readonly reciters = signal<{ value: string; label: string; remote: boolean }[]>([]);
+  readonly localReciters = computed(() => this.reciters().filter(r => !r.remote));
+  readonly remoteReciters = computed(() => this.reciters().filter(r => r.remote));
+  /** Display names from the API, by reciter id */
+  private readonly reciterNames = computed(() =>
+    Object.fromEntries(this.reciters().map(r => [r.value, r.label])) as Record<string, string>);
   readonly speeds = [0.75, 1, 1.25, 1.5];
   readonly repeatSettings = signal<RepeatSettings>(this.loadRepeatSettings());
   readonly repeatTargets: { value: RepeatTarget; label: string }[] = [
@@ -179,11 +184,15 @@ export class AudioPlayerComponent implements OnDestroy {
   readonly RepeatStyle = RepeatStyle;
 
   constructor() {
-    this.quran.getReciters().subscribe(list => {
-      this.reciters.set(list.map(r => ({ value: r, label: RECITER_NAMES[r] ?? r })));
+    this.quran.getReciterDetails().subscribe(list => {
+      this.reciters.set(list.map(r => ({
+        value: r.id,
+        label: r.name && r.name !== r.id ? r.name : (RECITER_NAMES[r.id] ?? r.id),
+        remote: r.source === 'remote'
+      })));
       // A remembered reciter that no longer exists falls back to the first available one
-      if (list.length && !list.includes(this.player().currentReciter)) {
-        this.audio.setReciter(list[0]);
+      if (list.length && !list.some(r => r.id === this.player().currentReciter)) {
+        this.audio.setReciter(list[0].id);
       }
     });
 
@@ -220,7 +229,7 @@ export class AudioPlayerComponent implements OnDestroy {
     // Lock screen / notification info follows the current ayah
     effect(() => {
       const label = this.currentLabel();
-      const reciter = RECITER_NAMES[this.player().currentReciter] ?? this.player().currentReciter;
+      const reciter = this.reciterName(this.player().currentReciter);
       if (!('mediaSession' in navigator) || !label) return;
       navigator.mediaSession.metadata = new MediaMetadata({
         title: `${label.name} · verset ${label.ref.split(':')[1]}`,
@@ -417,7 +426,7 @@ export class AudioPlayerComponent implements OnDestroy {
   // ─── Helpers ───────────────────────────────────────────────────────────────
 
   reciterName(id: string): string {
-    return RECITER_NAMES[id] ?? id;
+    return this.reciterNames()[id] ?? RECITER_NAMES[id] ?? id;
   }
 
   private baseConfig(): Omit<RepeatConfig, 'count' | 'repeatStyle'> {

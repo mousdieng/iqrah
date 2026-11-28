@@ -121,6 +121,20 @@ export class AudioService {
   }
 
   /**
+   * Asks the API for an upcoming ayah in the background, so it is ready (in the API cache for
+   * online reciters, and in the browser cache) when playback reaches it.
+   */
+  prefetch(ayah: Ayah | undefined, reciter?: string): void {
+    if (!ayah) return;
+    const url = this.getAudioUrl(ayah, reciter);
+    if (this.prefetched.has(url)) return;
+    this.prefetched.add(url);
+    fetch(url, { priority: 'low' } as RequestInit).catch(() => this.prefetched.delete(url));
+  }
+
+  private prefetched = new Set<string>();
+
+  /**
    * Get the tafsir audio URL
    */
   getTafsirUrl(ayah: Ayah, tafsir: string): string {

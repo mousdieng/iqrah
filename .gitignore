@@ -72,3 +72,8 @@ api/src/main/resources/uploads/
 !api/src/main/resources/application.properties
 !api/src/main/resources/static/**
 !api/src/main/resources/templates/**
+
+############################
+# Audio downloaded from remote reciters (cache)
+############################
+/api/audio-cache/

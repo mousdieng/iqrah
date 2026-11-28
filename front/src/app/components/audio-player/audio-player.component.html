@@ -7,8 +7,21 @@
         <section class="panel-section">
           <h3 class="panel-title"><i class="pi pi-microphone" aria-hidden="true"></i> Récitateur</h3>
           <select class="input" [value]="player().currentReciter" (change)="setReciter($event)" aria-label="Récitateur">
-            @for (r of reciters(); track r.value) {
-              <option [value]="r.value" [selected]="r.value === player().currentReciter">{{ r.label }}</option>
+            @if (remoteReciters().length) {
+              <optgroup label="Sur le serveur">
+                @for (r of localReciters(); track r.value) {
+                  <option [value]="r.value" [selected]="r.value === player().currentReciter">{{ r.label }}</option>
+                }
+              </optgroup>
+              <optgroup label="En ligne (chargés à la première écoute)">
+                @for (r of remoteReciters(); track r.value) {
+                  <option [value]="r.value" [selected]="r.value === player().currentReciter">{{ r.label }}</option>
+                }
+              </optgroup>
+            } @else {
+              @for (r of reciters(); track r.value) {
+                <option [value]="r.value" [selected]="r.value === player().currentReciter">{{ r.label }}</option>
+              }
             }
           </select>
 

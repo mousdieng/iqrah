@@ -277,6 +277,12 @@ export class RepeatService {
     }
 
     this.audioService.play();
+
+    // Get the next ayah ready while this one plays
+    if (this.currentConfig?.audioType === 'recitation') {
+      const next = this.currentAyahs[state.currentAyahIndex + 1];
+      if (next && next.id !== ayah.id) this.audioService.prefetch(next, this.currentConfig.reciter);
+    }
   }
 
   /**

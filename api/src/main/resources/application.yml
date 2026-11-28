@@ -42,9 +42,52 @@ spring:
       mode: never
 
 # Audio files configuration
-# Set this to an external directory path if audio files are outside the project
-# audio:
-#   base-path: C:/path/to/audio/files
+# Set base-path to an external directory if audio files are outside the project
+audio:
+  # base-path: C:/path/to/audio/files
+
+  # Extra reciters, fetched by the backend only when a verse is not stored locally,
+  # then kept in cache-dir so each verse is downloaded once.
+  # URL: {base-url}/{folder}/{SSS}{AAA}.mp3 (surah and ayah on 3 digits)
+  remote:
+    enabled: true
+    base-url: https://everyayah.com/data
+    cache-dir: audio-cache
+    timeout-seconds: 15
+    local-names:
+      minshawi: Mohamed Siddiq El-Minshawi
+      maher_al_muaiqly: Maher Al-Muaiqly
+    reciters:
+      alafasy:
+        name: Mishary Rashid Alafasy
+        folder: Alafasy_128kbps
+      husary:
+        name: Mahmoud Khalil Al-Husary
+        folder: Husary_128kbps
+      abdul_basit:
+        name: Abdul Basit Abdus Samad
+        folder: Abdul_Basit_Murattal_192kbps
+      sudais:
+        name: Abdurrahman As-Sudais
+        folder: Abdurrahmaan_As-Sudais_192kbps
+      shuraym:
+        name: Saud Ash-Shuraym
+        folder: Saood_ash-Shuraym_128kbps
+      ghamadi:
+        name: Saad Al-Ghamdi
+        folder: Ghamadi_40kbps
+      hudhaify:
+        name: Ali Al-Hudhaify
+        folder: Hudhaify_128kbps
+      dussary:
+        name: Yasser Ad-Dussary
+        folder: Yasser_Ad-Dussary_128kbps
+      shaatree:
+        name: Abu Bakr Ash-Shaatree
+        folder: Abu_Bakr_Ash-Shaatree_128kbps
+      ayyoub:
+        name: Muhammad Ayyoub
+        folder: Muhammad_Ayyoub_128kbps
 
 logging:
   level:

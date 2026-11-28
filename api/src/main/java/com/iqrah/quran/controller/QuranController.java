@@ -1,5 +1,6 @@
 package com.iqrah.quran.controller;
 
+import com.iqrah.quran.dto.ReciterDTO;
 import com.iqrah.quran.dto.Response;
 import com.iqrah.quran.dto.SurahDTO;
 import com.iqrah.quran.entity.Ayah;
@@ -75,6 +76,13 @@ public class QuranController {
     @GetMapping("/reciters")
     public ResponseEntity<Response<List<String>>> getAllReciters() {
         Response<List<String>> response = quranService.getAllReciters();
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    /** Reciters with their display name and source ("local" or "remote") */
+    @GetMapping("/reciters/details")
+    public ResponseEntity<Response<List<ReciterDTO>>> getReciterDetails() {
+        Response<List<ReciterDTO>> response = quranService.getReciterDetails();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

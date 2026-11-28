@@ -3,6 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 import { ApiResponse, Ayah, Surah, SurahDTO } from '../models';
 
+export interface ReciterInfo {
+  id: string;
+  name: string;
+  source: 'local' | 'remote';
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -138,6 +144,21 @@ export class QuranService {
           console.error('Error fetching reciters:', error);
           return of([]);
         })
+      );
+  }
+
+  /**
+   * Reciters with their display name and source: "local" (stored with the API)
+   * or "remote" (fetched by the API from an online source the first time a verse is played).
+   * Falls back to the plain id list if the API has no details endpoint.
+   */
+  getReciterDetails(): Observable<ReciterInfo[]> {
+    return this.http.get<ApiResponse<ReciterInfo[]>>(`${this.apiUrl}/reciters/details`)
+      .pipe(
+        map(response => response.data || []),
+        catchError(() => this.getReciters().pipe(
+          map(ids => ids.map(id => ({ id, name: id, source: 'local' as const })))
+        ))
       );
   }
 

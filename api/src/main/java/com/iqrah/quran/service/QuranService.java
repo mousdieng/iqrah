@@ -1,5 +1,6 @@
 package com.iqrah.quran.service;
 
+import com.iqrah.quran.dto.ReciterDTO;
 import com.iqrah.quran.dto.*;
 import com.iqrah.quran.entity.*;
 import com.iqrah.quran.repository.*;
@@ -50,6 +51,13 @@ public class QuranService {
 
     public Response<List<String>> getAllReciters() {
         List<String> reciters = audioService.getAllReciter();
+        return reciters.isEmpty()
+                ? Response.fail(404, "No reciters Found")
+                : Response.ok("Reciters found", reciters);
+    }
+
+    public Response<List<ReciterDTO>> getReciterDetails() {
+        List<ReciterDTO> reciters = audioService.getReciterDetails();
         return reciters.isEmpty()
                 ? Response.fail(404, "No reciters Found")
                 : Response.ok("Reciters found", reciters);

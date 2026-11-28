@@ -1,6 +1,9 @@
 package com.iqrah.quran.service;
 
 import com.iqrah.quran.dto.AudioType;
+import com.iqrah.quran.config.RemoteAudioProperties;
+import com.iqrah.quran.dto.ReciterDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
@@ -16,13 +19,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@RequiredArgsConstructor
 public class AudioService {
+
+    private final RemoteAudioService remoteAudioService;
+    private final RemoteAudioProperties remoteAudioProperties;
 
     @Value("${audio.base-path:#{null}}")
     private String externalAudioPath;
@@ -39,6 +47,11 @@ public class AudioService {
         try {
             String relativePath = buildRelativePath(type, sourceName, surahNumber, ayaNumber);
             Resource resource = resolveAudioResource(relativePath);
+
+            // Not stored locally: configured remote reciters are fetched (and cached) by the backend
+            if ((resource == null || !resource.exists()) && type == AudioType.RECITATION) {
+                resource = remoteAudioService.resolve(sourceName, surahNumber, ayaNumber);
+            }
 
             if (resource == null || !resource.exists()) {
                 System.err.println("Audio file not found: " + relativePath);
@@ -104,8 +117,26 @@ public class AudioService {
         return serveAudioByPath(AudioType.TRANSLATOR, tafsir, surahNumber, ayaNumber);
     }
 
+    /** Local reciters (audio folders) followed by the remote ones from the configuration */
     public List<String> getAllReciter() {
-        return listFolderNamesFromClasspath(RECITER_CLASSPATH);
+        return getReciterDetails().stream().map(ReciterDTO::getId).toList();
+    }
+
+    /** Every reciter with its display name and where its audio comes from */
+    public List<ReciterDTO> getReciterDetails() {
+        List<ReciterDTO> reciters = new ArrayList<>();
+        List<String> local = listFolderNamesFromClasspath(RECITER_CLASSPATH);
+        for (String id : local) {
+            reciters.add(new ReciterDTO(id, remoteAudioProperties.getLocalNames().getOrDefault(id, id), "local"));
+        }
+        if (remoteAudioProperties.isEnabled()) {
+            remoteAudioProperties.getReciters().forEach((id, reciter) -> {
+                if (!local.contains(id)) {
+                    reciters.add(new ReciterDTO(id, reciter.getName() != null ? reciter.getName() : id, "remote"));
+                }
+            });
+        }
+        return reciters;
     }
 
     public List<String> getAllTranslator() {
